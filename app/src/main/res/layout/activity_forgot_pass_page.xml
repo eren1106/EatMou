@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication.LoginPage">
+    tools:context=".Authentication.ForgotPassPage">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -75,63 +75,85 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Forgot Password"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:text="E-mail"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/loginEmail"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/inputbg"
-            android:elevation="3sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:paddingTop="30sp"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:text="Password"
+                android:text="Code"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5sp">
+                <EditText
+                    android:id="@+id/code1"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:elevation="3sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/inputbg"/>
+                <EditText
+                    android:id="@+id/code2"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:elevation="3sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/inputbg"/>
+                <EditText
+                    android:id="@+id/code3"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_marginRight="10sp"
+                    android:elevation="3sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/inputbg"/>
+                <EditText
+                    android:id="@+id/code4"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:elevation="3sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/inputbg"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/forgotPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginLeft="80sp"
-                android:text="Forgot Password"/>
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Enter the 4-digit code that\nhas been sent to your e-mail"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="10sp"/>
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/loginPass"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/inputbg"
-            android:elevation="3sp" />
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/confirmPinBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="continue"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:elevation="3sp"
