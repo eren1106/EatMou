@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button toSignUpPage;
     Button toLoginPage;
 
     @Override
@@ -18,13 +20,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toLoginPage = findViewById(R.id.toLoginPage);
+        toSignUpPage = findViewById(R.id.toSignUpPage);
 
-        toLoginPage.setOnClickListener(new View.OnClickListener() {
+        toSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SignUpPage.class));
             }
         });
+
+        toLoginPage = findViewById(R.id.toLoginPage);
+        toLoginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), LoginPage.class));
+            }
+        });
+
     }
 }
