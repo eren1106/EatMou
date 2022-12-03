@@ -10,12 +10,14 @@ import android.widget.Button;
 import com.example.eatmou.Authentication.ForgotPassPage;
 import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
+import com.example.eatmou.Authentication.UpdatePassPage;
 
 public class MainActivity extends AppCompatActivity {
 
     Button toSignUpPage;
     Button toLoginPage;
     Button toForgotPassPage;
+    Button toUpdatePassPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), ForgotPassPage.class));
+            }
+        });
+
+        toUpdatePassPage = findViewById(R.id.toUpdatePassPage);
+        toUpdatePassPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), UpdatePassPage.class));
             }
         });
 
