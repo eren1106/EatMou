@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.eatmou.Authentication.ForgotPassPage;
 import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
 
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button toSignUpPage;
     Button toLoginPage;
+    Button toForgotPassPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), LoginPage.class));
+            }
+        });
+
+        toForgotPassPage = findViewById(R.id.toForgotPassPage);
+        toForgotPassPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ForgotPassPage.class));
             }
         });
 
