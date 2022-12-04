@@ -150,7 +150,7 @@
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
@@ -173,7 +173,7 @@
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
