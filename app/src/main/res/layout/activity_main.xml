@@ -6,44 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/toSignUpPage"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:layout_marginTop="250sp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/toLoginPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="login"
-        app:layout_constraintEnd_toEndOf="@+id/toSignUpPage"
-        app:layout_constraintStart_toStartOf="@+id/toSignUpPage"
-        app:layout_constraintTop_toBottomOf="@+id/toSignUpPage" />
+        <Button
+            android:id="@+id/toSignUpPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/toForgotPassPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="Forgotpass"
-        app:layout_constraintEnd_toEndOf="@+id/toLoginPage"
-        app:layout_constraintStart_toStartOf="@+id/toLoginPage"
-        app:layout_constraintTop_toBottomOf="@+id/toLoginPage" />
+        <Button
+            android:id="@+id/toLoginPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:text="login"
+            app:layout_constraintEnd_toEndOf="@+id/toSignUpPage"
+            app:layout_constraintStart_toStartOf="@+id/toSignUpPage"
+            app:layout_constraintTop_toBottomOf="@+id/toSignUpPage" />
 
-    <Button
-        android:id="@+id/toUpdatePassPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="UpdatePass"
-        app:layout_constraintEnd_toEndOf="@+id/toForgotPassPage"
-        app:layout_constraintStart_toStartOf="@+id/toForgotPassPage"
-        app:layout_constraintTop_toBottomOf="@+id/toForgotPassPage" />
+        <Button
+            android:id="@+id/toForgotPassPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:text="Forgotpass"
+            app:layout_constraintEnd_toEndOf="@+id/toLoginPage"
+            app:layout_constraintStart_toStartOf="@+id/toLoginPage"
+            app:layout_constraintTop_toBottomOf="@+id/toLoginPage" />
+
+        <Button
+            android:id="@+id/toUpdatePassPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:text="UpdatePass"
+            app:layout_constraintEnd_toEndOf="@+id/toForgotPassPage"
+            app:layout_constraintStart_toStartOf="@+id/toForgotPassPage"
+            app:layout_constraintTop_toBottomOf="@+id/toForgotPassPage" />
+
+        <Button
+            android:id="@+id/toTwoFactor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:text="two factor"
+            app:layout_constraintEnd_toEndOf="@+id/toUpdatePassPage"
+            app:layout_constraintStart_toStartOf="@+id/toUpdatePassPage"
+            app:layout_constraintTop_toBottomOf="@+id/toUpdatePassPage" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

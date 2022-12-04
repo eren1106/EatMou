@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.example.eatmou.Authentication.ForgotPassPage;
 import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
+import com.example.eatmou.Authentication.TwoFactorAutheticationPage;
 import com.example.eatmou.Authentication.UpdatePassPage;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Button toLoginPage;
     Button toForgotPassPage;
     Button toUpdatePassPage;
+    Button toTwoFactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), UpdatePassPage.class));
+            }
+        });
+
+        toTwoFactor = findViewById(R.id.toTwoFactor);
+        toTwoFactor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), TwoFactorAutheticationPage.class));
             }
         });
 
