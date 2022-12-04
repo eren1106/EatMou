@@ -7,24 +7,55 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.eatmou.Authentication.ForgotPassPage;
+import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
+import com.example.eatmou.Authentication.UpdatePassPage;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button toSignUpPage;
     Button toLoginPage;
+    Button toForgotPassPage;
+    Button toUpdatePassPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toLoginPage = findViewById(R.id.toLoginPage);
+        toSignUpPage = findViewById(R.id.toSignUpPage);
 
-        toLoginPage.setOnClickListener(new View.OnClickListener() {
+        toSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SignUpPage.class));
             }
         });
+
+        toLoginPage = findViewById(R.id.toLoginPage);
+        toLoginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), LoginPage.class));
+            }
+        });
+
+        toForgotPassPage = findViewById(R.id.toForgotPassPage);
+        toForgotPassPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ForgotPassPage.class));
+            }
+        });
+
+        toUpdatePassPage = findViewById(R.id.toUpdatePassPage);
+        toUpdatePassPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), UpdatePassPage.class));
+            }
+        });
+
     }
 }
