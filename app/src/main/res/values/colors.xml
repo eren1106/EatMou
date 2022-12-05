@@ -19,4 +19,12 @@
     <color name="palepink">#58BC7C</color>
     <color name="green">#25B44D</color>
     <color name="yellow">#FFD237</color>
+    <color name="RED">#FF5E51</color>
+    <color name="ORANGE">#FF7F50</color>
+    <color name="YELLOW">#FFC859</color>
+    <color name="RICE">#FFEECC</color>
+    <color name="BLACK">#000000</color>
+    <color name="GREY">#9FA3A6</color>
+    <color name="LIGHTGREY">#EFF1F3</color>
+    <color name="WHITE">#FFFFFF</color>
 </resources>
