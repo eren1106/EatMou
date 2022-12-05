@@ -3,12 +3,16 @@ package com.example.eatmou.FoodParty;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eatmou.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +52,7 @@ public class FoodPartyListFragment extends Fragment {
         return fragment;
     }
 
+    ArrayList<FoodPartyModel> foodPartyModels = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +65,79 @@ public class FoodPartyListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        setupData();
+
+        View view = inflater.inflate(R.layout.fragment_food_party_list, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.RV_FoodParty);
+        recyclerView.setHasFixedSize(true);
+
+        FoodPartyRecyclerViewAdapter adapter = new FoodPartyRecyclerViewAdapter(this.getActivity(), foodPartyModels); // getActivity => context
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_party_list, container, false);
+        return view;
+    }
+
+    private void setupData() {
+        FoodPartyModel fp1 = new FoodPartyModel(
+                "Vegetarian gathering",
+                "Eren Yeager",
+                "Lai Vege Restaurant",
+                "06/09/2022",
+                "09:00 p.m."
+        );
+
+        FoodPartyModel fp2 = new FoodPartyModel(
+                "SE buddy night",
+                "SE bitch",
+                "Bitch Restaurant",
+                "09/06/2022",
+                "06:00 p.m."
+        );
+
+        FoodPartyModel fp3 = new FoodPartyModel(
+                "Ri hack gathering",
+                "Jit Sin Kia",
+                "Canteen at Jit Sin High School",
+                "11/11/2022",
+                "11:00 p.m."
+        );
+
+        FoodPartyModel fp4 = new FoodPartyModel(
+                "Vegetarian gathering",
+                "Eren Yeager",
+                "Lai Vege Restaurant",
+                "06/09/2022",
+                "09:00 p.m."
+        );
+
+        FoodPartyModel fp5 = new FoodPartyModel(
+                "SE buddy night",
+                "SE bitch",
+                "Bitch Restaurant",
+                "09/06/2022",
+                "06:00 p.m."
+        );
+
+        FoodPartyModel fp6 = new FoodPartyModel(
+                "Ri hack gathering",
+                "Jit Sin Kia",
+                "Canteen at Jit Sin High School",
+                "11/11/2022",
+                "11:00 p.m."
+        );
+
+        foodPartyModels.add(fp1);
+        foodPartyModels.add(fp2);
+        foodPartyModels.add(fp3);
+        foodPartyModels.add(fp4);
+        foodPartyModels.add(fp5);
+        foodPartyModels.add(fp6);
+
+        for(FoodPartyModel fpm : foodPartyModels){
+            System.out.println(fpm.getTitle());
+        }
     }
 }

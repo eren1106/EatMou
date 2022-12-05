@@ -1,61 +1,34 @@
 package com.example.eatmou;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.eatmou.Authentication.ForgotPassPage;
-import com.example.eatmou.Authentication.LoginPage;
-import com.example.eatmou.Authentication.SignUpPage;
-import com.example.eatmou.Authentication.UpdatePassPage;
+import com.example.eatmou.FoodParty.FoodPartyListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button toSignUpPage;
-    Button toLoginPage;
-    Button toForgotPassPage;
-    Button toUpdatePassPage;
+    Button toFoodPartyPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toSignUpPage = findViewById(R.id.toSignUpPage);
-
-        toSignUpPage.setOnClickListener(new View.OnClickListener() {
+        toFoodPartyPage = findViewById(R.id.toFoodPartyPage);
+        toFoodPartyPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SignUpPage.class));
+                toFoodPartyPage.setVisibility(View.GONE);
+
+                Fragment fragment = new FoodPartyListFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainContainer, fragment).commit();
             }
         });
-
-        toLoginPage = findViewById(R.id.toLoginPage);
-        toLoginPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), LoginPage.class));
-            }
-        });
-
-        toForgotPassPage = findViewById(R.id.toForgotPassPage);
-        toForgotPassPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ForgotPassPage.class));
-            }
-        });
-
-        toUpdatePassPage = findViewById(R.id.toUpdatePassPage);
-        toUpdatePassPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), UpdatePassPage.class));
-            }
-        });
-
     }
 }
