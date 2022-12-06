@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.example.eatmou.FoodParty.FoodPartyListFragment;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
     Button toFoodPartyPage;
