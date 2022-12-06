@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.eatmou.MainActivity;
+import com.example.eatmou.HomePage.MainActivity;
 import com.example.eatmou.R;
 
 public class LoginPage extends AppCompatActivity {

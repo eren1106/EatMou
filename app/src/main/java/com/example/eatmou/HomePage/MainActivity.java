@@ -1,9 +1,13 @@
-package com.example.eatmou;
+package com.example.eatmou.HomePage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,51 +15,58 @@ import com.example.eatmou.Authentication.ForgotPassPage;
 import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
 import com.example.eatmou.Authentication.UpdatePassPage;
+import com.example.eatmou.R;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button toSignUpPage;
-    Button toLoginPage;
-    Button toForgotPassPage;
-    Button toUpdatePassPage;
+    BottomAppBar bottomBarChart;
+    BottomNavigationView bottomBarViewChart;
+    FloatingActionButton partyPageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toSignUpPage = findViewById(R.id.toSignUpPage);
+        //Set the background of bottomAppBar as null
+        bottomBarChart = findViewById(R.id.bottomBarChart);
+        bottomBarChart.setBackground(null);
 
-        toSignUpPage.setOnClickListener(new View.OnClickListener() {
+        //Set the fragment replace layout
+        bottomBarViewChart = findViewById(R.id.bottomBarViewChart);
+        bottomBarViewChart.setOnNavigationItemSelectedListener(navListener);
+
+        //TODO: Disable the default selected item in bottomNavBar
+
+        //Default launch matching page
+        Fragment selectedFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
+
+        //Click to launch Matching page
+        partyPageBtn = findViewById(R.id.partyPageBtn);
+        partyPageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SignUpPage.class));
-            }
-        });
-
-        toLoginPage = findViewById(R.id.toLoginPage);
-        toLoginPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), LoginPage.class));
-            }
-        });
-
-        toForgotPassPage = findViewById(R.id.toForgotPassPage);
-        toForgotPassPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ForgotPassPage.class));
-            }
-        });
-
-        toUpdatePassPage = findViewById(R.id.toUpdatePassPage);
-        toUpdatePassPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), UpdatePassPage.class));
+                Fragment selectedFragment = new HomeFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             }
         });
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragment = null;
+            switch (item.getItemId()){
+                case R.id.party:
+                    selectedFragment = new HomeFragment();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
+            return true;
+        }
+    };
 }

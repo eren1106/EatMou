@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.eatmou.MainActivity;
+import com.example.eatmou.HomePage.MainActivity;
 import com.example.eatmou.R;
 
 public class SignUpPage extends AppCompatActivity {
