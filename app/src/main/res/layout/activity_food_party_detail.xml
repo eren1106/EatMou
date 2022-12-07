@@ -8,7 +8,7 @@
     android:background="@color/RICE">
 
     <TextView
-        android:id="@+id/TV_FoodPartyTitle"
+        android:id="@+id/TV_CreatePartyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -42,7 +42,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TV_FoodPartyTitle">
+        app:layout_constraintTop_toBottomOf="@+id/TV_CreatePartyTitle">
 
         <LinearLayout
             android:id="@+id/LL_InformationOrganizer"
@@ -223,10 +223,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
-                android:text="Button"
+                android:text="Join"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:cornerRadius="15dp"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RV_PersonList"

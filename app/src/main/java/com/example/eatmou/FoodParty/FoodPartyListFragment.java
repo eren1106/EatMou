@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.eatmou.R;
 
@@ -81,6 +82,14 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
         recyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener());
 
+        Button createBtn = view.findViewById(R.id.B_FoodPartyTopBtn);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateFoodPartyActivity.class);
+                startActivity(intent);
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }

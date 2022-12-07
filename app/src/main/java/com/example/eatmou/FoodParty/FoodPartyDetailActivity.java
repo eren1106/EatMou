@@ -28,7 +28,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_party_detail);
 
-        title = findViewById(R.id.TV_FoodPartyTitle);
+        title = findViewById(R.id.TV_CreatePartyTitle);
         organizer = findViewById(R.id.TV_OrganizerText);
         location = findViewById(R.id.TV_LocationText);
         date = findViewById(R.id.TV_DateText);

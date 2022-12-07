@@ -1,9 +1,6 @@
 package com.example.eatmou.FoodParty;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +59,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         public MyViewHolder(@NonNull View itemView, OnCardListener onCardListener) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.TV_FoodPartyTitle);
+            title = itemView.findViewById(R.id.TV_CreatePartyTitle);
             organizer = itemView.findViewById(R.id.TV_OrganizerText);
             location = itemView.findViewById(R.id.TV_LocationText);
             date = itemView.findViewById(R.id.TV_DateText);

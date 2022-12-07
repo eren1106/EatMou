@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodParty.CreateFoodPartyActivity">
+
+    <ImageButton
+        android:id="@+id/B_BackBtn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/TV_CreatePartyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Create Party"
+        android:textColor="@color/RED"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/B_BackBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="391dp"
+        android:layout_height="733dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TV_CreatePartyTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TV_TitleLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:text="Title"
+                android:textAlignment="textStart"
+                android:textColor="@color/BLACK"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ET_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/inputbg"
+                android:backgroundTint="@color/RICE"
+                android:hint="Title"
+                android:padding="16dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TV_LocationLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:text="Location"
+                android:textAlignment="textStart"
+                android:textColor="@color/BLACK"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ET_Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/inputbg"
+                android:backgroundTint="@color/RICE"
+                android:hint="Location"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TV_DateLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:text="Date"
+                android:textAlignment="textStart"
+                android:textColor="@color/BLACK"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ET_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/inputbg"
+                android:backgroundTint="@color/RICE"
+                android:drawableLeft="@drawable/ic_baseline_calendar_month"
+                android:drawablePadding="10dp"
+                android:hint="Date"
+                android:inputType="date"
+                android:padding="16dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TV_TimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:text="Time"
+                android:textAlignment="textStart"
+                android:textColor="@color/BLACK"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ET_StartTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/inputbg"
+                    android:backgroundTint="@color/RICE"
+                    android:hint="Start Time"
+                    android:padding="16dp"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/TV_ToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="to"
+                    android:textAlignment="center"
+                    android:textColor="@color/BLACK"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ET_EndTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/inputbg"
+                    android:backgroundTint="@color/RICE"
+                    android:hint="End Time"
+                    android:padding="16dp"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TV_NumberOfPersonLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:text="Number Person"
+                android:textAlignment="textStart"
+                android:textColor="@color/BLACK"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ET_MinPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/inputbg"
+                    android:backgroundTint="@color/RICE"
+                    android:hint="Min. Person"
+                    android:padding="16dp"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/TV_ToPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="to"
+                    android:textAlignment="center"
+                    android:textColor="@color/BLACK"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ET_MaxPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/inputbg"
+                    android:backgroundTint="@color/RICE"
+                    android:hint="Max Person"
+                    android:padding="16dp"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/B_CreateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cornerRadius="15dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

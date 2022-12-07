@@ -31,7 +31,8 @@
             android:layout_marginEnd="20dp"
             android:text="Create"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:cornerRadius="15dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV_FoodParty"
