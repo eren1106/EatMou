@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".HomePage.MainActivity">
 
-    <Button
-        android:id="@+id/toSignUpPage"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-10sp"
+        android:layout_above="@+id/coordinatorLayout3" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:layout_marginTop="250sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/toLoginPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="login"
-        app:layout_constraintEnd_toEndOf="@+id/toSignUpPage"
-        app:layout_constraintStart_toStartOf="@+id/toSignUpPage"
-        app:layout_constraintTop_toBottomOf="@+id/toSignUpPage" />
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            app:fabAlignmentMode="center"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="50dp">
 
-    <Button
-        android:id="@+id/toForgotPassPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="Forgotpass"
-        app:layout_constraintEnd_toEndOf="@+id/toLoginPage"
-        app:layout_constraintStart_toStartOf="@+id/toLoginPage"
-        app:layout_constraintTop_toBottomOf="@+id/toLoginPage" />
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomBarViewChart"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_getstartedbtnbg2"
+                app:menu="@menu/menu_bar" />
+        </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <Button
-        android:id="@+id/toUpdatePassPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="UpdatePass"
-        app:layout_constraintEnd_toEndOf="@+id/toForgotPassPage"
-        app:layout_constraintStart_toStartOf="@+id/toForgotPassPage"
-        app:layout_constraintTop_toBottomOf="@+id/toForgotPassPage" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/partyPageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#FF5E51"
+            android:clickable="true"
+            android:src="@drawable/matching_icon"
+            app:layout_anchor="@id/bottomBarChart"
+            app:tint="#ffffff" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
