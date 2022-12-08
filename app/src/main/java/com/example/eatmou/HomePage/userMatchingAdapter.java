@@ -8,6 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.R;
@@ -16,11 +20,11 @@ import com.example.eatmou.data.userMatching;
 import java.util.List;
 
 public class userMatchingAdapter extends RecyclerView.Adapter<userMatchingAdapter.MyViewHolder> {
-    Context context;
+    static Context context;
     List<userMatching> userMatchingList;
 
     public userMatchingAdapter(Context context, List<userMatching> userMatchingList) {
-        this.context = context;
+        userMatchingAdapter.context = context;
         this.userMatchingList = userMatchingList;
     }
 
@@ -46,12 +50,24 @@ public class userMatchingAdapter extends RecyclerView.Adapter<userMatchingAdapte
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
+        ConstraintLayout user_item;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.card_image);
             name = itemView.findViewById(R.id.card_name);
+            user_item = itemView.findViewById(R.id.user_item);
+
+            user_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment fragment = new UserMatchingProfileFragment();
+                    ((FragmentActivity)context).getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.frameLayout, fragment).commit();
+                }
+            });
+
         }
     }
 }
