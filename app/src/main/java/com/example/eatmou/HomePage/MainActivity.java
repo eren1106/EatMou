@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         //Set the fragment replace layout
         bottomBarViewChart = findViewById(R.id.bottomBarViewChart);
         bottomBarViewChart.setOnNavigationItemSelectedListener(navListener);
-
         //TODO: Disable the default selected item in bottomNavBar
 
         //Default launch matching page
