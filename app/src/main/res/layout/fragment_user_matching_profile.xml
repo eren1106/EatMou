@@ -57,7 +57,7 @@
                     android:scaleType="centerCrop"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/messageBtn"
+                    android:id="@+id/inviteBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30sp"

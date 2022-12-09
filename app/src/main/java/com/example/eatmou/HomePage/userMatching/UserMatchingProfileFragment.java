@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.eatmou.HomePage.InviteDialog.InviteDialog;
 import com.example.eatmou.HomePage.MainActivity;
 import com.example.eatmou.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UserMatchingProfileFragment extends Fragment {
     ImageView backBtn;
     Context context = getContext();
+    FloatingActionButton inviteBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +36,20 @@ public class UserMatchingProfileFragment extends Fragment {
             }
         });
 
+        //Add logic for invite button
+        inviteBtn = view.findViewById(R.id.inviteBtn);
+        inviteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
         return view;
+    }
+
+    public void openDialog() {
+        InviteDialog inviteDialog = new InviteDialog();
+        inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
     }
 }
