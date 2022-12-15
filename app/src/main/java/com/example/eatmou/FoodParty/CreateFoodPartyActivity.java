@@ -8,7 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
+import com.google.type.DateTime;
+
+import java.util.Date;
 
 public class CreateFoodPartyActivity extends AppCompatActivity {
 
@@ -35,8 +39,10 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //create food party logic
+                FirebaseMethods firebaseMethods = new FirebaseMethods();
+                Date dt = new Date();
+                firebaseMethods.addFoodParty("Testing123", "qwertyuiop1234", "Tong Sampah", dt, dt, dt, 9);
 
                 finish();
             }
