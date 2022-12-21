@@ -37,11 +37,11 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
     @Override
     public void onBindViewHolder(@NonNull FoodPartyRecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.title.setText(foodPartyModels.get(position).getTitle());
-        holder.organizer.setText(foodPartyModels.get(position).getOrganizer());
+        holder.organizer.setText(foodPartyModels.get(position).getOrganiserId());
         holder.location.setText(foodPartyModels.get(position).getLocation());
-        holder.date.setText(foodPartyModels.get(position).getDate());
-        holder.time.setText(foodPartyModels.get(position).getTime());
-        holder.personNumber.setText(foodPartyModels.get(position).getJoinedPersonModels().size() + "/9");
+        holder.date.setText(foodPartyModels.get(position).getDate().toString());
+        holder.time.setText(foodPartyModels.get(position).getStartTime().toString());
+        holder.personNumber.setText(foodPartyModels.get(position).getJoinedPersons().size() + "/9");
     }
 
     @Override

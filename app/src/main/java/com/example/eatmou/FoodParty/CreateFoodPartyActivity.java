@@ -2,23 +2,39 @@ package com.example.eatmou.FoodParty;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
-import com.google.type.DateTime;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CreateFoodPartyActivity extends AppCompatActivity {
 
     EditText title;
+    EditText location;
     ImageButton backBtn;
     Button createBtn;
+
+    TextView tvDate;
+    DatePickerDialog.OnDateSetListener setListener;
+
+    TextView tvStartTime;
+    TextView tvEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +61,72 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 firebaseMethods.addFoodParty("Testing123", "qwertyuiop1234", "Tong Sampah", dt, dt, dt, 9);
 
                 finish();
+            }
+        });
+
+        tvDate = findViewById(R.id.TV_Date);
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        CreateFoodPartyActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        String date = day + "/"  + month + "/" + year;
+                        tvDate.setText(date);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        tvStartTime = findViewById(R.id.TV_StartTime);
+        tvEndTime = findViewById(R.id.TV_EndTime);
+
+        setupTimePicker(tvStartTime);
+        setupTimePicker(tvEndTime);
+    }
+
+    private void setupTimePicker(TextView tv) {
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int[] hour = new int[1];
+                final int[] minute = new int[1];
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        CreateFoodPartyActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                                hour[0] = i;
+                                minute[0] = i1;
+                                String time = i + ":" + i1;
+                                SimpleDateFormat f24Hours = new SimpleDateFormat(
+                                        "HH:mm"
+                                );
+                                try {
+                                    Date date = f24Hours.parse(time);
+                                    SimpleDateFormat f12hours = new SimpleDateFormat("hh:mm aa");
+                                    tv.setText(f12hours.format(date));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 12, 0, false);
+
+                // set transparent background
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                //display previous selected time
+                timePickerDialog.updateTime(hour[0], minute[0]);
+                // show dialog
+                timePickerDialog.show();
             }
         });
     }

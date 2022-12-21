@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        setupData();
+//        setupData();
 
         View view = inflater.inflate(R.layout.fragment_food_party_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.RV_FoodParty);
@@ -90,83 +91,86 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
                 startActivity(intent);
             }
         });
+
+        FirebaseMethods firebaseMethods = new FirebaseMethods();
+        firebaseMethods.getAllFoodParties();
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void setupData() {
-        JoinedPersonModel jp1 = new JoinedPersonModel("Eren", R.drawable.eren);
-        JoinedPersonModel jp2 = new JoinedPersonModel("Ali", R.drawable.eren);
-        JoinedPersonModel jp3 = new JoinedPersonModel("Akau", R.drawable.eren);
-        JoinedPersonModel jp4 = new JoinedPersonModel("Muthu", R.drawable.eren);
-        JoinedPersonModel jp5 = new JoinedPersonModel("Jibai", R.drawable.eren);
-        JoinedPersonModel jp6 = new JoinedPersonModel("Lancao", R.drawable.eren);
+//    private void setupData() {
+//        JoinedPersonModel jp1 = new JoinedPersonModel("Eren", R.drawable.eren);
+//        JoinedPersonModel jp2 = new JoinedPersonModel("Ali", R.drawable.eren);
+//        JoinedPersonModel jp3 = new JoinedPersonModel("Akau", R.drawable.eren);
+//        JoinedPersonModel jp4 = new JoinedPersonModel("Muthu", R.drawable.eren);
+//        JoinedPersonModel jp5 = new JoinedPersonModel("Jibai", R.drawable.eren);
+//        JoinedPersonModel jp6 = new JoinedPersonModel("Lancao", R.drawable.eren);
+//
+//        FoodPartyModel fp1 = new FoodPartyModel(
+//                "Vegetarian gathering",
+//                "Eren Yeager",
+//                "Lai Vege Restaurant",
+//                "06/09/2022",
+//                "09:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp1, jp2, jp3))
+//        );
+//
+//        FoodPartyModel fp2 = new FoodPartyModel(
+//                "SE buddy night",
+//                "SE bitch",
+//                "Bitch Restaurant",
+//                "09/06/2022",
+//                "06:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp4, jp5, jp6))
+//        );
+//
+//        FoodPartyModel fp3 = new FoodPartyModel(
+//                "Ri hack gathering",
+//                "Jit Sin Kia",
+//                "Canteen at Jit Sin High School",
+//                "11/11/2022",
+//                "11:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp1))
+//        );
+//
+//        FoodPartyModel fp4 = new FoodPartyModel(
+//                "Vegetarian gathering",
+//                "Eren Yeager",
+//                "Lai Vege Restaurant",
+//                "06/09/2022",
+//                "09:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp2, jp3, jp4, jp5, jp6))
+//        );
+//
+//        FoodPartyModel fp5 = new FoodPartyModel(
+//                "SE buddy night",
+//                "SE bitch",
+//                "Bitch Restaurant",
+//                "09/06/2022",
+//                "06:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp1, jp2, jp3, jp4, jp5, jp6))
+//        );
+//
+//        FoodPartyModel fp6 = new FoodPartyModel(
+//                "Ri hack gathering",
+//                "Jit Sin Kia",
+//                "Canteen at Jit Sin High School",
+//                "11/11/2022",
+//                "11:00 p.m.",
+//                new ArrayList<>(Arrays.asList(jp5))
+//        );
 
-        FoodPartyModel fp1 = new FoodPartyModel(
-                "Vegetarian gathering",
-                "Eren Yeager",
-                "Lai Vege Restaurant",
-                "06/09/2022",
-                "09:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp1, jp2, jp3))
-        );
-
-        FoodPartyModel fp2 = new FoodPartyModel(
-                "SE buddy night",
-                "SE bitch",
-                "Bitch Restaurant",
-                "09/06/2022",
-                "06:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp4, jp5, jp6))
-        );
-
-        FoodPartyModel fp3 = new FoodPartyModel(
-                "Ri hack gathering",
-                "Jit Sin Kia",
-                "Canteen at Jit Sin High School",
-                "11/11/2022",
-                "11:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp1))
-        );
-
-        FoodPartyModel fp4 = new FoodPartyModel(
-                "Vegetarian gathering",
-                "Eren Yeager",
-                "Lai Vege Restaurant",
-                "06/09/2022",
-                "09:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp2, jp3, jp4, jp5, jp6))
-        );
-
-        FoodPartyModel fp5 = new FoodPartyModel(
-                "SE buddy night",
-                "SE bitch",
-                "Bitch Restaurant",
-                "09/06/2022",
-                "06:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp1, jp2, jp3, jp4, jp5, jp6))
-        );
-
-        FoodPartyModel fp6 = new FoodPartyModel(
-                "Ri hack gathering",
-                "Jit Sin Kia",
-                "Canteen at Jit Sin High School",
-                "11/11/2022",
-                "11:00 p.m.",
-                new ArrayList<>(Arrays.asList(jp5))
-        );
-
-        foodPartyModels.add(fp1);
-        foodPartyModels.add(fp2);
-        foodPartyModels.add(fp3);
-        foodPartyModels.add(fp4);
-        foodPartyModels.add(fp5);
-        foodPartyModels.add(fp6);
-
-        for (FoodPartyModel fpm : foodPartyModels) {
-            System.out.println(fpm.getTitle());
-        }
-    }
+//        foodPartyModels.add(fp1);
+//        foodPartyModels.add(fp2);
+//        foodPartyModels.add(fp3);
+//        foodPartyModels.add(fp4);
+//        foodPartyModels.add(fp5);
+//        foodPartyModels.add(fp6);
+//
+//        for (FoodPartyModel fpm : foodPartyModels) {
+//            System.out.println(fpm.getTitle());
+//        }
+//    }
 
     @Override
     public void onCardClick(int position) {

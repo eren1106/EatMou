@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.eatmou.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FoodPartyDetailActivity extends AppCompatActivity implements Serializable {
 
@@ -39,11 +41,11 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject"); //get data pass from previous activity/fragment
 
         title.setText(foodPartyModel.getTitle());
-        organizer.setText(foodPartyModel.getOrganizer());
+        organizer.setText(foodPartyModel.getOrganiserId());
         location.setText(foodPartyModel.getLocation());
-        date.setText(foodPartyModel.getDate());
-        time.setText(foodPartyModel.getTime());
-        joinedPersonNumber.setText(foodPartyModel.getJoinedPersonModels().size() + "/9");
+        date.setText(foodPartyModel.getDate().toString());
+        time.setText(foodPartyModel.getStartTime().toString());
+        joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/9");
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
 
 
         RecyclerView recyclerView = findViewById(R.id.RV_PersonList);
-        JoinedPersonRecyclerViewAdapter adapter = new JoinedPersonRecyclerViewAdapter(this, foodPartyModel.getJoinedPersonModels());
+        JoinedPersonRecyclerViewAdapter adapter = new JoinedPersonRecyclerViewAdapter(this, foodPartyModel.getJoinedPersons());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
