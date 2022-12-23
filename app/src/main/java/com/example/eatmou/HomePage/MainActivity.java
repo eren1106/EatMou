@@ -3,18 +3,9 @@ package com.example.eatmou.HomePage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import com.example.eatmou.Authentication.ForgotPassPage;
-import com.example.eatmou.Authentication.LoginPage;
-import com.example.eatmou.Authentication.SignUpPage;
-import com.example.eatmou.Authentication.UpdatePassPage;
 import com.example.eatmou.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
