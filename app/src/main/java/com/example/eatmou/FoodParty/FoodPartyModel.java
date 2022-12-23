@@ -3,6 +3,7 @@ package com.example.eatmou.FoodParty;
 import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,6 +59,21 @@ public class FoodPartyModel implements Serializable {
                 (int) ((long) map.get("maxParticipant")),
                 (ArrayList<JoinedPersonModel>) map.get("joinedPersons"));
         return fpm;
+    }
+
+    public String getDateText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        return formatter.format(this.date);
+    }
+
+    public String getStartTimeText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa");
+        return formatter.format(this.startTime);
+    }
+
+    public String getEndTimeText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa");
+        return formatter.format(this.endTime);
     }
 
     public String getId() {

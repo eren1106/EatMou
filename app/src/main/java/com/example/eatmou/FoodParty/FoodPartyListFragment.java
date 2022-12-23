@@ -1,11 +1,9 @@
 package com.example.eatmou.FoodParty;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,19 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +75,9 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         }
     }
 
+    boolean showMine = false;
+    EventListener<QuerySnapshot> eventListener;
+    ListenerRegistration listenerRegistration;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,23 +95,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         progressDialog.setMessage("Fetching Data...");
         progressDialog.show();
 
-        fetchData(progressDialog, adapter);
-
-        Button createBtn = view.findViewById(R.id.B_FoodPartyTopBtn);
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateFoodPartyActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    private void fetchData(ProgressDialog progressDialog, FoodPartyRecyclerViewAdapter adapter) {
-        firestore.collection("foodParties").addSnapshotListener(new EventListener<QuerySnapshot>() { // addSnapshotListener -> will update the recyclerview whenever there is data change in database
+        eventListener = new EventListener<QuerySnapshot>() { // addSnapshotListener -> will update the recyclerview whenever there is data change in database
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
@@ -134,13 +115,71 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
                         progressDialog.dismiss();
                 }
             }
+        };
+
+        fetchData();
+
+        setupCreateButton(view);
+
+        setupToggleButton(view);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    private void fetchData() {
+        foodPartyModels.clear();
+        if(listenerRegistration != null) {
+            listenerRegistration.remove();
+        }
+        if(showMine) {
+            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", "myid").addSnapshotListener(eventListener);
+        }
+        else {
+            listenerRegistration = firestore.collection("foodParties").addSnapshotListener(eventListener);
+        }
+    }
+
+    private void setupCreateButton(View view) {
+        Button createBtn = view.findViewById(R.id.B_FoodPartyTopBtn);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateFoodPartyActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
+    private void setupToggleButton(View view) {
+        Button toggleButton = view.findViewById(R.id.B_Toggle);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(showMine) {
+                    toggleButton.setText("All");
+                    showMine = false;
+                }
+                else{
+                    toggleButton.setText("Mine");
+                    showMine = true;
+                }
+                fetchData();
+            }
+        });
+    }
     @Override
     public void onCardClick(int position) {
         Intent intent = new Intent(getActivity(), FoodPartyDetailActivity.class);
         intent.putExtra("FoodPartyObject", foodPartyModels.get(position));
         startActivity(intent);
     }
+
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        if(listenerRegistration != null) {
+//            listenerRegistration.remove(); // if no remove, it will still run when your app is closed
+//        }
+//    }
 }

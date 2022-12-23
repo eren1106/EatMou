@@ -64,7 +64,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 //create food party logic
                 FirebaseMethods firebaseMethods = new FirebaseMethods();
                 Date dt = new Date();
-                firebaseMethods.addFoodParty(etTitle.getText().toString(), "qwertyuiop1234", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
+                firebaseMethods.addFoodParty(etTitle.getText().toString(), "myid", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
 
                 finish();
             }

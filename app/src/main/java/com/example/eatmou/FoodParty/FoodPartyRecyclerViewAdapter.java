@@ -40,16 +40,8 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         holder.title.setText(foodPartyModels.get(position).getTitle());
         holder.organizer.setText(foodPartyModels.get(position).getOrganiserId());
         holder.location.setText(foodPartyModels.get(position).getLocation());
-
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        String strDate = formatter.format(foodPartyModels.get(position).getDate());
-        holder.date.setText(strDate);
-
-        formatter = new SimpleDateFormat("hh:mm aa");
-        String strStartTime = formatter.format(foodPartyModels.get(position).getStartTime());
-        String strEndTime = formatter.format(foodPartyModels.get(position).getEndTime());
-        holder.time.setText(strStartTime + " - " + strEndTime);
-
+        holder.date.setText(foodPartyModels.get(position).getDateText());
+        holder.time.setText(foodPartyModels.get(position).getStartTimeText() + " - " + foodPartyModels.get(position).getEndTimeText());
         holder.personNumber.setText(foodPartyModels.get(position).getJoinedPersons().size() + "/9");
     }
 

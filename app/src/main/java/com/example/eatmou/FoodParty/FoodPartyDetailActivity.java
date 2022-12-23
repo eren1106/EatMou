@@ -43,8 +43,8 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         title.setText(foodPartyModel.getTitle());
         organizer.setText(foodPartyModel.getOrganiserId());
         location.setText(foodPartyModel.getLocation());
-        date.setText(foodPartyModel.getDate().toString());
-        time.setText(foodPartyModel.getStartTime().toString());
+        date.setText(foodPartyModel.getDateText());
+        time.setText(foodPartyModel.getStartTimeText() + " - " + foodPartyModel.getEndTimeText());
         joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/9");
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,6 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 finish(); // exit this activity
             }
         });
-
 
         RecyclerView recyclerView = findViewById(R.id.RV_PersonList);
         JoinedPersonRecyclerViewAdapter adapter = new JoinedPersonRecyclerViewAdapter(this, foodPartyModel.getJoinedPersons());
