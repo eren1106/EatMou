@@ -25,23 +25,29 @@ import java.util.Date;
 
 public class CreateFoodPartyActivity extends AppCompatActivity {
 
-    EditText title;
-    EditText location;
+    EditText etTitle;
+    EditText etLocation;
+    EditText etMaxPerson;
     ImageButton backBtn;
     Button createBtn;
 
     TextView tvDate;
+    Date date = new Date();
     DatePickerDialog.OnDateSetListener setListener;
 
     TextView tvStartTime;
     TextView tvEndTime;
+    Date startTime = new Date();
+    Date endTime = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_food_party);
 
-        title = findViewById(R.id.ET_Title);
+        etTitle = findViewById(R.id.ET_Title);
+        etLocation = findViewById(R.id.ET_Location);
+        etMaxPerson = findViewById(R.id.ET_MaxPerson);
         backBtn = findViewById(R.id.B_BackBtn);
         createBtn = findViewById(R.id.B_CreateBtn);
 
@@ -58,13 +64,23 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 //create food party logic
                 FirebaseMethods firebaseMethods = new FirebaseMethods();
                 Date dt = new Date();
-                firebaseMethods.addFoodParty("Testing123", "qwertyuiop1234", "Tong Sampah", dt, dt, dt, 9);
+                firebaseMethods.addFoodParty(etTitle.getText().toString(), "qwertyuiop1234", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
 
                 finish();
             }
         });
 
         tvDate = findViewById(R.id.TV_Date);
+        setupDatePicker(tvDate);
+
+        tvStartTime = findViewById(R.id.TV_StartTime);
+        tvEndTime = findViewById(R.id.TV_EndTime);
+
+        setupTimePicker(tvStartTime, "startTime");
+        setupTimePicker(tvEndTime, "endTime");
+    }
+
+    private void setupDatePicker(TextView tvDate) {
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -78,22 +94,20 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month + 1;
-                        String date = day + "/"  + month + "/" + year;
-                        tvDate.setText(date);
+                        String selectedDate = day + "/"  + month + "/" + year;
+                        try {
+                            date = new SimpleDateFormat("dd/MM/yyyy").parse(selectedDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        tvDate.setText(selectedDate);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
             }
         });
-
-        tvStartTime = findViewById(R.id.TV_StartTime);
-        tvEndTime = findViewById(R.id.TV_EndTime);
-
-        setupTimePicker(tvStartTime);
-        setupTimePicker(tvEndTime);
     }
-
-    private void setupTimePicker(TextView tv) {
+    private void setupTimePicker(TextView tv, String tvName) {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,11 +122,15 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                                 hour[0] = i;
                                 minute[0] = i1;
                                 String time = i + ":" + i1;
-                                SimpleDateFormat f24Hours = new SimpleDateFormat(
-                                        "HH:mm"
-                                );
+                                SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
                                 try {
                                     Date date = f24Hours.parse(time);
+                                    if(tvName.equals("startTime")) {
+                                        startTime = date;
+                                    }
+                                    else{
+                                        endTime = date;
+                                    }
                                     SimpleDateFormat f12hours = new SimpleDateFormat("hh:mm aa");
                                     tv.setText(f12hours.format(date));
                                 } catch (ParseException e) {

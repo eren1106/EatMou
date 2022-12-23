@@ -49,20 +49,23 @@ public class FirebaseMethods {
         });
     }
 
-    public void getAllFoodParties() {
-        firestore.collection("foodParties").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        FoodPartyModel foodPartyModel = FoodPartyModel.toObject(document.getData());
-                        System.out.println(foodPartyModel.getTitle());
-                    }
-                }
-                else {
-                    System.out.println("Error");
-                }
-            }
-        });
-    }
+//    public ArrayList<FoodPartyModel> getAllFoodParties() {
+//        ArrayList<FoodPartyModel> res = new ArrayList<>();
+//        firestore.collection("foodParties").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        FoodPartyModel foodPartyModel = FoodPartyModel.toObject(document.getData());
+//                        res.add(foodPartyModel);
+//                    }
+//                }
+//                else {
+//                    System.out.println("Error");
+//                }
+//            }
+//        });
+//
+//        return res;
+//    }
 }

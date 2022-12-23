@@ -1,12 +1,17 @@
 package com.example.eatmou.FoodParty;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,14 @@ import android.widget.Button;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +70,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
     }
 
     ArrayList<FoodPartyModel> foodPartyModels = new ArrayList<>();
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,18 +84,21 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        setupData();
-
         View view = inflater.inflate(R.layout.fragment_food_party_list, container, false);
+
         RecyclerView recyclerView = view.findViewById(R.id.RV_FoodParty);
         recyclerView.setHasFixedSize(true);
-
         FoodPartyRecyclerViewAdapter adapter = new FoodPartyRecyclerViewAdapter(this.getActivity(), foodPartyModels, this); // getActivity => context
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
         recyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener());
+
+        ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
+
+        fetchData(progressDialog, adapter);
 
         Button createBtn = view.findViewById(R.id.B_FoodPartyTopBtn);
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,85 +109,33 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
             }
         });
 
-        FirebaseMethods firebaseMethods = new FirebaseMethods();
-        firebaseMethods.getAllFoodParties();
         // Inflate the layout for this fragment
         return view;
     }
 
-//    private void setupData() {
-//        JoinedPersonModel jp1 = new JoinedPersonModel("Eren", R.drawable.eren);
-//        JoinedPersonModel jp2 = new JoinedPersonModel("Ali", R.drawable.eren);
-//        JoinedPersonModel jp3 = new JoinedPersonModel("Akau", R.drawable.eren);
-//        JoinedPersonModel jp4 = new JoinedPersonModel("Muthu", R.drawable.eren);
-//        JoinedPersonModel jp5 = new JoinedPersonModel("Jibai", R.drawable.eren);
-//        JoinedPersonModel jp6 = new JoinedPersonModel("Lancao", R.drawable.eren);
-//
-//        FoodPartyModel fp1 = new FoodPartyModel(
-//                "Vegetarian gathering",
-//                "Eren Yeager",
-//                "Lai Vege Restaurant",
-//                "06/09/2022",
-//                "09:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp1, jp2, jp3))
-//        );
-//
-//        FoodPartyModel fp2 = new FoodPartyModel(
-//                "SE buddy night",
-//                "SE bitch",
-//                "Bitch Restaurant",
-//                "09/06/2022",
-//                "06:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp4, jp5, jp6))
-//        );
-//
-//        FoodPartyModel fp3 = new FoodPartyModel(
-//                "Ri hack gathering",
-//                "Jit Sin Kia",
-//                "Canteen at Jit Sin High School",
-//                "11/11/2022",
-//                "11:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp1))
-//        );
-//
-//        FoodPartyModel fp4 = new FoodPartyModel(
-//                "Vegetarian gathering",
-//                "Eren Yeager",
-//                "Lai Vege Restaurant",
-//                "06/09/2022",
-//                "09:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp2, jp3, jp4, jp5, jp6))
-//        );
-//
-//        FoodPartyModel fp5 = new FoodPartyModel(
-//                "SE buddy night",
-//                "SE bitch",
-//                "Bitch Restaurant",
-//                "09/06/2022",
-//                "06:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp1, jp2, jp3, jp4, jp5, jp6))
-//        );
-//
-//        FoodPartyModel fp6 = new FoodPartyModel(
-//                "Ri hack gathering",
-//                "Jit Sin Kia",
-//                "Canteen at Jit Sin High School",
-//                "11/11/2022",
-//                "11:00 p.m.",
-//                new ArrayList<>(Arrays.asList(jp5))
-//        );
+    private void fetchData(ProgressDialog progressDialog, FoodPartyRecyclerViewAdapter adapter) {
+        firestore.collection("foodParties").addSnapshotListener(new EventListener<QuerySnapshot>() { // addSnapshotListener -> will update the recyclerview whenever there is data change in database
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    Log.e("Firestore error", error.getMessage());
+                    return;
+                }
 
-//        foodPartyModels.add(fp1);
-//        foodPartyModels.add(fp2);
-//        foodPartyModels.add(fp3);
-//        foodPartyModels.add(fp4);
-//        foodPartyModels.add(fp5);
-//        foodPartyModels.add(fp6);
-//
-//        for (FoodPartyModel fpm : foodPartyModels) {
-//            System.out.println(fpm.getTitle());
-//        }
-//    }
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        foodPartyModels.add(FoodPartyModel.toObject(dc.getDocument().getData()));
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+                }
+            }
+        });
+    }
 
     @Override
     public void onCardClick(int position) {
