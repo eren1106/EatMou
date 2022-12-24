@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import com.example.eatmou.FoodParty.FoodPartyListFragment;
 import com.example.eatmou.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             switch (item.getItemId()){
                 case R.id.party:
-                    selectedFragment = new HomeFragment();
+                    selectedFragment = new FoodPartyListFragment();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             return true;
