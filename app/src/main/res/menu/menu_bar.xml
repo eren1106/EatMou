@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/party"
+        android:title="@string/Party"
+        android:icon="@drawable/party_icon"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/restaurant"
+        android:title="@string/Restaurant"
+        android:icon="@drawable/restaurant_icon"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/placeHolder"
+        android:title=""/>
+    <item
+        android:id="@+id/manage"
+        android:title="@string/Manage"
+        android:icon="@drawable/party_manage_icon"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/profile"
+        android:title="@string/Profile"
+        android:icon="@drawable/profile_icon"
+        app:showAsAction="always"/>
+</menu>
