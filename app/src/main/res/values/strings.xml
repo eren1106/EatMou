@@ -5,4 +5,17 @@
     <string name="Manage">Manage</string>
     <string name="Profile">Profile</string>
     <string name="invite_title">Invite Galileo Galilei</string>
+    <string name="received">Received</string>
+    <string name="sent">Sent</string>
+    <string name="matched">Matched</string>
+    <string name="received_invitations">Received Invitations</string>
+    <string name="sort">Sort</string>
+    <string name="sent_invitations">Sent Invitations</string>
+    <string name="matched_history">Matched History</string>
+    <string name="no_data">No Data</string>
+    <string name="oh_no_no_invitation_received">Oh no! No invitation received.</string>
+    <string name="oops_you_haven_t_sent_any_invitations">Oops! You haven\'t sent any invitations.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inbox">Inbox</string>
 </resources>
