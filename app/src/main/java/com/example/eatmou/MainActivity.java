@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Fragment fragment = new FoodPartyListFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.mainContainer, fragment).commit();
+                fragmentTransaction.replace(R.id.MainContainer, fragment).commit();
             }
         });
     }

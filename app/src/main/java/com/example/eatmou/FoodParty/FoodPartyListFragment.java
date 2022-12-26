@@ -109,6 +109,9 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
                     if (dc.getType() == DocumentChange.Type.ADDED) {
                         foodPartyModels.add(FoodPartyModel.toObject(dc.getDocument().getData()));
                     }
+//                    else if(dc.getType() == DocumentChange.Type.REMOVED) {
+//                        foodPartyModels.remove(FoodPartyModel.toObject(dc.getDocument().getData()));
+//                    }
 
                     adapter.notifyDataSetChanged();
                     if(progressDialog.isShowing())
@@ -123,6 +126,9 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
         setupToggleButton(view);
 
+//        if(foodPartyModels.size() == 0 && progressDialog.isShowing())
+//            progressDialog.dismiss();
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -133,7 +139,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
             listenerRegistration.remove();
         }
         if(showMine) {
-            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", "myid").addSnapshotListener(eventListener);
+            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", "temp").addSnapshotListener(eventListener);
         }
         else {
             listenerRegistration = firestore.collection("foodParties").addSnapshotListener(eventListener);

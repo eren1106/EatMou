@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,12 +38,20 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
 
     @Override
     public void onBindViewHolder(@NonNull FoodPartyRecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.title.setText(foodPartyModels.get(position).getTitle());
-        holder.organizer.setText(foodPartyModels.get(position).getOrganiserId());
-        holder.location.setText(foodPartyModels.get(position).getLocation());
-        holder.date.setText(foodPartyModels.get(position).getDateText());
-        holder.time.setText(foodPartyModels.get(position).getStartTimeText() + " - " + foodPartyModels.get(position).getEndTimeText());
-        holder.personNumber.setText(foodPartyModels.get(position).getJoinedPersons().size() + "/9");
+        FoodPartyModel fpm = foodPartyModels.get(position);
+        holder.title.setText(fpm.getTitle());
+        holder.organizer.setText(fpm.getOrganiserId());
+        holder.location.setText(fpm.getLocation());
+        holder.date.setText(fpm.getDateText());
+        holder.time.setText(fpm.getStartTimeText() + " - " + fpm.getEndTimeText());
+        holder.personNumber.setText(fpm.getJoinedPersons().size() + "/9");
+
+        if(fpm.getOrganiserId().equals("myid")) {
+            holder.cardBtn.setText("Manage");
+        }
+        else{
+            holder.cardBtn.setText("Join");
+        }
     }
 
     @Override
@@ -55,6 +64,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         // kinda like in onCreate method
 
         TextView title, organizer, location, date, time, personNumber;
+        Button cardBtn;
         OnCardListener onCardListener;
 
         public MyViewHolder(@NonNull View itemView, OnCardListener onCardListener) {
@@ -66,6 +76,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
             date = itemView.findViewById(R.id.TV_DateText);
             time = itemView.findViewById(R.id.TV_TimeText);
             personNumber = itemView.findViewById(R.id.TV_JoinedPersonNumber);
+            cardBtn = itemView.findViewById(R.id.B_CardBtn);
 
             this.onCardListener = onCardListener;
 

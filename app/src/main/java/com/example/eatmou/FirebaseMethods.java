@@ -36,36 +36,20 @@ public class FirebaseMethods {
         FoodPartyModel fpm = new FoodPartyModel(id, title, organiserId, location, date, startTime, endTime, 9, new ArrayList<>(Arrays.asList()));
         Map<String, Object> foodParty = fpm.toMap();
 
-        firestore.collection("foodParties").add(foodParty).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        firestore.collection("foodParties").document(id).set(foodParty);
+    }
+
+    public void deleteFoodParty(String foodPartyId) {
+        firestore.collection("foodParties").document(foodPartyId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                System.out.println("Added Food Party");
+            public void onSuccess(Void unused) {
+                Log.i("Food Party Deleted", "Food Party Deleted");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                System.out.println("Fail to add Food Party");
+                Log.e("Delete Food Party Error", e.toString());
             }
         });
     }
-
-//    public ArrayList<FoodPartyModel> getAllFoodParties() {
-//        ArrayList<FoodPartyModel> res = new ArrayList<>();
-//        firestore.collection("foodParties").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        FoodPartyModel foodPartyModel = FoodPartyModel.toObject(document.getData());
-//                        res.add(foodPartyModel);
-//                    }
-//                }
-//                else {
-//                    System.out.println("Error");
-//                }
-//            }
-//        });
-//
-//        return res;
-//    }
 }
