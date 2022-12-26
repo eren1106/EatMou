@@ -15,6 +15,8 @@ import com.example.eatmou.Authentication.ForgotPassPage;
 import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.Authentication.SignUpPage;
 import com.example.eatmou.Authentication.UpdatePassPage;
+import com.example.eatmou.ProfilePage.ProfilePage;
+import com.example.eatmou.ProfilePage.ProfilePageFrame;
 import com.example.eatmou.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.party:
                     selectedFragment = new HomeFragment();
+
+                case R.id.profile:
+                    selectedFragment = new ProfilePageFrame();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             return true;
