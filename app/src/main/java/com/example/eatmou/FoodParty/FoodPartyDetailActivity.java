@@ -21,7 +21,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
 
     TextView title, organizer, location, date, time, joinedPersonNumber;
     ImageButton backBtn;
-    Button deleteBtn;
+    Button deleteBtn, bottomBtn;
 
     FoodPartyModel foodPartyModel;
     FirebaseMethods firebaseMethods;
@@ -41,6 +41,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         backBtn = findViewById(R.id.B_BackBtn);
         joinedPersonNumber = findViewById(R.id.TV_JoinedPersonNumber);
         deleteBtn = findViewById(R.id.B_Delete);
+        bottomBtn = findViewById(R.id.B_BottomBtn);
 
         foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject"); //get data pass from previous activity/fragment
 
@@ -68,6 +69,8 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
             }
         });
 
+        setBottomBtn();
+
         RecyclerView recyclerView = findViewById(R.id.RV_PersonList);
         JoinedPersonRecyclerViewAdapter adapter = new JoinedPersonRecyclerViewAdapter(this, foodPartyModel.getJoinedPersons());
         recyclerView.setAdapter(adapter);
@@ -81,5 +84,27 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         else{
             deleteBtn.setVisibility(View.GONE);
         }
+    }
+
+    private void setBottomBtn() {
+        if(foodPartyModel.getOrganiserId().equals("myid")) {
+            bottomBtn.setText("Manage");
+            bottomBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // navigate to create page
+                }
+            });
+        }
+        else{
+            bottomBtn.setText("Join");
+            bottomBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // join food party
+                }
+            });
+        }
+
     }
 }
