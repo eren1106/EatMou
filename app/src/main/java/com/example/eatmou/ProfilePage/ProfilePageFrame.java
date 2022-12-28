@@ -18,15 +18,9 @@ import com.example.eatmou.R;
 
 public class ProfilePageFrame extends Fragment {
 
-
-    Button editProfileFragmentBtn, managePwFragmentBtn, settingsFragmentBtn;
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -40,17 +34,9 @@ public class ProfilePageFrame extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        editProfileFragmentBtn = view.findViewById(R.id.editProfileBtn);
-        managePwFragmentBtn = view.findViewById(R.id.manage_pw_btn);
-        settingsFragmentBtn = view.findViewById(R.id.settings_btn);
+
 
         replaceFragment(new ProfilePage());
-
-
-        editProfileFragmentBtn.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
-
-//        getParentFragmentManager().beginTransaction().replace(R.id.frameLayout, new EditProfileFragment()).commit();
-
     }
 
     private void replaceFragment(Fragment fragment){
@@ -59,4 +45,5 @@ public class ProfilePageFrame extends Fragment {
         fragmentTransaction.replace(R.id.profilePageFrame, fragment);
         fragmentTransaction.commit();
     }
+
 }

@@ -102,22 +102,20 @@
                         android:layout_marginRight="190dp">
                     </TextView>
 
-
-
                 </LinearLayout>
-
-                <EditText
-                    android:layout_width="375dp"
-                    android:layout_height="40sp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/inputbg"
-                    android:elevation="3sp"
-                    android:inputType="date"
-                    android:maxLines="1"
-                    android:paddingStart="20sp"
-                    android:paddingEnd="20sp">
-                </EditText>
-
+                    <EditText
+                        android:id="@+id/date"
+                        android:layout_width="375dp"
+                        android:layout_height="40sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/inputbg"
+                        android:elevation="3sp"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:paddingStart="20sp"
+                        android:paddingEnd="20sp"
+                        android:drawableEnd="@drawable/calendar">
+                    </EditText>
 
             </LinearLayout>
 
@@ -145,12 +143,13 @@
 
                 </LinearLayout>
 
+
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_img"
+                    android:id="@+id/editProfileImg"
                     android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:src="@drawable/mikami_profile"
                     android:layout_gravity="center"
+                    android:src="@drawable/mikami_profile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -181,15 +180,14 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/bg_img"
+                <ImageButton
+                    android:id="@+id/editBgImg"
                     android:layout_width="375dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="center"
                     android:src="@drawable/mikami_bg"
-                    app:layout_constraintTop_toBottomOf="@id/profile_title"
                     tools:layout_editor_absoluteX="0dp" />
             </LinearLayout>
 
