@@ -119,6 +119,16 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
                             }
                         }
                     }
+                    else if(dc.getType() == DocumentChange.Type.MODIFIED) {
+                        FoodPartyModel temp = FoodPartyModel.toObject(dc.getDocument().getData());
+
+                        for(int i = 0; i<foodPartyModels.size(); i++) {
+                            if(foodPartyModels.get(i).getId().equals(temp.getId())){
+                                foodPartyModels.set(i, temp);
+                                break;
+                            }
+                        }
+                    }
 
                     adapter.notifyDataSetChanged();
                     if(progressDialog.isShowing())

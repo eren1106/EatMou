@@ -1,9 +1,11 @@
 package com.example.eatmou.FoodParty;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,8 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
     FoodPartyModel foodPartyModel;
     FirebaseMethods firebaseMethods;
 
+    int RESULT_OK = 6969;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +49,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
 
         foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject"); //get data pass from previous activity/fragment
 
-        title.setText(foodPartyModel.getTitle());
-        organizer.setText(foodPartyModel.getOrganiserId());
-        location.setText(foodPartyModel.getLocation());
-        date.setText(foodPartyModel.getDateText());
-        time.setText(foodPartyModel.getStartTimeText() + " - " + foodPartyModel.getEndTimeText());
-        joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/9");
+        setData();
 
         setDeleteBtnVisibility();
 
@@ -92,7 +91,10 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
             bottomBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // navigate to create page
+                    Intent intent = new Intent(FoodPartyDetailActivity.this, CreateFoodPartyActivity.class);
+                    intent.putExtra("FoodPartyObject", foodPartyModel);
+                    startActivityForResult(intent, 1);
+//                    FoodPartyDetailActivity.this.startActivity(intent);
                 }
             });
         }
@@ -106,5 +108,26 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
             });
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                foodPartyModel = (FoodPartyModel) data.getSerializableExtra("UpdatedFoodPartyObject");
+                setData();
+            }
+        }
+    }
+
+    private void setData() {
+        title.setText(foodPartyModel.getTitle());
+        organizer.setText(foodPartyModel.getOrganiserId());
+        location.setText(foodPartyModel.getLocation());
+        date.setText(foodPartyModel.getDateText());
+        time.setText(foodPartyModel.getStartTimeText() + " - " + foodPartyModel.getEndTimeText());
+        joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/9");
     }
 }

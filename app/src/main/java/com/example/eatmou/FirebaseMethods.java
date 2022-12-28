@@ -52,4 +52,11 @@ public class FirebaseMethods {
             }
         });
     }
+
+    public void updateFoodParty(FoodPartyModel foodPartyModel) {
+        String id = foodPartyModel.getId();
+        Map<String, Object> foodParty = foodPartyModel.toMap();
+
+        firestore.collection("foodParties").document(id).set(foodParty);
+    }
 }

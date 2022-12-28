@@ -1,6 +1,7 @@
 package com.example.eatmou.FoodParty;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,16 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
 
         if(fpm.getOrganiserId().equals("myid")) {
             holder.cardBtn.setText("Manage");
+            holder.cardBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, CreateFoodPartyActivity.class);
+                    intent.putExtra("FoodPartyObject", foodPartyModels.get(position));
+                    // extras
+                    context.startActivity(intent);
+                }
+            });
         }
         else{
             holder.cardBtn.setText("Join");

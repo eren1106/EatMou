@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,12 +34,13 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
 
     TextView tvDate;
     Date date = new Date();
-    DatePickerDialog.OnDateSetListener setListener;
 
     TextView tvStartTime;
     TextView tvEndTime;
     Date startTime = new Date();
     Date endTime = new Date();
+
+    int RESULT_OK = 6969;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +60,13 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
             }
         });
 
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //create food party logic
-                FirebaseMethods firebaseMethods = new FirebaseMethods();
-                Date dt = new Date();
-                firebaseMethods.addFoodParty(etTitle.getText().toString(), "myid", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
-
-                finish();
-            }
-        });
-
         tvDate = findViewById(R.id.TV_Date);
         setupDatePicker(tvDate);
 
         tvStartTime = findViewById(R.id.TV_StartTime);
         tvEndTime = findViewById(R.id.TV_EndTime);
 
+        setupCreateManage();
         setupTimePicker(tvStartTime, "startTime");
         setupTimePicker(tvEndTime, "endTime");
     }
@@ -147,5 +138,57 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+    }
+
+    private void setupCreateManage() {
+        FirebaseMethods firebaseMethods = new FirebaseMethods();
+        FoodPartyModel foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject");
+
+        if(foodPartyModel == null) {
+            createBtn.setText("Create");
+
+            createBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //create food party logic
+                    firebaseMethods.addFoodParty(etTitle.getText().toString(), "myid", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
+
+                    finish();
+                }
+            });
+        }
+        else {
+            createBtn.setText("Update");
+
+            etTitle.setText(foodPartyModel.getTitle());
+            etLocation.setText(foodPartyModel.getLocation());
+            etMaxPerson.setText(Integer.toString(foodPartyModel.getMaxParticipant()));
+            tvDate.setText(foodPartyModel.getDateText());
+            tvStartTime.setText(foodPartyModel.getStartTimeText());
+            tvEndTime.setText(foodPartyModel.getEndTimeText());
+
+            createBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FoodPartyModel updated = new FoodPartyModel(
+                            foodPartyModel.getId(),
+                            etTitle.getText().toString(),
+                            foodPartyModel.getOrganiserId(),
+                            etLocation.getText().toString(),
+                            date,
+                            startTime,
+                            endTime,
+                            Integer.parseInt(etMaxPerson.getText().toString()),
+                            foodPartyModel.getJoinedPersons()
+                    );
+                    firebaseMethods.updateFoodParty(updated);
+
+                    Intent intent = new Intent();
+                    intent.putExtra("UpdatedFoodPartyObject", updated);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+        }
     }
 }
