@@ -180,7 +180,7 @@
 
                 </LinearLayout>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/editBgImg"
                     android:layout_width="375dp"
                     android:layout_height="200dp"

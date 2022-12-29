@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.example.eatmou.HomePage.MainActivity;
 import com.example.eatmou.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Request;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -46,10 +48,8 @@ public class EditProfileFragment extends Fragment {
     EditText date;
     DatePickerDialog datePickerDialog;
     CircleImageView editProfileImg;
-    ImageButton editBgImg;
-    public static int RESULT_LOAD_IMAGE = 1;
+    ImageView editBgImg;
     ImageView backBtn;
-    Context context = getContext();
     private Uri mImageUri;
 
     @Override
@@ -63,6 +63,7 @@ public class EditProfileFragment extends Fragment {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // calender class's instance and get current date , month and year from calender
                 final Calendar c = Calendar.getInstance();
                 int mYear = c.get(Calendar.YEAR); // current year
@@ -83,8 +84,6 @@ public class EditProfileFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
-
     }
 
 
@@ -109,18 +108,6 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-//        view.findViewById(R.id.editProfileImg).setOnClickListener(view1 -> {
-//            if(ActivityCompat.checkSelfPermission(getActivity(),
-//                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-//            {
-//                requestPermissions(
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                        2000);
-//            }
-//            else {
-//                startGallery();
-//            }
-//        });
        return view;
     }
 
@@ -129,14 +116,15 @@ public class EditProfileFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        getParentFragment().startActivityForResult(intent, 111);
+
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == 1888 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
             Picasso.get().load(mImageUri).into(editBgImg);
@@ -167,6 +155,4 @@ public class EditProfileFragment extends Fragment {
 //            }
 //        }
 //    }
-
-
 }

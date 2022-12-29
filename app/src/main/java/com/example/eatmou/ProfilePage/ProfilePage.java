@@ -1,5 +1,6 @@
 package com.example.eatmou.ProfilePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ public class ProfilePage extends Fragment {
 
     Button editProfileFragmentBtn, managePwFragmentBtn, settingsFragmentBtn;
     View view;
+
+
 
 
     @Override
@@ -42,10 +45,6 @@ public class ProfilePage extends Fragment {
         managePwFragmentBtn = view.findViewById(R.id.manage_pw_btn);
         settingsFragmentBtn = view.findViewById(R.id.settings_btn);
 
-//        replaceFragment(new ProfilePage());
-
-//        getParentFragmentManager().beginTransaction().replace(R.id.frameLayout, new ProfilePage()).commit();
-
         editProfileFragmentBtn.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
 
     }
@@ -57,6 +56,11 @@ public class ProfilePage extends Fragment {
         fragmentTransaction.commit();
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
 
