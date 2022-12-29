@@ -116,7 +116,7 @@ public class EditProfileFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        getParentFragment().startActivityForResult(intent, 111);
+        startActivityForResult(intent, 111);
 
     }
 
