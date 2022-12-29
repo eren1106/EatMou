@@ -18,11 +18,8 @@ import com.example.eatmou.R;
 
 public class ProfilePage extends Fragment {
 
-    Button editProfileFragmentBtn, managePwFragmentBtn, settingsFragmentBtn;
+    Button btnEditProfileFragment, btnManagePwFragment, btnSettingsFragment;
     View view;
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,12 +38,12 @@ public class ProfilePage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        editProfileFragmentBtn = view.findViewById(R.id.editProfileBtn);
-        managePwFragmentBtn = view.findViewById(R.id.manage_pw_btn);
-        settingsFragmentBtn = view.findViewById(R.id.settings_btn);
+        btnEditProfileFragment = view.findViewById(R.id.btnEditProfile);
+        btnManagePwFragment = view.findViewById(R.id.btnManagePw);
+        btnSettingsFragment = view.findViewById(R.id.btnSettings);
 
-        editProfileFragmentBtn.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
-
+        btnEditProfileFragment.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
+        btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
     }
 
     private void replaceFragment(Fragment fragment){

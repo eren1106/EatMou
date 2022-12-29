@@ -86,7 +86,7 @@
                     app:layout_constraintRight_toRightOf="parent"/>
 
                 <Button
-                    android:id="@+id/editProfileBtn"
+                    android:id="@+id/btnEditProfile"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:text="Edit Profile"
@@ -95,20 +95,20 @@
                     app:layout_constraintRight_toRightOf="parent"/>
 
                 <Button
-                    android:id="@+id/manage_pw_btn"
+                    android:id="@+id/btnManagePw"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:text="Manage Password"
-                    app:layout_constraintTop_toBottomOf="@id/editProfileBtn"
+                    app:layout_constraintTop_toBottomOf="@id/btnEditProfile"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"/>
 
                 <Button
-                    android:id="@+id/settings_btn"
+                    android:id="@+id/btnSettings"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:text="Settings"
-                    app:layout_constraintTop_toBottomOf="@id/manage_pw_btn"
+                    app:layout_constraintTop_toBottomOf="@id/btnManagePw"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>

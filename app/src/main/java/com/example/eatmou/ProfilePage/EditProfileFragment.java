@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -57,6 +59,10 @@ public class EditProfileFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+
+        backBtn = view.findViewById(R.id.back_BtnEditProfile);
+        backBtn.setOnClickListener(v -> replaceFragment(new ProfilePage()));
+
         // {Date Picker} initiate the date picker and a button
         date = (EditText) view.findViewById(R.id.date);
         // perform click event on edit text
@@ -92,15 +98,6 @@ public class EditProfileFragment extends Fragment {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        backBtn = view.findViewById(R.id.back_Btn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();
-            }
-        });
-
         view.findViewById(R.id.editBgImg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +126,14 @@ public class EditProfileFragment extends Fragment {
 
             Picasso.get().load(mImageUri).into(editBgImg);
         }
+    }
+
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.profilePageFrame, fragment);
+        fragmentTransaction.commit();
     }
 
 //    private void startGallery() {
