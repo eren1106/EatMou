@@ -1,4 +1,4 @@
-package com.example.eatmou.Authentication;
+package com.example.eatmou.ui.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.eatmou.HomePage.MainActivity;
+import com.example.eatmou.ui.homePage.MainActivity;
 import com.example.eatmou.R;
 
 public class SignUpPage extends AppCompatActivity {

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Eatmou"
         tools:targetApi="31">
         <activity
-            android:name=".HomePage.MainActivity"
+            android:name=".ui.homePage.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -25,42 +25,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Authentication.UpdatePassPage"
+            android:name=".ui.Authentication.UpdatePassPage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Authentication.ForgotPassPage"
+            android:name=".ui.Authentication.ForgotPassPage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Authentication.LoginPage"
+            android:name=".ui.Authentication.LoginPage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Authentication.SignUpPage"
+            android:name=".ui.Authentication.SignUpPage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".FoodParty.FoodPartyDetailActivity"
+            android:name=".ui.FoodParty.FoodPartyDetailActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".FoodParty.CreateFoodPartyActivity"
+            android:name=".ui.FoodParty.CreateFoodPartyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

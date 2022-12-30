@@ -1,4 +1,4 @@
-package com.example.eatmou.FoodParty;
+package com.example.eatmou.ui.FoodParty;
 
 import android.content.Intent;
 import android.os.Bundle;

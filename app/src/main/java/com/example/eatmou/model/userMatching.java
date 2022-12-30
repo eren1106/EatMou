@@ -1,4 +1,4 @@
-package com.example.eatmou.data;
+package com.example.eatmou.model;
 
 public class userMatching {
     private String name;

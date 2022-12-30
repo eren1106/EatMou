@@ -1,4 +1,4 @@
-package com.example.eatmou.HomePage.InviteDialog;
+package com.example.eatmou.ui.homePage.InviteDialog;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;

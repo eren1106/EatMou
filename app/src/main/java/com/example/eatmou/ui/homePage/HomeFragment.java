@@ -1,4 +1,4 @@
-package com.example.eatmou.HomePage;
+package com.example.eatmou.ui.homePage;
 
 import android.os.Bundle;
 
@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eatmou.HomePage.userMatching.userMatchingAdapter;
+import com.example.eatmou.ui.homePage.userMatching.userMatchingAdapter;
 import com.example.eatmou.R;
-import com.example.eatmou.data.userMatching;
+import com.example.eatmou.model.userMatching;
 
 import java.util.ArrayList;
 import java.util.List;

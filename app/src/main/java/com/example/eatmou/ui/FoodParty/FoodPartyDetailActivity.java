@@ -1,4 +1,4 @@
-package com.example.eatmou.FoodParty;
+package com.example.eatmou.ui.FoodParty;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

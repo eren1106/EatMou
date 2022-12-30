@@ -1,19 +1,18 @@
-package com.example.eatmou.HomePage.userMatching;
+package com.example.eatmou.ui.homePage.userMatching;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.eatmou.HomePage.InviteDialog.InviteDialog;
-import com.example.eatmou.HomePage.MainActivity;
+import com.example.eatmou.ui.homePage.InviteDialog.InviteDialog;
+import com.example.eatmou.ui.homePage.MainActivity;
 import com.example.eatmou.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

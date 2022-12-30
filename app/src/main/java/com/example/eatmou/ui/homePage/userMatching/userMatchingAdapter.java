@@ -1,4 +1,4 @@
-package com.example.eatmou.HomePage.userMatching;
+package com.example.eatmou.ui.homePage.userMatching;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.R;
-import com.example.eatmou.data.userMatching;
+import com.example.eatmou.model.userMatching;
 
 import java.util.List;
 
