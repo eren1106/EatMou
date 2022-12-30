@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/CLAbout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:nestedScrollingEnabled="true"
+        tools:context=".Restaurant.AboutFragment">
+
+        <TextView
+            android:id="@+id/restaurantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="4dp"
+            android:text="Blink Blink Restaurant"
+            android:textColor="@color/BLACK"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/categoryTitle"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="4dp"
+            android:text="@string/category"
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/restaurantName" />
+
+        <TextView
+            android:id="@+id/restaurantCategory"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="4dp"
+            android:text="Blink Blink Restaurant, 16A, Gulu Gulu Street, Blink Blink Beach, Pacific Ocean."
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/categoryTitle"
+            app:layout_constraintTop_toBottomOf="@id/restaurantName" />
+
+        <TextView
+            android:id="@+id/locationTitle"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="4dp"
+            android:text="@string/location"
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/restaurantCategory" />
+
+        <TextView
+            android:id="@+id/restaurantLocation"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="4dp"
+            android:text="Blink Blink Restaurant, 16A, Gulu Gulu Street, Blink Blink Beach, Pacific Ocean."
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/locationTitle"
+            app:layout_constraintTop_toBottomOf="@id/restaurantCategory" />
+
+        <TextView
+            android:id="@+id/openingHoursTitle"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="4dp"
+            android:text="Opening Hours:"
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/restaurantLocation" />
+
+        <TextView
+            android:id="@+id/restaurantOpeningHours"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="4dp"
+            android:text="Blink Blink Restaurant, 16A, Gulu Gulu Street, Blink Blink Beach, Pacific Ocean."
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/openingHoursTitle"
+            app:layout_constraintTop_toBottomOf="@id/restaurantLocation" />
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="4dp"
+            android:text="Description:"
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/restaurantOpeningHours" />
+
+        <TextView
+            android:id="@+id/restaurantDescription"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="4dp"
+            android:text="Blink Blink Restaurant, 16A, Gulu Gulu Street, Blink Blink Beach, Pacific Ocean."
+            android:textColor="#404040"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/descriptionTitle"
+            app:layout_constraintTop_toBottomOf="@id/restaurantOpeningHours" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

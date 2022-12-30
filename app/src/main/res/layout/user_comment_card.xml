@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:id="@+id/commentRL"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userProfileImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="4dp"
+            android:src="@drawable/eren" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/userProfileImage"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/userRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@id/username"
+            android:drawableEnd="@drawable/star"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/commentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="4dp"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/commentContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/userProfileImage"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

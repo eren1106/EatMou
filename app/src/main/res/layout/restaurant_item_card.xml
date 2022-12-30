@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Hardcoded Image -->
+        <ImageView
+            android:id="@+id/restaurantImage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/samanja" />
+
+        <TextView
+            android:id="@+id/restaurantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/restaurantImage"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/restaurantRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/restaurantName"
+            android:layout_alignStart="@+id/restaurantName"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textAlignment="gravity"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/star" />
+
+        <TextView
+            android:id="@+id/restaurantStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/restaurantName"
+            android:layout_alignEnd="@+id/restaurantName"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/open_status"
+            android:textAlignment="viewEnd"
+            android:textColor="#00D408"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/restaurantCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantStatus"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/restaurant_category_icon" />
+
+
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
