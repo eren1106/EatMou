@@ -14,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.eatmou.Authentication.LoginPage;
 import com.example.eatmou.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -143,8 +146,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
         setupToggleButton(view);
 
-//        if(foodPartyModels.size() == 0 && progressDialog.isShowing())
-//            progressDialog.dismiss();
+        setupLogout(view);
 
         // Inflate the layout for this fragment
         return view;
@@ -198,11 +200,16 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         startActivity(intent);
     }
 
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(listenerRegistration != null) {
-//            listenerRegistration.remove(); // if no remove, it will still run when your app is closed
-//        }
-//    }
+    private void setupLogout(View view) {
+        TextView tvTitle = view.findViewById(R.id.PageTitle);
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), LoginPage.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+    }
 }
