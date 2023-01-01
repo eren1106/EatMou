@@ -1,4 +1,4 @@
-package com.example.eatmou.FoodParty;
+package com.example.eatmou.ui.FoodParty;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

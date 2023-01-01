@@ -1,12 +1,6 @@
 package com.example.eatmou;
 
-import com.example.eatmou.FoodParty.FoodPartyModel;
-import com.example.eatmou.FoodParty.JoinedPersonModel;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.Blob;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
