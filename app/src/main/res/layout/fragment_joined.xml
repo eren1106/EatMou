@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Inbox.matched.MatchedFragment">
+    tools:context=".Inbox.joined.JoinedFragment">
 
     <TextView
         android:id="@+id/fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:text="@string/matched_history"
+        android:text="@string/joined_invitations"
         android:textStyle="bold"
         android:paddingStart="36sp"
         android:paddingEnd="36sp"
@@ -31,12 +31,10 @@
         android:contentDescription="@string/sort" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/matchedRecyclerView"
+        android:id="@+id/joinedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8sp"
         android:layout_marginTop="8sp"
-        android:layout_marginEnd="8sp"
         android:layout_marginBottom="8sp"
         android:paddingStart="16sp"
         android:paddingEnd="16sp"
@@ -45,7 +43,7 @@
 
     <include
         android:id="@+id/empty_view"
-        layout="@layout/matched_empty_state_layout"
+        layout="@layout/joined_empty_state_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_title"

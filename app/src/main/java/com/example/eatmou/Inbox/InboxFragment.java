@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.eatmou.Inbox.matched.MatchedFragment;
+import com.example.eatmou.Inbox.joined.JoinedFragment;
 import com.example.eatmou.Inbox.received.ReceivedFragment;
 import com.example.eatmou.Inbox.sent.SentFragment;
 import com.example.eatmou.R;
@@ -31,7 +31,6 @@ public class InboxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -46,7 +45,7 @@ public class InboxFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         receivedFrgBtn = view.findViewById(R.id.receivedBtn);
         sentFrgBtn = view.findViewById(R.id.sentBtn);
-        matchedFrgBtn = view.findViewById(R.id.matchedBtn);
+        matchedFrgBtn = view.findViewById(R.id.joinedBtn);
 
         replaceFragment(new ReceivedFragment());
 
@@ -55,7 +54,7 @@ public class InboxFragment extends Fragment {
 
         receivedFrgBtn.setOnClickListener(v -> replaceFragment(new ReceivedFragment()));
         sentFrgBtn.setOnClickListener(v -> replaceFragment(new SentFragment()));
-        matchedFrgBtn.setOnClickListener(v -> replaceFragment(new MatchedFragment()));
+        matchedFrgBtn.setOnClickListener(v -> replaceFragment(new JoinedFragment()));
     }
 
     private void replaceFragment(Fragment fragment) {

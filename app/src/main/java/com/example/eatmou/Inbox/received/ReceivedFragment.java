@@ -1,6 +1,7 @@
 package com.example.eatmou.Inbox.received;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +19,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eatmou.Inbox.EmptyDataObserver;
 import com.example.eatmou.Inbox.Invitation;
 import com.example.eatmou.R;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ReceivedFragment extends Fragment {
 
     private ArrayList<Invitation> invitationList;
     private RecyclerView receivedRecyclerView;
+    private FirebaseFirestore db;
 
     View view;
     ImageButton sort_button;
     RelativeLayout empty_view;
+
+    ReceivedAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +54,9 @@ public class ReceivedFragment extends Fragment {
         empty_view = view.findViewById(R.id.empty_view);
         receivedRecyclerView = view.findViewById(R.id.receivedRecyclerView);
         invitationList = new ArrayList<>();
+        adapter = new ReceivedAdapter(invitationList);
+
+        db = FirebaseFirestore.getInstance();
 
         setInvitationList();
         setAdapter();
@@ -60,7 +70,7 @@ public class ReceivedFragment extends Fragment {
     }
 
     private void setAdapter() {
-        ReceivedAdapter adapter = new ReceivedAdapter(invitationList);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         receivedRecyclerView.setLayoutManager(layoutManager);
         receivedRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -68,14 +78,34 @@ public class ReceivedFragment extends Fragment {
 
         EmptyDataObserver emptyDataObserver = new EmptyDataObserver(empty_view, receivedRecyclerView);
         adapter.registerAdapterDataObserver(emptyDataObserver);
+        adapter.notifyDataSetChanged();
     }
 
     private void setInvitationList() {
+        //to be changed
+        String yourID = "dC8RVWnivbo1v2WvFdyF";
 
-        invitationList.add(new Invitation("You", "Your House", new Date(), new Time(0)));
-        invitationList.add(new Invitation("Adam", "Here", new Date(), new Time(0)));
-        invitationList.add(new Invitation("Bob", "There", new Date(), new Time(0)));
-        invitationList.add(new Invitation("Cris", "Where", new Date(), new Time(0)));
+        db.collection("Invitations")
+                .whereEqualTo("InvitedID", yourID)
+                .whereEqualTo("Status","Pending")
+                .orderBy("Date")
+                .orderBy("StartTime")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null){
+                    Log.e("Firestore error", error.getMessage());
+                    return;
+                }
+                for(DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        invitationList.add(Invitation.toObject(doc.getDocument().getData()));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
     }
 
 }

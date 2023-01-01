@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="20sp"
-    app:cardElevation="5sp"
+    app:cardElevation="8sp"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/vanilla"
     android:backgroundTint="@null">
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:padding="16sp"
-                android:text="Your Mum"
+                android:text="Invited User"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/location"
                 android:padding="16sp"
-                android:text="Your Home"
+                android:text="Restaurant"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
@@ -83,42 +83,88 @@
                 android:layout_below="@id/location"
                 android:layout_toEndOf="@id/date"
                 android:padding="16sp"
-                android:text="Today"
+                android:text="Date"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date"
                 android:padding="16sp"
-                android:text="Date:"
+                android:text="Start Time:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/timeTxt"
+                android:id="@+id/startTimeTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date"
-                android:layout_toEndOf="@id/time"
+                android:layout_toEndOf="@id/startTime"
                 android:padding="16sp"
-                android:text="Now"
+                android:text="Time"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/statusTxt"
+                android:id="@+id/endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/time"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8sp"
+                android:text="End Time:"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:padding="16sp"
-                android:text="Status"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_below="@id/startTime"/>
+
+            <TextView
+                android:id="@+id/endTimeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:padding="16sp"
+                android:layout_toEndOf="@id/endTime"
+                android:layout_below="@id/startTime"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/endTimeTxt"
+                android:gravity="center"
+                android:layout_marginBottom="16sp">
+
+                <TextView
+                    android:id="@+id/statusTxt"
+                    android:layout_width="1sp"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp"
+                    android:text="Status"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="16sp"
+                    android:layout_marginEnd="16sp"/>
+
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="1sp"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp"
+                    android:text="Cancel Invitation"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:backgroundTint="#FF0000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16sp"
+                    android:layout_marginEnd="16sp"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>
