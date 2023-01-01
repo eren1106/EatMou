@@ -20,7 +20,7 @@
             android:fontFamily="@font/poppins_bold"
             android:padding="4dp"
             android:text="Blink Blink Restaurant"
-            android:textColor="@color/BLACK"
+            android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

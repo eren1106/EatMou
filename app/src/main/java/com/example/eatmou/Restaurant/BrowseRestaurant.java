@@ -10,8 +10,6 @@ import android.view.View;
 
 import com.example.eatmou.R;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -45,7 +43,7 @@ public class BrowseRestaurant extends AppCompatActivity {
         categoryFilterRecView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
 
-
+        restaurants = new ArrayList<>();
         restaurants.add(new Restaurant(1, "StarBuck Coffee", 5.0, "Coffee", "KL", "I love bucks", true));
         restaurants.add(new Restaurant(2, "StarBug Coffee", 5.0, "Coffee", "Penang", "I love bugs", false));
         restaurants.add(new Restaurant(3, "StarButt Coffee", 4.0, "Coffee", "KL", "I love butts", true));

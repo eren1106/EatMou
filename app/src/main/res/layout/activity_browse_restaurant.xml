@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Restaurant.BrowseRestaurant">
 
+    <!-- Cibai I forgot to do search bar -->
     <TextView
         android:id="@+id/selectCategory"
         android:layout_width="match_parent"
