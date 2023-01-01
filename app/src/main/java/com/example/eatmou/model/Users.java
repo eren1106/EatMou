@@ -1,67 +1,60 @@
 package com.example.eatmou.model;
 
+import com.google.firebase.Timestamp;
+
 public class Users {
-    private String userID;
-    private String username;
     private String bio;
+    private Timestamp dob;
+    private String email;
     private String location;
-    private String personal_info;
-    private String profile_pic;
+    private String profileBgPicUrl;
+    private String profilePicUrl;
+    private String username;
+    private String userID;
 
-    public Users(String userID, String username, String bio, String location, String personal_info, String profile_pic) {
-        this.userID = userID;
-        this.username = username;
+
+    public Users(){}
+
+    public Users(String bio, Timestamp dob, String email, String location, String profileBgPicUrl, String profilePicUrl, String username, String userID) {
         this.bio = bio;
+        this.dob = dob;
+        this.email = email;
         this.location = location;
-        this.personal_info = personal_info;
-        this.profile_pic = profile_pic;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+        this.profileBgPicUrl = profileBgPicUrl;
+        this.profilePicUrl = profilePicUrl;
         this.username = username;
+        this.userID = userID;
     }
 
     public String getBio() {
         return bio;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public Timestamp getDob() {
+        return dob;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getProfileBgPicUrl() {
+        return profileBgPicUrl;
     }
 
-    public String getPersonal_info() {
-        return personal_info;
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
-    public void setPersonal_info(String personal_info) {
-        this.personal_info = personal_info;
+    public String getUsername() {
+        return username;
     }
 
-    public String getProfile_pic() {
-        return profile_pic;
-    }
-
-    public void setProfile_pic(String profile_pic) {
-        this.profile_pic = profile_pic;
+    public String getUserID() {
+        return userID;
     }
 }

@@ -1,51 +1,120 @@
 package com.example.eatmou.ui.homePage;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.eatmou.ui.homePage.userMatching.userMatchingAdapter;
+import com.bumptech.glide.Glide;
+import com.example.eatmou.model.Users;
+import com.example.eatmou.ui.homePage.userMatching.UserMatchingProfileFragment;
 import com.example.eatmou.R;
-import com.example.eatmou.model.userMatching;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class HomeFragment extends Fragment {
     RecyclerView user_matching_list;
+    FirestoreRecyclerAdapter<Users, UserViewHolder> adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        //List for tester
-        List<userMatching> userMatchingList = new ArrayList<>();
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-        userMatchingList.add(new userMatching("Ernest Henningways", R.drawable.test2));
-
-        //Set up the recycler view
         user_matching_list = view.findViewById(R.id.user_matching_list);
-        userMatchingAdapter userMatchingAdapter = new userMatchingAdapter(getActivity(), userMatchingList);
+
+        //Get data from fireStore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Query
+        Query query = db.collection("users");
+
+        //RecyclerOption
+        FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
+                .setQuery(query, Users.class)
+                        .build();
+
+        adapter = new FirestoreRecyclerAdapter<Users, UserViewHolder>(options) {
+            @NonNull
+            @Override
+            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+                View view = layoutInflater.inflate(R.layout.user_matching_card, parent, false);
+                return new UserViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Users model) {
+                holder.name.setText(model.getUsername());
+                Glide.with(container).load(model.getProfilePicUrl()).into(holder.image);
+            }
+        };
+
+        user_matching_list.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         user_matching_list.setLayoutManager(gridLayoutManager);
-        user_matching_list.setAdapter(userMatchingAdapter);
+        user_matching_list.setAdapter(adapter);
+
+//        Log.d("User document", userMatchingList.get(0).getUsername());
+//        //Set up the recycler view
+//        user_matching_list = view.findViewById(R.id.user_matching_list);
+//        userMatchingAdapter = new userMatchingAdapter(getActivity(), userMatchingList);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+//        user_matching_list.setLayoutManager(gridLayoutManager);
+//        user_matching_list.setAdapter(userMatchingAdapter);
 
         return view;
+    }
+
+    private class UserViewHolder extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView name;
+        ConstraintLayout user_item;
+
+        //Share Preferences
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("SHARED_PREF_USER", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        public UserViewHolder(@NonNull View itemView) {
+            super(itemView);
+            image = itemView.findViewById(R.id.card_image);
+            name = itemView.findViewById(R.id.card_name);
+            user_item = itemView.findViewById(R.id.user_item);
+
+            user_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editor.putString("USERNAME_SHARED_PREF",name.getText().toString());
+                    editor.apply();
+                    Fragment fragment = new UserMatchingProfileFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.frameLayout, fragment).commit();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
 }
