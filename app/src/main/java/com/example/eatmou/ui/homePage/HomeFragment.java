@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class HomeFragment extends Fragment {
             protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Users model) {
                 holder.name.setText(model.getUsername());
                 Glide.with(container).load(model.getProfilePicUrl()).into(holder.image);
+                holder.userIDTitle.setText(model.getUserID());
             }
         };
 
@@ -68,36 +71,32 @@ public class HomeFragment extends Fragment {
         user_matching_list.setLayoutManager(gridLayoutManager);
         user_matching_list.setAdapter(adapter);
 
-//        Log.d("User document", userMatchingList.get(0).getUsername());
-//        //Set up the recycler view
-//        user_matching_list = view.findViewById(R.id.user_matching_list);
-//        userMatchingAdapter = new userMatchingAdapter(getActivity(), userMatchingList);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
-//        user_matching_list.setLayoutManager(gridLayoutManager);
-//        user_matching_list.setAdapter(userMatchingAdapter);
-
         return view;
     }
 
     private class UserViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView name;
+        TextView name, userIDTitle;
         ConstraintLayout user_item;
-
-        //Share Preferences
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("SHARED_PREF_USER", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.card_image);
             name = itemView.findViewById(R.id.card_name);
             user_item = itemView.findViewById(R.id.user_item);
+            userIDTitle = itemView.findViewById(R.id.userIDTile);
 
             user_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    editor.putString("USERNAME_SHARED_PREF",name.getText().toString());
+                    //Share Preferences
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //Set username clicked into the share preference
+                    editor.putString("USERNAME_SHARED_PREF",userIDTitle.getText().toString());
                     editor.apply();
+
+                    //Switch to next fragment
                     Fragment fragment = new UserMatchingProfileFragment();
                     getActivity().getSupportFragmentManager()
                             .beginTransaction().replace(R.id.frameLayout, fragment).commit();
