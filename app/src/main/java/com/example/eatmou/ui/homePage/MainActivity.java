@@ -1,38 +1,40 @@
-package com.example.eatmou.HomePage;
+package com.example.eatmou.ui.homePage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import com.example.eatmou.Authentication.ForgotPassPage;
-import com.example.eatmou.Authentication.LoginPage;
-import com.example.eatmou.Authentication.SignUpPage;
-import com.example.eatmou.Authentication.UpdatePassPage;
-import com.example.eatmou.ProfilePage.ProfilePage;
 import com.example.eatmou.ProfilePage.ProfilePageFrame;
+import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
 import com.example.eatmou.R;
+import com.example.eatmou.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomAppBar bottomBarChart;
     BottomNavigationView bottomBarViewChart;
     FloatingActionButton partyPageBtn;
-
+    public static UserModel user;
+    FirebaseFirestore firestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fetchUser();
 
         //Set the background of bottomAppBar as null
         bottomBarChart = findViewById(R.id.bottomBarChart);
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         //Set the fragment replace layout
         bottomBarViewChart = findViewById(R.id.bottomBarViewChart);
         bottomBarViewChart.setOnNavigationItemSelectedListener(navListener);
-
         //TODO: Disable the default selected item in bottomNavBar
 
         //Default launch matching page
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             }
         });
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,19 +66,41 @@ public class MainActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             switch (item.getItemId()){
                 case R.id.party:
-                    selectedFragment = new HomeFragment();
+                    selectedFragment = new FoodPartyListFragment();
+                    break;
 
                 case R.id.profile:
                     selectedFragment = new ProfilePageFrame();
+                    break;
+                default:
+                    return false;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             return true;
         }
     };
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
+
+    private void fetchUser() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        user = UserModel.toObject(document.getData());
+                        Log.d("USER", user.toString());
+                    } else {
+                        Log.e("USER", "User not exists");
+                    }
+                } else {
+                    Log.e("USER", "User error");
+                }
+            }
+        });
+    }
 }

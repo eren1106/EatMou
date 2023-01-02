@@ -1,4 +1,4 @@
-package com.example.eatmou.Authentication;
+package com.example.eatmou.ui.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.eatmou.HomePage.MainActivity;
+import com.example.eatmou.ui.homePage.MainActivity;
 import com.example.eatmou.R;
 
-public class ForgotPassPage extends AppCompatActivity {
+public class UpdatePassPage extends AppCompatActivity {
+
     ImageView back_home_arrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_pass_page);
+        setContentView(R.layout.activity_update_pass_page);
 
         back_home_arrow = findViewById(R.id.back_home_arrow);
 

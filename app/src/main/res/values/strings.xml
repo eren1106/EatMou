@@ -8,4 +8,6 @@
     <string name="Manage_Password">Manage Password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invite_title">Invite Galileo Galilei</string>
+    <string name="userid">userID</string>
 </resources>
