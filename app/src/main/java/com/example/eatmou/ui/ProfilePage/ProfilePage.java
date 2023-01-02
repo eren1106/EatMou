@@ -1,5 +1,6 @@
-package com.example.eatmou.ProfilePage;
+package com.example.eatmou.ui.ProfilePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,10 @@ import android.widget.Button;
 
 import com.example.eatmou.R;
 
+public class ProfilePage extends Fragment {
 
-public class ProfilePageFrame extends Fragment {
+    Button btnEditProfileFragment, btnManagePwFragment, btnSettingsFragment;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,17 +28,22 @@ public class ProfilePageFrame extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_page_frame, container, false);
+       view = inflater.inflate(R.layout.fragment_profile_page, container, false);
+       return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        btnEditProfileFragment = view.findViewById(R.id.btnEditProfile);
+        btnManagePwFragment = view.findViewById(R.id.btnManagePw);
+        btnSettingsFragment = view.findViewById(R.id.btnSettings);
 
-        replaceFragment(new ProfilePage());
+        btnEditProfileFragment.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
+        btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
     }
 
     private void replaceFragment(Fragment fragment){
@@ -45,4 +53,11 @@ public class ProfilePageFrame extends Fragment {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
+

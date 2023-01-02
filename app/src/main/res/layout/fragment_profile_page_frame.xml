@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilePage.ProfilePageFrame">
+    tools:context=".ui.ProfilePage.ProfilePageFrame">
 
     <FrameLayout
         android:id="@+id/profilePageFrame"

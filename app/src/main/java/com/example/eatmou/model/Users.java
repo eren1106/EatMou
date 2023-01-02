@@ -9,8 +9,8 @@ public class Users {
     private String location;
     private String profileBgPicUrl;
     private String profilePicUrl;
-    private String username;
     private String userID;
+    private String username;
 
 
     public Users(){}

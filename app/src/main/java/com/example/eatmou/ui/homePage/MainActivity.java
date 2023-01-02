@@ -4,12 +4,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
+
 import com.example.eatmou.ui.Inbox.InboxFragment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.eatmou.ProfilePage.ProfilePageFrame;
 import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
+
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
