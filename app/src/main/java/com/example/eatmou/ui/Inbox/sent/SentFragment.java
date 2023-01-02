@@ -57,7 +57,7 @@ public class SentFragment extends Fragment {
         empty_view = view.findViewById(R.id.empty_view);
         sentRecyclerView = view.findViewById(R.id.sentRecyclerView);
         invitationList = new ArrayList<>();
-        adapter = new SentAdapter(invitationList, userID);
+        adapter = new SentAdapter(getContext(), invitationList, userID);
 
         db = FirebaseFirestore.getInstance();
 

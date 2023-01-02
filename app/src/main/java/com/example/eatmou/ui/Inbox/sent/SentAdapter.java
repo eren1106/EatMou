@@ -3,7 +3,10 @@ package com.example.eatmou.ui.Inbox.sent;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
+import com.example.eatmou.ui.homePage.userMatching.UserMatchingProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,13 +36,15 @@ import java.util.ArrayList;
 
 public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> {
 
+    private Context context;
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
     private String userID;
 
-    public SentAdapter(ArrayList<Invitation> invitationList, String userID){
+    public SentAdapter(Context context,ArrayList<Invitation> invitationList, String userID){
         this.invitationList = invitationList;
         this.userID = userID;
+        this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -74,12 +82,16 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 notifyItemChanged(getAdapterPosition());
             });
 
-            usernameTxt.setOnLongClickListener(v -> {
-                Invitation invitation = invitationList.get(getAdapterPosition());
-                String name = invitation.getInvitedID() + "'s ";
-                Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
-                return true;
+            usernameTxt.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Invitation invitation = invitationList.get(getAdapterPosition());
+                    String name = invitation.getInvitedID() + "'s ";
+                    Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
             });
+
             cancelBtn.setOnClickListener( v -> new AlertDialog.Builder(view.getContext())
                     .setTitle("Cancel Invitation")
                     .setMessage("Are you sure you want to cancel this invitation?\nThis action cannot be undone!")

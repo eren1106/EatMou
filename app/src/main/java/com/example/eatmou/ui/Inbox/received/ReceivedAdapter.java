@@ -3,6 +3,9 @@ package com.example.eatmou.ui.Inbox.received;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
+import com.example.eatmou.ui.homePage.userMatching.UserMatchingProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -114,12 +120,16 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                         .show();
             });
 
-            usernameTxt.setOnLongClickListener(v -> {
-                Invitation invitation = invitationList.get(getAdapterPosition());
-                String name = invitation.getInvitedID() + "'s ";
-                Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
-                return true;
+            usernameTxt.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Invitation invitation = invitationList.get(getAdapterPosition());
+                    String name = invitation.getInvitedID() + "'s ";
+                    Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
             });
+
         }
     }
 
