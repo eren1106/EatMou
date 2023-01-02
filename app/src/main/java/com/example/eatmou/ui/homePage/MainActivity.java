@@ -1,16 +1,14 @@
 package com.example.eatmou.ui.homePage;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.example.eatmou.ui.Inbox.InboxFragment;
-
 import android.util.Log;
 import android.view.MenuItem;
-
+import android.view.View;
+import com.example.eatmou.ProfilePage.ProfilePageFrame;
 import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
@@ -53,9 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Click to launch Matching page
         partyPageBtn = findViewById(R.id.partyPageBtn);
-        partyPageBtn.setOnClickListener(view -> {
-            Fragment selectedFragment1 = new HomeFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment1).commit();
+        partyPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment selectedFragment = new HomeFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
+            }
         });
 
     }
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.inbox:
                     selectedFragment = new InboxFragment();
+                    break;
+                case R.id.profile:
+                    selectedFragment = new ProfilePageFrame();
                     break;
                 default:
                     return false;
