@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication.LoginPage">
+    tools:context=".ui.Authentication.LoginPage">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -132,10 +132,11 @@
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:background="@drawable/inputbg"
-            android:elevation="3sp" />
+            android:elevation="3sp"
+            />
 
         <Button
             android:id="@+id/loginBtn"
@@ -148,6 +149,12 @@
             android:layout_marginTop="40sp"
             android:layout_marginBottom="20sp"
             android:background="@drawable/submitbtnbg"/>
+
+        <TextView
+            android:id="@+id/TV_ToSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up" />
 
     </LinearLayout>
 

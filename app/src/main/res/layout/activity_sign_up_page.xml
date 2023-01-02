@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication.SignUpPage">
+    tools:context=".ui.Authentication.SignUpPage">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -14,6 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/back_home_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_margin="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/whitebg"
@@ -99,6 +108,7 @@
             android:layout_gravity="center"
             android:inputType="text"
             android:maxLines="1"
+            android:ellipsize="end"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
 
@@ -121,6 +131,7 @@
             android:layout_gravity="center"
             android:inputType="text"
             android:maxLines="1"
+            android:ellipsize="end"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
 
@@ -141,8 +152,9 @@
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1"
+            android:ellipsize="end"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
 
@@ -164,8 +176,9 @@
             android:paddingStart="20sp"
             android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1"
+            android:ellipsize="end"
             android:background="@drawable/inputbg"
             android:elevation="3sp" />
 

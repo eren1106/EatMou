@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication.UpdatePassPage">
+    tools:context=".ui.Authentication.UpdatePassPage">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -14,6 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/back_home_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/whitebg"
@@ -40,8 +49,8 @@
         android:id="@+id/textView"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:text="EATMOU"
         android:gravity="center"
+        android:text="EATMOU"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -53,9 +62,9 @@
         android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:text="WHERE FOOD'S ALIVE"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="10sp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -93,14 +102,14 @@
             android:id="@+id/newPass"
             android:layout_width="match_parent"
             android:layout_height="40sp"
-            android:layout_marginTop="10sp"
-            android:paddingStart="20sp"
-            android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
-            android:maxLines="1"
+            android:layout_marginTop="10sp"
             android:background="@drawable/inputbg"
-            android:elevation="3sp" />
+            android:elevation="3sp"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -115,26 +124,26 @@
             android:id="@+id/newConfirmPass"
             android:layout_width="match_parent"
             android:layout_height="40sp"
-            android:layout_marginTop="10sp"
-            android:paddingStart="20sp"
-            android:paddingEnd="20sp"
             android:layout_gravity="center"
-            android:inputType="text"
-            android:maxLines="1"
+            android:layout_marginTop="10sp"
             android:background="@drawable/inputbg"
-            android:elevation="3sp" />
+            android:elevation="3sp"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp" />
 
         <Button
             android:id="@+id/newPassSubmitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="continue"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:elevation="3sp"
             android:layout_marginTop="40sp"
             android:layout_marginBottom="20sp"
-            android:background="@drawable/submitbtnbg"/>
+            android:background="@drawable/submitbtnbg"
+            android:elevation="3sp"
+            android:text="continue"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

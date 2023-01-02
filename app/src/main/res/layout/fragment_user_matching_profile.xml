@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.homePage.userMatching.UserMatchingProfileFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/page_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp"
+            android:verticalScrollbarPosition="defaultPosition">
+
+            <ImageView
+                android:id="@+id/back_Btn"
+                android:layout_width="24sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20sp"
+                android:src="@drawable/back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:text="Profile Page"
+                android:textColor="#FF5E51"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/back_Btn"
+                app:layout_constraintStart_toEndOf="@+id/back_Btn"
+                app:layout_constraintTop_toTopOf="@+id/back_Btn" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/page_title_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/user_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="350sp"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/test2" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/inviteBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_image"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-30sp"
+                    android:layout_marginRight="30sp"
+                    android:backgroundTint="#FF5E51"
+                    android:src="@drawable/message_icon" />
+
+                <TextView
+                    android:id="@+id/user_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_image"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginRight="20sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    tools:text="Nicolas Tesla" />
+
+                <TextView
+                    android:id="@+id/about_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_title"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="10sp"
+                    android:text="About me"
+                    android:textColor="#C4C4C4"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/user_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/about_me"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="5sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:text="I'm dead" />
+
+                <TextView
+                    android:id="@+id/user_location_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_bio"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="10sp"
+                    android:text="My Location"
+                    android:textColor="#C4C4C4"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/user_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_location_title"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="5sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:text="Petaling Jaya, Selangor" />
+
+                <TextView
+                    android:id="@+id/user_info_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_location"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="10sp"
+                    android:text="Basic Information"
+                    android:textColor="#C4C4C4"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/user_info_title"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginRight="20sp">
+
+                    <TextView
+                        android:id="@+id/info1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/infoborderbg"
+                        android:paddingLeft="20sp"
+                        android:paddingTop="3sp"
+                        android:paddingRight="20sp"
+                        android:paddingBottom="3sp"
+                        android:text="Male"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/info2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginRight="20sp"
+                        android:layout_toRightOf="@+id/info1"
+                        android:background="@drawable/infoborderbg"
+                        android:paddingLeft="20sp"
+                        android:paddingTop="3sp"
+                        android:paddingRight="20sp"
+                        android:paddingBottom="3sp"
+                        android:text="Physics"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/info3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/info2"
+                        android:background="@drawable/infoborderbg"
+                        android:paddingLeft="20sp"
+                        android:paddingTop="3sp"
+                        android:paddingRight="20sp"
+                        android:paddingBottom="3sp"
+                        android:text="Post Graduate"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+</FrameLayout>

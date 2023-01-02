@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVFoodPartyCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/RICE"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
+        app:contentPadding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TV_CreatePartyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SE buddy night"
+                android:textAlignment="viewStart"
+                android:textColor="@color/BLACK"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/LL_InformationColumn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TV_CreatePartyTitle">
+
+                <LinearLayout
+                    android:id="@+id/LL_InformationOrganizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_OrganizerLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Organizer:"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/BLACK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TV_OrganizerText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="Eren Yeager"
+                        android:textColor="@color/BLACK" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LL_InformationLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_LocationLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Location:"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/BLACK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TV_LocationText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:singleLine="false"
+                        android:text="Restaurant Sin Chew Surat Khabar Tak Lama, Kuala Lumpur"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/BLACK" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LL_InformationDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_DateLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date: "
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/BLACK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TV_DateText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="09/09/2022"
+                        android:textColor="@color/BLACK" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LL_InformationTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TV_TimeLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Time: "
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/BLACK"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TV_TimeText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:text="06:00 p.m."
+                        android:textColor="@color/BLACK" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_IconContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LL_InformationColumn">
+
+                <ImageView
+                    android:id="@+id/IV_PersonIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_baseline_person_outline" />
+
+                <TextView
+                    android:id="@+id/TV_JoinedPersonNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8/9"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/RED"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/B_CardBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="Join"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:cornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LL_InformationColumn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
