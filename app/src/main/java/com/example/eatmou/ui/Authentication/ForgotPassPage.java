@@ -66,11 +66,6 @@ public class ForgotPassPage extends AppCompatActivity {
             }
         });
 
-        //Share Preferences
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         code1 = findViewById(R.id.code1);
         code2 = findViewById(R.id.code2);
         code3 = findViewById(R.id.code3);
@@ -176,18 +171,15 @@ public class ForgotPassPage extends AppCompatActivity {
         confirmPinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numberMove();
-                Log.d("code",verifiedCode + " = " + randNumCode);
                 //Check verification code
-                //TODO: Verification code doesn't same
-                if(!code.equals(String.valueOf(randNumCode))) {
+                if(code.equals(String.valueOf(randNumCode))) {
                     //Redirect to email link to reset password
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     firebaseAuth.sendPasswordResetEmail(email)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(ForgotPassPage.this, "Password updated", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgotPassPage.this, "Please check your email", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), LoginPage.class));
                                     overridePendingTransition(0,0);
                                 }
@@ -195,13 +187,12 @@ public class ForgotPassPage extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(ForgotPassPage.this, "Error updating password", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgotPassPage.this, "Error sending link", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                 } else {
-                    Toast.makeText(ForgotPassPage.this, "The verification code entered is incorrect. " +
-                            "\nPlease verified again ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPassPage.this, "The verification code entered is incorrect", Toast.LENGTH_SHORT).show();
                 }
             }
         });
