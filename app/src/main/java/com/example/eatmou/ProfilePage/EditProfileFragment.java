@@ -3,6 +3,7 @@ package com.example.eatmou.ProfilePage;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +40,7 @@ import android.widget.Toast;
 
 import com.example.eatmou.HomePage.MainActivity;
 import com.example.eatmou.R;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
 
@@ -52,14 +58,18 @@ public class EditProfileFragment extends Fragment {
     CircleImageView editProfileImg;
     ImageView editBgImg;
     ImageView backBtn;
-    private Uri mImageUri;
+    private Uri bgImageUri, profileImgUri;
+
+    //global test
+    String indication;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
 
-
+        editProfileImg = view.findViewById(R.id.editProfileImg);
+        editBgImg = view.findViewById(R.id.editBgImg);
         backBtn = view.findViewById(R.id.back_BtnEditProfile);
         backBtn.setOnClickListener(v -> replaceFragment(new ProfilePage()));
 
@@ -90,6 +100,26 @@ public class EditProfileFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
+
+        view.findViewById(R.id.editProfileImg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(EditProfileFragment.this)
+                        .galleryOnly()	//User can only select image from Gallery
+                        .start(111);//Default Request Code is ImagePicker.REQUEST_CODE
+                indication = "profileImg";
+            }
+        });
+
+        view.findViewById(R.id.editBgImg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(EditProfileFragment.this)
+                        .galleryOnly()	//User can only select image from Gallery
+                        .start(111);//Default Request Code is ImagePicker.REQUEST_CODE
+                indication = "bgImg";
+            }
+        });
     }
 
 
@@ -97,37 +127,8 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-
-        view.findViewById(R.id.editBgImg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFileChooser();
-            }
-        });
-
        return view;
     }
-
-
-    private void openFileChooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 111);
-
-    }
-
-    @Override
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1888 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mImageUri = data.getData();
-
-            Picasso.get().load(mImageUri).into(editBgImg);
-        }
-    }
-
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getParentFragmentManager();
@@ -136,28 +137,28 @@ public class EditProfileFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-//    private void startGallery() {
-//        Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        cameraIntent.setType("image/*");
-//        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//            startActivityForResult(cameraIntent, 1000);
-//        }
-//    }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        //super method removed
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == 1000) {
-//                Uri returnUri = data.getData();
-//                Bitmap bitmapImage = null;
-//                try {
-//                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), returnUri);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                editProfileImg.setImageBitmap(bitmapImage);
-//            }
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 111 & resultCode == RESULT_OK) {
+
+            switch (indication){
+                case "profileImg":
+                    profileImgUri = data.getData();
+                    editProfileImg.setImageURI(profileImgUri);
+                    break;
+
+                case "bgImg":
+                    bgImageUri = data.getData();
+                    editBgImg.setImageURI(bgImageUri);
+                    break;
+                default:
+                    Toast.makeText(requireContext(),"Test", Toast.LENGTH_SHORT).show();
+            }
+
+        }else if (resultCode == ImagePicker.RESULT_ERROR){
+            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
