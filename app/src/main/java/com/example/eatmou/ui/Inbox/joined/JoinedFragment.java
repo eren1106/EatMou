@@ -129,7 +129,7 @@ public class JoinedFragment extends Fragment {
     };
 
     private void setAdapter() {
-        adapter = new JoinedAdapter(invitationList, userID);
+        adapter = new JoinedAdapter(invitationList, userID, getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         joinedRecyclerView.setLayoutManager(layoutManager);
         joinedRecyclerView.setItemAnimator(new DefaultItemAnimator());

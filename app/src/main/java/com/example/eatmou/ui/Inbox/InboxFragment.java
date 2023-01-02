@@ -25,12 +25,13 @@ import java.util.Objects;
 
 public class InboxFragment extends Fragment {
 
+    Fragment initFragment;
     Button receivedFrgBtn;
     Button sentFrgBtn;
-    Button matchedFrgBtn;
+    Button joinedFrgBtn;
 
-    public InboxFragment() {
-        // Required empty public constructor
+    public InboxFragment(Fragment initFragment) {
+        this.initFragment = initFragment;
     }
 
     @Override
@@ -54,16 +55,34 @@ public class InboxFragment extends Fragment {
 
         receivedFrgBtn = view.findViewById(R.id.receivedBtn);
         sentFrgBtn = view.findViewById(R.id.sentBtn);
-        matchedFrgBtn = view.findViewById(R.id.joinedBtn);
+        joinedFrgBtn = view.findViewById(R.id.joinedBtn);
 
         //pass user id to other fragments
         Bundle args = new Bundle();
         args.putString("userID", userID);
 
         {
-            ReceivedFragment receivedFragment = new ReceivedFragment();
-            receivedFragment.setArguments(args);
-            replaceFragment(receivedFragment);
+            initFragment.setArguments(args);
+            replaceFragment(initFragment);
+
+            Bundle args2 = this.getArguments();
+            System.out.println("12312314241  -->>>"+args2.getString("button"));
+            String buttonNum;
+            if (args2 != null) {
+                 buttonNum = args2.getString("button");
+                switch (buttonNum){
+                    case "1":
+                        receivedFrgBtn.performClick();
+                        break;
+                    case "2":
+                        sentFrgBtn.performClick();
+                        break;
+                    case "3":
+                        joinedFrgBtn.performClick();
+                        break;
+                }
+                System.out.println("Button Number " + buttonNum);
+            }
         }
 
         //swipe to change fragment******************************
@@ -80,7 +99,7 @@ public class InboxFragment extends Fragment {
             replaceFragment(sentFragment);
         });
 
-        matchedFrgBtn.setOnClickListener(v -> {
+        joinedFrgBtn.setOnClickListener(v -> {
             JoinedFragment joinedFragment = new JoinedFragment();
             joinedFragment.setArguments(args);
             replaceFragment(joinedFragment);
@@ -91,7 +110,7 @@ public class InboxFragment extends Fragment {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.inboxFrameLayout,fragment);
+        fragmentTransaction.replace(R.id.inboxFrameLayout,fragment).addToBackStack("toFragment");
         fragmentTransaction.commit();
     }
 }

@@ -63,7 +63,7 @@ public class ReceivedFragment extends Fragment {
         empty_view = view.findViewById(R.id.empty_view);
         receivedRecyclerView = view.findViewById(R.id.receivedRecyclerView);
         invitationList = new ArrayList<>();
-        adapter = new ReceivedAdapter(invitationList, userID);
+        adapter = new ReceivedAdapter(invitationList, userID, getContext());
 
         db = FirebaseFirestore.getInstance();
 

@@ -3,7 +3,9 @@ package com.example.eatmou.ui.Inbox.sent;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
+import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,10 +40,12 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
     private String userID;
+    private Context context;
 
-    public SentAdapter(ArrayList<Invitation> invitationList, String userID){
+    public SentAdapter(ArrayList<Invitation> invitationList, String userID, Context context){
         this.invitationList = invitationList;
         this.userID = userID;
+        this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -48,6 +57,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         private Button cancelBtn;
 
         private TextView statusTxt;
+        private String InboxUserID;
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -74,12 +84,19 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 notifyItemChanged(getAdapterPosition());
             });
 
-            usernameTxt.setOnLongClickListener(v -> {
-                Invitation invitation = invitationList.get(getAdapterPosition());
-                String name = invitation.getInvitedID() + "'s ";
-                Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
-                return true;
+            usernameTxt.setOnClickListener(v -> {
+                Fragment fragment = new InboxUserProfileFragment();
+                Bundle args = new Bundle();
+                args.putString("InboxUserID", InboxUserID);
+                args.putString("FragmentID", "SentFragment");
+                fragment.setArguments(args);
+
+                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout,fragment);
+                fragmentTransaction.commit();
             });
+
             cancelBtn.setOnClickListener( v -> new AlertDialog.Builder(view.getContext())
                     .setTitle("Cancel Invitation")
                     .setMessage("Are you sure you want to cancel this invitation?\nThis action cannot be undone!")
@@ -114,18 +131,15 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
 
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(invitation.getInvitedID());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String name = document.getString("username");
-                        holder.usernameTxt.setText(preText + name);
-                    } else Log.d(TAG, "No such document");
-                } else Log.d(TAG, "get failed with ", task.getException());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String name = document.getString("username");
+                    holder.usernameTxt.setText(preText + name);
+                } else Log.d(TAG, "No such document");
+            } else Log.d(TAG, "get failed with ", task.getException());
 
-            }
         });
 
         holder.locationTxt.setText(invitation.getLocation());
@@ -153,6 +167,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 break;
         }
         holder.statusTxt.setText(status);
+        holder.InboxUserID = invitation.getInvitedID();
 
         boolean isExpandable = invitationList.get(position).isExpandable();
         holder.cardView_expandable.setVisibility(isExpandable? View.VISIBLE:View.GONE);
