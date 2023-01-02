@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Inbox.InboxFragment">
+
+    <TextView
+        android:id="@+id/inbox_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inbox"
+        android:textSize="30sp"
+        android:textColor="@color/RED"
+        android:textStyle="bold"
+        android:padding="20sp"/>
+
+    <RadioGroup
+        android:id="@+id/inbox_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_below="@id/inbox_title">
+
+        <RadioButton
+            android:id="@+id/receivedBtn"
+            android:layout_width="110sp"
+            android:layout_height="wrap_content"
+            android:padding="16sp"
+            android:layout_margin="8sp"
+            android:text="@string/received"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="@drawable/inbox_nav_button"
+            android:button="@android:color/transparent"
+            android:textColor="@drawable/text_selector"
+            android:checked="true"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/sentBtn"
+            android:layout_width="110sp"
+            android:layout_height="wrap_content"
+            android:padding="16sp"
+            android:layout_margin="8sp"
+            android:text="@string/sent"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="@drawable/inbox_nav_button"
+            android:button="@android:color/transparent"
+            android:textColor="@drawable/text_selector"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/joinedBtn"
+            android:layout_width="110sp"
+            android:layout_height="wrap_content"
+            android:padding="16sp"
+            android:layout_margin="8sp"
+            android:text="@string/joined"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="@drawable/inbox_nav_button"
+            android:button="@android:color/transparent"
+            android:textColor="@drawable/text_selector"
+            android:gravity="center"/>
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/inboxFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inbox_radioGroup"/>
+
+
+</RelativeLayout>
