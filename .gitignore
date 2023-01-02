@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Avoid conflict for Virtual Device
+.idea/deploymentTargetDropDown.xml
+
