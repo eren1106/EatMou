@@ -32,9 +32,11 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
 
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
+    private String userID;
 
-    public SentAdapter(ArrayList<Invitation> invitationList){
+    public SentAdapter(ArrayList<Invitation> invitationList, String userID){
         this.invitationList = invitationList;
+        this.userID = userID;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -46,8 +48,6 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         private Button cancelBtn;
 
         private TextView statusTxt;
-
-//        private ImageView cardView_arrow;
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -64,8 +64,6 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
 
             statusTxt = view.findViewById(R.id.statusTxt);
 
-//            cardView_arrow = view.findViewById(R.id.cardView_arrow);
-
             cardView_mainBar = view.findViewById(R.id.cardView_mainBar);
             cardView_linearLayout = view.findViewById(R.id.cardView_linearLayout);
             cardView_expandable = view.findViewById(R.id.cardView_expandable);
@@ -74,7 +72,6 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 Invitation invitation =  invitationList.get(getAdapterPosition());
                 invitation.setExpandable(!invitation.isExpandable());
                 notifyItemChanged(getAdapterPosition());
-//                cardView_arrow.animate().rotation(!invitation.isExpandable()?90:0).start();
             });
 
             usernameTxt.setOnLongClickListener(v -> {
@@ -116,19 +113,18 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         Invitation invitation = invitationList.get(position);
 
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("Users").document(invitation.getInvitedID());
+        DocumentReference docRef = db.collection("users").document(invitation.getInvitedID());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String name = document.getString("Username");
+                        String name = document.getString("username");
                         holder.usernameTxt.setText(preText + name);
-                    }
-                    else Log.d(TAG, "No such document");
-                }
-                else Log.d(TAG, "get failed with ", task.getException());
+                    } else Log.d(TAG, "No such document");
+                } else Log.d(TAG, "get failed with ", task.getException());
+
             }
         });
 
@@ -137,25 +133,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         holder.startTimeTxt.setText(invitation.getStartTimeText());
         holder.endTimeTxt.setText(invitation.getEndTimeText());
 
-        //no need is accepted/is declined boolean
         String status = invitation.getStatus();
-//        if (invitation.isCanceled()){
-//            status = "Canceled";
-//            holder.statusTxt.setTextColor(Color.parseColor("#9FA3A6"));
-//            holder.cancelBtn.setEnabled(false);
-//        }
-//        else if(invitation.isDeclined()) {
-//            status = "Declined";
-//            holder.statusTxt.setTextColor(Color.parseColor("#FF0000"));
-//            holder.cancelBtn.setEnabled(false);
-//        }
-//        else if(invitation.isAccepted()) {
-//            status = "Accepted";
-//            holder.statusTxt.setTextColor(Color.parseColor("#00FF00"));
-//        }
-//        else{
-//            holder.statusTxt.setTextColor(Color.parseColor("#000000"));
-//        }
         switch (status) {
             case "Canceled":
                 holder.statusTxt.setTextColor(Color.parseColor("#9FA3A6"));
@@ -183,5 +161,13 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return invitationList.size();
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

@@ -39,6 +39,7 @@ public class JoinedFragment extends Fragment {
     private ArrayList<Invitation> invitationList;
     private RecyclerView joinedRecyclerView;
     private FirebaseFirestore db;
+    private String userID;
     Invitation removedInvitation = null;
 
     JoinedAdapter adapter;
@@ -58,6 +59,9 @@ public class JoinedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null) userID = bundle.getString("userID");
 
         empty_view = view.findViewById(R.id.empty_view);
         joinedRecyclerView = view.findViewById(R.id.joinedRecyclerView);
@@ -125,7 +129,7 @@ public class JoinedFragment extends Fragment {
     };
 
     private void setAdapter() {
-        adapter = new JoinedAdapter(invitationList);
+        adapter = new JoinedAdapter(invitationList, userID);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         joinedRecyclerView.setLayoutManager(layoutManager);
         joinedRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -136,8 +140,6 @@ public class JoinedFragment extends Fragment {
     }
 
     private void setInvitationList() {
-        //
-        String yourID = "dC8RVWnivbo1v2WvFdyF";
 
         db.collection("Invitations")
                 .whereEqualTo("Status", "Accepted")
@@ -153,8 +155,8 @@ public class JoinedFragment extends Fragment {
                         for(DocumentChange doc : value.getDocumentChanges()){
                             if (doc.getType() == DocumentChange.Type.ADDED) {
                                 Invitation invitation = Invitation.toObject(doc.getDocument().getData());
-                                if(invitation.getInvitedID().equals(yourID)
-                                        || invitation.getOrganiserID().equals(yourID)){
+                                if(invitation.getInvitedID().equals(userID)
+                                        || invitation.getOrganiserID().equals(userID)){
                                     invitationList.add(invitation);
                                 }
                             }

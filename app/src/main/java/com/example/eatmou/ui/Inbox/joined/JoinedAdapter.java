@@ -30,9 +30,11 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
 
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
+    private String userID;
 
-    public JoinedAdapter(ArrayList<Invitation> invitationList) {
+    public JoinedAdapter(ArrayList<Invitation> invitationList, String userID) {
         this.invitationList = invitationList;
+        this.userID = userID;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -41,11 +43,6 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
         private TextView dateTxt;
         private TextView startTimeTxt;
         private TextView endTimeTxt;
-
-//        private ImageView cardView_arrow;
-
-        private ImageView empty_image;
-        private TextView empty_text;
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -60,21 +57,14 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
             startTimeTxt = view.findViewById(R.id.startTimeTxt);
             endTimeTxt = view.findViewById(R.id.endTimeTxt);
 
-//            cardView_arrow = view.findViewById(R.id.cardView_arrow);
-
-
             cardView_mainBar = view.findViewById(R.id.cardView_mainBar);
             cardView_linearLayout = view.findViewById(R.id.cardView_linearLayout);
             cardView_expandable = view.findViewById(R.id.cardView_expandable);
-
-//            empty_image = view.findViewById(R.id.empty_image);
-//            empty_text = view.findViewById(R.id.empty_text);
 
             cardView_linearLayout.setOnClickListener( v -> {
                 Invitation invitation =  invitationList.get(getAdapterPosition());
                 invitation.setExpandable(!invitation.isExpandable());
                 notifyItemChanged(getAdapterPosition());
-//                cardView_arrow.animate().rotation(!invitation.isExpandable()?90:0).start();
             });
 
             usernameTxt.setOnClickListener(v -> {
@@ -95,20 +85,19 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull JoinedAdapter.MyViewHolder holder, int position) {
         //
-        String yourID = "dC8RVWnivbo1v2WvFdyF";
         String preText;
         Invitation invitation = invitationList.get(position);
 
         db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = null;
-        if(invitation.getInvitedID().equals(yourID)){
+        DocumentReference docRef;
+        if(invitation.getInvitedID().equals(userID)){
             preText = "Invitation from ";
-            docRef = db.collection("Users").document(invitation.getOrganiserID());
+            docRef = db.collection("users").document(invitation.getOrganiserID());
         }
         else {
             preText = "You invited ";
-            docRef = db.collection("Users").document(invitation.getInvitedID());
+            docRef = db.collection("users").document(invitation.getInvitedID());
         }
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -116,14 +105,10 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String name = document.getString("Username");
+                        String name = document.getString("username");
                         holder.usernameTxt.setText(preText + name);
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
+                    } else  Log.d(TAG, "No such document");
+                } else Log.d(TAG, "get failed with ", task.getException());
             }
         });
 
@@ -139,5 +124,13 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
     @Override
     public int getItemCount() {
         return invitationList.size();
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

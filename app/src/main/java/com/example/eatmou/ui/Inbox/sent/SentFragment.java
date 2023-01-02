@@ -32,6 +32,7 @@ public class SentFragment extends Fragment {
     private ArrayList<Invitation> invitationList;
     private RecyclerView sentRecyclerView;
     private FirebaseFirestore db;
+    private String userID;
 
     SentAdapter adapter;
     View view;
@@ -50,11 +51,13 @@ public class SentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle != null) userID = bundle.getString("userID");
 
         empty_view = view.findViewById(R.id.empty_view);
         sentRecyclerView = view.findViewById(R.id.sentRecyclerView);
         invitationList = new ArrayList<>();
-        adapter = new SentAdapter(invitationList);
+        adapter = new SentAdapter(invitationList, userID);
 
         db = FirebaseFirestore.getInstance();
 
@@ -114,9 +117,8 @@ public class SentFragment extends Fragment {
 
     private void setInvitationList() {
         // to be changed
-        String yourID = "dC8RVWnivbo1v2WvFdyF";
         db.collection("Invitations")
-                .whereEqualTo("OrganiserID", yourID)
+                .whereEqualTo("OrganiserID", userID)
                 .orderBy("Date")
                 .orderBy("StartTime")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

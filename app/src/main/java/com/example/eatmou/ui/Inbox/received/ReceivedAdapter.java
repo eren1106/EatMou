@@ -31,9 +31,11 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
+    private String userID;
 
-    public ReceivedAdapter(ArrayList<Invitation> invitationList){
+    public ReceivedAdapter(ArrayList<Invitation> invitationList, String userID){
         this.invitationList = invitationList;
+        this.userID = userID;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -43,12 +45,8 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
         private TextView startTimeTxt;
         private TextView endTimeTxt;
 
-//        private ImageView cardView_arrow;
-
         private Button acceptBtn;
         private Button declineBtn;
-        private ImageView empty_image;
-        private TextView empty_text;
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -63,8 +61,6 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
             startTimeTxt = view.findViewById(R.id.startTimeTxt);
             endTimeTxt = view.findViewById(R.id.endTimeTxt);
 
-//            cardView_arrow = view.findViewById(R.id.cardView_arrow);
-
             acceptBtn = view.findViewById(R.id.acceptBtn);
             declineBtn = view.findViewById(R.id.declineBtn);
 
@@ -72,14 +68,10 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
             cardView_linearLayout = view.findViewById(R.id.cardView_linearLayout);
             cardView_expandable = view.findViewById(R.id.cardView_expandable);
 
-//            empty_image = view.findViewById(R.id.empty_image);
-//            empty_text = view.findViewById(R.id.empty_text);
-
             cardView_linearLayout.setOnClickListener( v -> {
                 Invitation invitation =  invitationList.get(getAdapterPosition());
                 invitation.setExpandable(!invitation.isExpandable());
                 notifyItemChanged(getAdapterPosition());
-//                cardView_arrow.animate().rotation(!invitation.isExpandable()?90:0).start();
             });
 
             acceptBtn.setOnClickListener( v -> {
@@ -89,11 +81,8 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                         .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
                             Invitation invitation =  invitationList.get(getAdapterPosition());
                             invitation.setAccepted(true);
-                            //
-                            //
                             invitationList.remove(getAdapterPosition());
                             notifyItemRemoved(getAdapterPosition());
-                            //need to update database or the data will reappear
                             db.collection("Invitations")
                                     .document(invitation.getInvitationID())
                                     .update("Status", "Accepted");
@@ -112,11 +101,8 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                         .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
                             Invitation invitation =  invitationList.get(getAdapterPosition());
                             invitation.setDeclined(true);
-                            //
-                            //
                             invitationList.remove(getAdapterPosition());
                             notifyItemRemoved(getAdapterPosition());
-                            //need to update database or the data will reappear
                             db.collection("Invitations")
                                     .document(invitation.getInvitationID())
                                     .update("Status", "Declined");
@@ -150,19 +136,17 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
         Invitation invitation = invitationList.get(position);
 
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("Users").document(invitation.getOrganiserID());
+        DocumentReference docRef = db.collection("users").document(invitation.getOrganiserID());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String name = document.getString("Username");
+                        String name = document.getString("username");
                         holder.usernameTxt.setText(preText + name);
-                    }
-                    else Log.d(TAG, "No such document");
-                }
-                else Log.d(TAG, "get failed with ", task.getException());
+                    } else Log.d(TAG, "No such document");
+                } else Log.d(TAG, "get failed with ", task.getException());
             }
         });
 
@@ -180,4 +164,11 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
         return invitationList.size();
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 }

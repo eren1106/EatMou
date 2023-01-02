@@ -32,12 +32,18 @@ public class ReceivedFragment extends Fragment {
     private ArrayList<Invitation> invitationList;
     private RecyclerView receivedRecyclerView;
     private FirebaseFirestore db;
+    private String userID;
 
     View view;
     ImageButton sort_button;
     RelativeLayout empty_view;
 
     ReceivedAdapter adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,10 +57,13 @@ public class ReceivedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = this.getArguments();
+        if(bundle != null) userID = bundle.getString("userID");
+
         empty_view = view.findViewById(R.id.empty_view);
         receivedRecyclerView = view.findViewById(R.id.receivedRecyclerView);
         invitationList = new ArrayList<>();
-        adapter = new ReceivedAdapter(invitationList);
+        adapter = new ReceivedAdapter(invitationList, userID);
 
         db = FirebaseFirestore.getInstance();
 
@@ -82,11 +91,8 @@ public class ReceivedFragment extends Fragment {
     }
 
     private void setInvitationList() {
-        //to be changed
-        String yourID = "dC8RVWnivbo1v2WvFdyF";
-
         db.collection("Invitations")
-                .whereEqualTo("InvitedID", yourID)
+                .whereEqualTo("InvitedID", userID)
                 .whereEqualTo("Status","Pending")
                 .orderBy("Date")
                 .orderBy("StartTime")
