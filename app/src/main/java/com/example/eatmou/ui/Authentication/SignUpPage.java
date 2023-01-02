@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,10 @@ public class SignUpPage extends AppCompatActivity {
         pass = findViewById(R.id.password);
         confirmPass = findViewById(R.id.confirmPass);
 
+        //Progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait...");
 
         //Check any empty field haven't fill
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +83,12 @@ public class SignUpPage extends AppCompatActivity {
                     return;
                 }
 
+                //Progress dialog
+                final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog.setTitle("Sign up");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
+
                 // SIGN UP USER
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -93,6 +104,9 @@ public class SignUpPage extends AppCompatActivity {
 
                             UserModel userModel = new UserModel(user.getUid(), usernameTemp, emailTemp, tempDate, "", "", "", "");
                             firestore.collection("users").document(user.getUid()).set(userModel.toMap());
+                            //Hide the progress dialog
+                            progressDialog.hide();
+
                             //Click submit button to login page
                             startActivity(new Intent(getApplicationContext(), LoginPage.class));
                             finish();

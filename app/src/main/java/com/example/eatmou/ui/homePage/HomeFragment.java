@@ -1,6 +1,5 @@
 package com.example.eatmou.ui.homePage;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +70,6 @@ public class HomeFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         user_matching_list.setLayoutManager(gridLayoutManager);
         user_matching_list.setAdapter(adapter);
-
         return view;
     }
 
@@ -93,9 +92,9 @@ public class HomeFragment extends Fragment {
                             .getDefaultSharedPreferences(getContext());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     //Set username clicked into the share preference
-                    editor.putString("USERNAME_SHARED_PREF",userIDTitle.getText().toString());
+                    editor.putString("USERNAME_SHARED_PREF", userIDTitle.getText().toString());
                     editor.apply();
-
+                    Log.d("userID", userIDTitle.getText().toString());
                     //Switch to next fragment
                     Fragment fragment = new UserMatchingProfileFragment();
                     getActivity().getSupportFragmentManager()

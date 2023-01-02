@@ -1,4 +1,4 @@
-package com.example.eatmou.ProfilePage;
+package com.example.eatmou.ui.ProfilePage;
 
 import android.os.Bundle;
 
