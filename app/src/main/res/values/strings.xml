@@ -22,4 +22,5 @@
     <string name="joined_invitations">Joined Invitations</string>
     <string name="seems_like_you_haven_t_join_any_events_yet">Seems like you haven\'t join any events yet!</string>
     <string name="joined">Joined</string>
+    <string name="userid">userID</string>
 </resources>

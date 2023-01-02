@@ -1,32 +1,20 @@
 package com.example.eatmou;
 
-import static android.content.ContentValues.TAG;
-
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.example.eatmou.Inbox.Invitation;
-import com.example.eatmou.Inbox.received.ReceivedAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
+
+import com.example.eatmou.ui.FoodParty.FoodPartyModel;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class FirebaseMethods {
     private FirebaseFirestore firestore;
@@ -37,26 +25,24 @@ public class FirebaseMethods {
 
     public void addFoodParty(String title, String organiserId, String location, Date date,
                              Date startTime, Date endTime, int maxParticipant) {
-        Map<String, Object> foodParty = new HashMap<>();
 
-        foodParty.put("title", title);
-        foodParty.put("organiserId", organiserId);
-        foodParty.put("location", location);
-        foodParty.put("date", date);
-        foodParty.put("startTime", startTime);
-        foodParty.put("endTime", endTime);
-        foodParty.put("maxParticipant", maxParticipant);
-        foodParty.put("participantId", Arrays.asList());
+        String id = UUID.randomUUID().toString();
+        FoodPartyModel fpm = new FoodPartyModel(id, title, organiserId, location, date, startTime, endTime, 9, new ArrayList<>(Arrays.asList()));
+        Map<String, Object> foodParty = fpm.toMap();
 
-        firestore.collection("foodParties").add(foodParty).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        firestore.collection("foodParties").document(id).set(foodParty);
+    }
+
+    public void deleteFoodParty(String foodPartyId) {
+        firestore.collection("foodParties").document(foodPartyId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                System.out.println("Added Food Party");
+            public void onSuccess(Void unused) {
+                Log.i("Food Party Deleted", "Food Party Deleted");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                System.out.println("Fail to add Food Party");
+                Log.e("Delete Food Party Error", e.toString());
             }
         });
     }
@@ -80,4 +66,10 @@ public class FirebaseMethods {
 //            }
 //        });
 //    }
+    public void updateFoodParty(FoodPartyModel foodPartyModel) {
+        String id = foodPartyModel.getId();
+        Map<String, Object> foodParty = foodPartyModel.toMap();
+
+        firestore.collection("foodParties").document(id).set(foodParty);
+    }
 }
