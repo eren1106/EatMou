@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPage extends AppCompatActivity {
 
-    TextView tvSignUp;
+    TextView tvSignUp, forgotPass;
     EditText etEmail, etPassword;
     Button loginBtn;
     FirebaseAuth auth;
@@ -64,6 +64,16 @@ public class LoginPage extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        //Forgot password
+        forgotPass = findViewById(R.id.forgotPass);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ForgotPassPage.class));
+                overridePendingTransition(0,0);
             }
         });
 
