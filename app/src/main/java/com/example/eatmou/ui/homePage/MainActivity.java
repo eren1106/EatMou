@@ -1,18 +1,21 @@
 package com.example.eatmou.ui.homePage;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
+
+import com.example.eatmou.ui.Inbox.InboxFragment;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import com.example.eatmou.ProfilePage.ProfilePageFrame;
+import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
+
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
-import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             }
         });
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.party:
                     selectedFragment = new FoodPartyListFragment();
                     break;
-
+                case R.id.inbox:
+                    selectedFragment = new InboxFragment();
+                    break;
                 case R.id.profile:
                     selectedFragment = new ProfilePageFrame();
                     break;
@@ -80,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
-
-
 
     private void fetchUser() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

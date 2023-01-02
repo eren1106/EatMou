@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Inbox.sent.SentFragment">
+
+    <TextView
+        android:id="@+id/fragment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/sent_invitations"
+        android:textStyle="bold"
+        android:paddingStart="36sp"
+        android:paddingEnd="36sp"
+        android:paddingTop="16sp"
+        android:paddingBottom="8sp"/>
+
+    <ImageButton
+        android:id="@+id/sort_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_sort_24"
+        android:background="@android:color/transparent"
+        android:layout_alignParentEnd="true"
+        android:paddingStart="36sp"
+        android:paddingEnd="36sp"
+        android:paddingTop="16sp"
+        android:paddingBottom="8sp"
+        android:contentDescription="@string/sort" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:paddingStart="16sp"
+        android:paddingEnd="16sp"
+        android:layout_below="@id/fragment_title"/>
+
+    <include
+        android:id="@+id/empty_view"
+        layout="@layout/sent_empty_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_title"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+</RelativeLayout>
