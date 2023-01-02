@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.party:
                     selectedFragment = new FoodPartyListFragment();
                     break;
-
                 case R.id.profile:
                     selectedFragment = new ProfilePageFrame();
                     break;
