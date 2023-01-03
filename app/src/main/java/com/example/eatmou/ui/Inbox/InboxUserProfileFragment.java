@@ -101,10 +101,13 @@ public class InboxUserProfileFragment extends Fragment {
                     info1 = view.findViewById(R.id.info1);
                     info2 = view.findViewById(R.id.info2);
                     info3 = view.findViewById(R.id.info3);
-                    String[] basic_info = user.getBio().split(" ");
-                    info1.setText(basic_info[0]);
-                    info2.setText(basic_info[1]);
-                    info3.setText(basic_info[2]);
+                    String bio = user.getBio();
+                    if(bio != null) {
+                        String[] basic_info = bio.split(" ");
+                        info1.setText(basic_info[0]);
+                        info2.setText(basic_info[1]);
+                        info3.setText(basic_info[2]);
+                    }
                 } else {
                     Log.d("User document", "No such document");
                 }
@@ -124,12 +127,5 @@ public class InboxUserProfileFragment extends Fragment {
     public void openDialog() {
         InviteDialog inviteDialog = new InviteDialog();
         inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.inboxFrameLayout,fragment);
-        fragmentTransaction.commit();
     }
 }

@@ -17,6 +17,10 @@ public class Invitation {
     private Date EndTime;
     private String Status;
 
+    private String organiserName;
+    private String invitedName;
+    private boolean currentUserInvitation;
+
     private boolean expandable;
     private boolean accepted;
     private boolean declined;
@@ -189,5 +193,29 @@ public class Invitation {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public String getOrganiserName() {
+        return organiserName;
+    }
+
+    public void setOrganiserName(String organiserName) {
+        this.organiserName = organiserName;
+    }
+
+    public String getInvitedName() {
+        return invitedName;
+    }
+
+    public void setInvitedName(String invitedName) {
+        this.invitedName = invitedName;
+    }
+
+    public boolean isCurrentUserInvitation() {
+        return currentUserInvitation;
+    }
+
+    public void setCurrentUserInvitation(boolean currentUserInvitation) {
+        this.currentUserInvitation = currentUserInvitation;
     }
 }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
 import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
@@ -49,6 +51,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
+        private ImageView userImgView;
         private TextView usernameTxt;
         private TextView locationTxt;
         private TextView dateTxt;
@@ -65,6 +68,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
 
         public MyViewHolder(final View view){
             super(view);
+            userImgView = view.findViewById(R.id.userImgView);
             usernameTxt = view.findViewById(R.id.usernameTxt);
             locationTxt = view.findViewById(R.id.locationTxt);
             dateTxt = view.findViewById(R.id.dateTxt);
@@ -84,7 +88,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 notifyItemChanged(getAdapterPosition());
             });
 
-            usernameTxt.setOnClickListener(v -> {
+            userImgView.setOnClickListener(v -> {
                 Fragment fragment = new InboxUserProfileFragment();
                 Bundle args = new Bundle();
                 args.putString("InboxUserID", InboxUserID);
@@ -137,6 +141,9 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 if (document.exists()) {
                     String name = document.getString("username");
                     holder.usernameTxt.setText(preText + name);
+
+                    String profilePicUrl = document.getString("profilePicUrl");
+                    Glide.with(context).load(profilePicUrl).into(holder.userImgView);
                 } else Log.d(TAG, "No such document");
             } else Log.d(TAG, "get failed with ", task.getException());
 

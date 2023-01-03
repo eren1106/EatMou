@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,11 +23,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eatmou.model.Invitation;
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
+import com.example.eatmou.model.Invitation;
 import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +47,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
+        private ImageView userImgView;
         private TextView usernameTxt;
         private TextView locationTxt;
         private TextView dateTxt;
@@ -65,6 +66,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
         public MyViewHolder(final View view){
             super(view);
+            userImgView = view.findViewById(R.id.userImgView);
             usernameTxt = view.findViewById(R.id.usernameTxt);
             locationTxt = view.findViewById(R.id.locationTxt);
             dateTxt = view.findViewById(R.id.dateTxt);
@@ -124,7 +126,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                         .show();
             });
 
-            usernameTxt.setOnClickListener(view1 -> {
+            userImgView.setOnClickListener(view1 -> {
                 Fragment fragment = new InboxUserProfileFragment();
                 Bundle args = new Bundle();
                 args.putString("InboxUserID", InboxUserID);
@@ -171,10 +173,14 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                 if (document.exists()) {
                     String name = document.getString("username");
                     holder.usernameTxt.setText(preText + name);
+
+                    String profilePicUrl = document.getString("profilePicUrl");
+                    Glide.with(context).load(profilePicUrl).into(holder.userImgView);
                 } else Log.d(TAG, "No such document");
             } else Log.d(TAG, "get failed with ", task.getException());
         });
-
+//        System.out.println(invitation);
+//        holder.usernameTxt.setText(preText + invitation.getOrganiserName());
         holder.locationTxt.setText(invitation.getLocation());
         holder.dateTxt.setText(invitation.getDateText());
         holder.startTimeTxt.setText(invitation.getStartTimeText());

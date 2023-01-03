@@ -1,13 +1,16 @@
 package com.example.eatmou.ui.Inbox.received;
 
+import static android.content.ContentValues.TAG;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +23,14 @@ import com.example.eatmou.ui.Inbox.EmptyDataObserver;
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ReceivedFragment extends Fragment {
 
@@ -72,8 +77,33 @@ public class ReceivedFragment extends Fragment {
 
         sort_button = view.findViewById(R.id.sort_button);
         sort_button.setOnClickListener(v ->{
-            //
-            Toast.makeText(getContext(), "Open sorting view", Toast.LENGTH_SHORT).show();
+            PopupMenu popupMenu = new PopupMenu(getContext(), sort_button);
+            popupMenu.getMenuInflater().inflate(R.menu.received_sorting_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                String chosen = (String) menuItem.getTitle();
+                switch (chosen) {
+                    case "Username":
+                        Collections.sort(invitationList, (inv1, inv2) -> inv1.getOrganiserName().compareToIgnoreCase(inv2.getOrganiserName()));
+                        break;
+                    case "Location":
+                        Collections.sort(invitationList, (inv1, inv2) -> inv1.getLocation().compareToIgnoreCase(inv2.getLocation()));
+                        break;
+                    case "Date":
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Collections.sort(invitationList, Comparator.comparing(Invitation::getDate));
+                            Collections.reverse(invitationList);
+                        }
+                        break;
+                    case "Time":
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Collections.sort(invitationList, Comparator.comparing(Invitation::getStartTime));
+                        }
+                        break;
+                }
+                adapter.notifyDataSetChanged();
+                return true;
+            });
+            popupMenu.show();
         });
 
     }
@@ -94,24 +124,34 @@ public class ReceivedFragment extends Fragment {
         db.collection("Invitations")
                 .whereEqualTo("InvitedID", userID)
                 .whereEqualTo("Status","Pending")
-                .orderBy("Date")
-                .orderBy("StartTime")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error!=null){
-                    Log.e("Firestore error", error.getMessage());
-                    return;
-                }
-                for(DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        invitationList.add(Invitation.toObject(doc.getDocument().getData()));
+                .orderBy("Date", Query.Direction.DESCENDING)
+                .orderBy("StartTime", Query.Direction.ASCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if(error!=null){
+                        Log.e("Firestore error", error.getMessage());
+                        return;
                     }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
+                    for(DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            Invitation invitation = Invitation.toObject(doc.getDocument().getData());
 
+                            //get and set organiser name
+                            DocumentReference docRef = db.collection("users").document(invitation.getOrganiserID());
+                            docRef.get().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        String name = document.getString("username");
+                                        invitation.setOrganiserName(name);
+                                        System.out.println(invitation.getOrganiserName());
+                                    } else Log.d(TAG, "No such document");
+                                } else Log.d(TAG, "get failed with ", task.getException());
+                            });
+
+                            invitationList.add(invitation);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
-
 }

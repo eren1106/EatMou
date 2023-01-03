@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,16 +20,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eatmou.model.Invitation;
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
+import com.example.eatmou.model.Invitation;
 import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 
@@ -48,6 +45,7 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
+        private ImageView userImgView;
         private TextView usernameTxt;
         private TextView locationTxt;
         private TextView dateTxt;
@@ -62,6 +60,7 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
 
         public MyViewHolder(final View view){
             super(view);
+            userImgView = view.findViewById(R.id.userImgView);
             usernameTxt = view.findViewById(R.id.usernameTxt);
             locationTxt = view.findViewById(R.id.locationTxt);
             dateTxt = view.findViewById(R.id.dateTxt);
@@ -78,7 +77,7 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
                 notifyItemChanged(getAdapterPosition());
             });
 
-            usernameTxt.setOnClickListener(v -> {
+            userImgView.setOnClickListener(v -> {
                 Fragment fragment = new InboxUserProfileFragment();
                 Bundle args = new Bundle();
                 args.putString("InboxUserID", InboxUserID);
@@ -117,19 +116,19 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
             preText = "You invited ";
             docRef = db.collection("users").document(invitation.getInvitedID());
         }
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String name = document.getString("username");
-                        String userID = document.getString("userID");
-                        holder.usernameTxt.setText(preText + name);
-                        holder.InboxUserID = userID;
-                    } else  Log.d(TAG, "No such document");
-                } else Log.d(TAG, "get failed with ", task.getException());
-            }
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String name = document.getString("username");
+                    String userID = document.getString("userID");
+                    holder.usernameTxt.setText(preText + name);
+                    holder.InboxUserID = userID;
+
+                    String profilePicUrl = document.getString("profilePicUrl");
+                    Glide.with(context).load(profilePicUrl).into(holder.userImgView);
+                } else  Log.d(TAG, "No such document");
+            } else Log.d(TAG, "get failed with ", task.getException());
         });
 
         holder.locationTxt.setText(invitation.getLocation());
