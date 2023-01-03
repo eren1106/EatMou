@@ -2,6 +2,12 @@ package com.example.eatmou.ui.ProfilePage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,17 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.example.eatmou.R;
+import com.example.eatmou.model.Users;
 
 public class ProfilePage extends Fragment {
 
     Button btnEditProfileFragment, btnManagePwFragment, btnSettingsFragment;
+    ImageView userBgImg, userProfileImg;
+    TextView userName, userBio;
     View view;
+    Users user = new Users();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class ProfilePage extends Fragment {
 
         btnEditProfileFragment.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
         btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
+        btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
     }
 
     private void replaceFragment(Fragment fragment){
