@@ -49,6 +49,7 @@ public class InboxFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = null;
         if (user != null) userID = user.getUid();
@@ -66,7 +67,6 @@ public class InboxFragment extends Fragment {
             replaceFragment(initFragment);
 
             Bundle args2 = this.getArguments();
-            System.out.println("12312314241  -->>>"+args2.getString("button"));
             String buttonNum;
             if (args2 != null) {
                  buttonNum = args2.getString("button");

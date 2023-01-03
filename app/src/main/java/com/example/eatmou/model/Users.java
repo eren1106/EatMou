@@ -2,6 +2,9 @@ package com.example.eatmou.model;
 
 import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
+import java.util.Map;
+
 public class Users {
     private String bio;
     private Timestamp dob;
@@ -11,7 +14,6 @@ public class Users {
     private String profilePicUrl;
     private String userID;
     private String username;
-
 
     public Users(){}
 
@@ -25,6 +27,25 @@ public class Users {
         this.username = username;
         this.userID = userID;
     }
+
+    public static Users toObject(Map<String, Object> map) {
+        Users user = new Users(
+                (String) map.get("bio"),
+                ((Timestamp) map.get("dob")),
+                (String) map.get("email"),
+                (String) map.get("location"),
+                (String) map.get("profileBgPicUrl"),
+                (String) map.get("profilePicUrl"),
+                (String) map.get("username"),
+                (String) map.get("userID"));
+        return user;
+    }
+
+    public String getDOBText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(this.dob.toDate());
+    }
+
 
     public String getBio() {
         return bio;

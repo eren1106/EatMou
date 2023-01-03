@@ -43,4 +43,15 @@
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
     <string name="settings">Settings</string>
+    <string name="profile_page">Profile Page</string>
+    <string name="edit_profile_back_button">Edit Profile Back Button</string>
+    <string name="name">Name</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="cover_picture">Cover Picture</string>
+    <string name="about_me">About Me</string>
+    <string name="address">Address</string>
+    <string name="save">SAVE</string>
+    <string name="manage_password">Manage Password</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>
