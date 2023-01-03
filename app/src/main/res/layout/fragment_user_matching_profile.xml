@@ -58,7 +58,7 @@
                     android:layout_height="350sp"
                     android:layout_alignParentTop="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/test2" />
+                    tools:src="@drawable/test2" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/inviteBtn"
@@ -78,14 +78,14 @@
                     android:layout_below="@+id/user_image"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="20sp"
-                    android:layout_marginRight="20sp"
                     android:layout_marginTop="20sp"
+                    android:layout_marginRight="20sp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Nicolas Tesla"
                     android:textColor="@color/black"
                     android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Nicolas Tesla" />
 
                 <TextView
                     android:id="@+id/about_me"
@@ -108,9 +108,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="5sp"
-                    android:text="I'm dead"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="I'm dead" />
 
                 <TextView
                     android:id="@+id/user_location_title"
@@ -133,9 +133,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="5sp"
-                    android:text="Petaling Jaya, Selangor"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="Petaling Jaya, Selangor" />
 
                 <TextView
                     android:id="@+id/user_info_title"

@@ -47,6 +47,7 @@ public class UserMatchingProfileFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: Back button not user friendly
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
             }
@@ -89,10 +90,13 @@ public class UserMatchingProfileFragment extends Fragment {
                         info1 = view.findViewById(R.id.info1);
                         info2 = view.findViewById(R.id.info2);
                         info3 = view.findViewById(R.id.info3);
-                        String[] basic_info = user.getBio().split(" ");
-                        info1.setText(basic_info[0]);
-                        info2.setText(basic_info[1]);
-                        info3.setText(basic_info[2]);
+                        String bio = user.getBio();
+                        if(bio != null) {
+                            String[] basic_info = bio.split(" ");
+                            info1.setText(basic_info[0]);
+                            info2.setText(basic_info[1]);
+                            info3.setText(basic_info[2]);
+                        }
                     } else {
                         Log.d("User document", "No such document");
                     }
