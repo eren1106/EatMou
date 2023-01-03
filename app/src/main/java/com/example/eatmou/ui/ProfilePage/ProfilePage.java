@@ -49,6 +49,7 @@ public class ProfilePage extends Fragment {
 
         btnEditProfileFragment.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
         btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
+        btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
     }
 
     private void replaceFragment(Fragment fragment){

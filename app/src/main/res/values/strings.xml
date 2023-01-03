@@ -42,4 +42,5 @@
     <string name="organiser_name">Organiser Name</string>
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
+    <string name="settings">Settings</string>
 </resources>
