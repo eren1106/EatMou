@@ -57,7 +57,6 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
         RelativeLayout cardView_expandable;
         RelativeLayout cardView_mainBar;
 
-
         public MyViewHolder(final View view){
             super(view);
             userImgView = view.findViewById(R.id.userImgView);
