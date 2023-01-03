@@ -23,10 +23,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -134,10 +138,17 @@ public class EditProfileFragment extends Fragment {
                 db.collection("users").document(UserID)
                         .update("username", editNameField.getText().toString());
             }
-//                if (!date.getText().toString().equals(args.getString("Dob"))){
-//                    db.collection("users").document(args.getString("UserID"))
-//                            .update("username", date.getText().toString());
-//                }
+            if (!date.getText().toString().equals(args.getString("Dob"))){
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date userDOB = sdf.parse(date.getText().toString());
+                    Timestamp timestampDOB = new Timestamp(userDOB);
+                    db.collection("users").document(args.getString("UserID"))
+                            .update("dob", timestampDOB);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
             if(!editBioField.getText().toString().equals(args.getString("Bio"))){
                 db.collection("users").document(UserID)
                         .update("bio", editBioField.getText().toString());

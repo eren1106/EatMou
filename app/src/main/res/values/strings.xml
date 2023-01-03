@@ -52,4 +52,6 @@
     <string name="about_me">About Me</string>
     <string name="address">Address</string>
     <string name="save">SAVE</string>
+    <string name="manage_password">Manage Password</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

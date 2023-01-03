@@ -1,12 +1,13 @@
 package com.example.eatmou.model;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.google.firebase.Timestamp;
 
-public class Users implements Serializable {
+import java.text.SimpleDateFormat;
+import java.util.Map;
+
+public class Users {
     private String bio;
-    private Date dob;
+    private Timestamp dob;
     private String email;
     private String location;
     private String profileBgPicUrl;
@@ -14,10 +15,9 @@ public class Users implements Serializable {
     private String userID;
     private String username;
 
-
     public Users(){}
 
-    public Users(String bio, Date dob, String email, String location, String profileBgPicUrl, String profilePicUrl, String username, String userID) {
+    public Users(String bio, Timestamp dob, String email, String location, String profileBgPicUrl, String profilePicUrl, String username, String userID) {
         this.bio = bio;
         this.dob = dob;
         this.email = email;
@@ -28,16 +28,30 @@ public class Users implements Serializable {
         this.userID = userID;
     }
 
-    public String getDobText() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(this.dob);
+    public static Users toObject(Map<String, Object> map) {
+        Users user = new Users(
+                (String) map.get("bio"),
+                ((Timestamp) map.get("dob")),
+                (String) map.get("email"),
+                (String) map.get("location"),
+                (String) map.get("profileBgPicUrl"),
+                (String) map.get("profilePicUrl"),
+                (String) map.get("username"),
+                (String) map.get("userID"));
+        return user;
     }
+
+    public String getDOBText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(this.dob.toDate());
+    }
+
 
     public String getBio() {
         return bio;
     }
 
-    public Date getDob() {
+    public Timestamp getDob() {
         return dob;
     }
 
