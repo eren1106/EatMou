@@ -68,7 +68,6 @@ public class InboxUserProfileFragment extends Fragment {
             fragmentTransaction.commit();
         });
 
-        //Get username from share preference from adapter for particular user
         if(args != null) InboxUserID = args.getString("InboxUserID");
 
         //Set the view of fragment by fetching data from firebase
