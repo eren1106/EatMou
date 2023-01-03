@@ -13,6 +13,7 @@ import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
 import com.example.eatmou.ui.Inbox.InboxFragment;
+import com.example.eatmou.ui.Inbox.received.ReceivedFragment;
 import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new FoodPartyListFragment();
                     break;
                 case R.id.inbox:
-                    selectedFragment = new InboxFragment();
+                    selectedFragment = new InboxFragment(new ReceivedFragment());
+                    Bundle args = new Bundle();
+                    args.putString("button", "1");
+                    selectedFragment.setArguments(args);
                     break;
                 case R.id.profile:
                     selectedFragment = new ProfilePageFrame();

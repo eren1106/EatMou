@@ -1,13 +1,16 @@
 package com.example.eatmou.ui.Inbox.sent;
 
+import static android.content.ContentValues.TAG;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +23,13 @@ import com.example.eatmou.ui.Inbox.EmptyDataObserver;
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SentFragment extends Fragment {
 
@@ -38,7 +42,6 @@ public class SentFragment extends Fragment {
     View view;
     ImageButton sort_button;
     RelativeLayout empty_view;
-    Invitation canceledInvitation = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +60,7 @@ public class SentFragment extends Fragment {
         empty_view = view.findViewById(R.id.empty_view);
         sentRecyclerView = view.findViewById(R.id.sentRecyclerView);
         invitationList = new ArrayList<>();
-        adapter = new SentAdapter(invitationList, userID);
+        adapter = new SentAdapter(invitationList, userID, getContext());
 
         db = FirebaseFirestore.getInstance();
 
@@ -66,43 +69,37 @@ public class SentFragment extends Fragment {
 
         sort_button = view.findViewById(R.id.sort_button);
         sort_button.setOnClickListener(v ->{
-            //
-            Toast.makeText(getContext(), "Open sorting view", Toast.LENGTH_SHORT).show();
+            PopupMenu popupMenu = new PopupMenu(getContext(), sort_button);
+            popupMenu.getMenuInflater().inflate(R.menu.sent_sorting_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                String chosen = (String) menuItem.getTitle();
+                switch (chosen) {
+                    case "Username":
+                        Collections.sort(invitationList, (inv1, inv2) -> inv1.getInvitedName().compareToIgnoreCase(inv2.getInvitedName()));
+                        break;
+                    case "Location":
+                        Collections.sort(invitationList, (inv1, inv2) -> inv1.getLocation().compareToIgnoreCase(inv2.getLocation()));
+                        break;
+                    case "Date":
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Collections.sort(invitationList, Comparator.comparing(Invitation::getDate));
+                            Collections.reverse(invitationList);
+                        }
+                        break;
+                    case "Time":
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Collections.sort(invitationList, Comparator.comparing(Invitation::getStartTime));
+                        }
+                        break;
+                    case "Status":
+                        Collections.sort(invitationList, (inv1, inv2) -> inv1.getStatus().compareToIgnoreCase(inv2.getStatus()));
+                }
+                adapter.notifyDataSetChanged();
+                return true;
+            });
+            popupMenu.show();
         });
-
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(sentRecyclerView);
     }
-
-//
-//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-//        @Override
-//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//            return false;
-//        }
-//
-//        @Override
-//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//            int position = viewHolder.getAdapterPosition();
-//            switch (direction) {
-//                case ItemTouchHelper.RIGHT:
-//                    getCanceledUsername(position);
-//                    deleteInvitation();
-//                    break;
-//            }
-//        }
-//
-//        @Override
-//        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-//            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-//                    .addSwipeRightBackgroundColor(ContextCompat.getColor(view.getContext(),R.color.RED))
-//                    .addSwipeRightActionIcon(R.drawable.ic_baseline_cancel_24)
-//                    .addSwipeRightLabel("Cancel Invitation")
-//                    .create()
-//                    .decorate();
-//            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-//        }
-//    };
 
     private void setAdapter() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -121,64 +118,30 @@ public class SentFragment extends Fragment {
                 .whereEqualTo("OrganiserID", userID)
                 .orderBy("Date")
                 .orderBy("StartTime")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error!=null){
-                    Log.e("Firestore error", error.getMessage());
-                    return;
-                }
-                for(DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        invitationList.add(Invitation.toObject(doc.getDocument().getData()));
+                .addSnapshotListener((value, error) -> {
+                    if(error!=null){
+                        Log.e("Firestore error", error.getMessage());
+                        return;
                     }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }
+                    for(DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            Invitation invitation = Invitation.toObject(doc.getDocument().getData());
 
-//    private void getCanceledUsername(int position){
-//        canceledInvitation = invitationList.get(position);
-//        DocumentReference docRef = db.collection("Users").document(canceledInvitation.getInvitedID());
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        String name = document.getString("Username");
-//                        invitationList.remove(position);
-//                        adapter.notifyItemRemoved(position);
-//                        String description = "You have canceled the invitation for " + name;
-//                        Snackbar.make(sentRecyclerView, description, 10000)
-//                                .setAction("Undo", view -> {
-//                                    invitationList.add(position,canceledInvitation);
-//                                    adapter.notifyItemInserted(position);
-//                                }).show();
-//                    }
-//                    else Log.d(TAG, "No such document");
-//                }
-//                else Log.d(TAG, "get failed with ", task.getException());
-//            }
-//        });
-//    }
-//
-//    private void deleteInvitation(){
-//        db.collection("Invitations")
-//                .document(canceledInvitation.getInvitationID())
-//                .delete()
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error deleting document", e);
-//                    }
-//                });
-//    }
+                            //get and set organiser name
+                            DocumentReference docRef = db.collection("users").document(invitation.getInvitedID());
+                            docRef.get().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        String name = document.getString("username");
+                                        invitation.setInvitedName(name);
+                                    } else Log.d(TAG, "No such document");
+                                } else Log.d(TAG, "get failed with ", task.getException());
+                            });
+                            invitationList.add(invitation);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+    }
 }

@@ -3,6 +3,8 @@ package com.example.eatmou.ui.Inbox.received;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eatmou.model.Invitation;
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.eatmou.model.Invitation;
+import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,13 +38,16 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
     private ArrayList<Invitation> invitationList;
     private FirebaseFirestore db;
     private String userID;
+    private Context context;
 
-    public ReceivedAdapter(ArrayList<Invitation> invitationList, String userID){
+    public ReceivedAdapter(ArrayList<Invitation> invitationList, String userID, Context context){
         this.invitationList = invitationList;
         this.userID = userID;
+        this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
+        private ImageView userImgView;
         private TextView usernameTxt;
         private TextView locationTxt;
         private TextView dateTxt;
@@ -47,6 +56,8 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
         private Button acceptBtn;
         private Button declineBtn;
+        private String InboxUserID;
+
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -55,6 +66,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
         public MyViewHolder(final View view){
             super(view);
+            userImgView = view.findViewById(R.id.userImgView);
             usernameTxt = view.findViewById(R.id.usernameTxt);
             locationTxt = view.findViewById(R.id.locationTxt);
             dateTxt = view.findViewById(R.id.dateTxt);
@@ -114,11 +126,29 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                         .show();
             });
 
-            usernameTxt.setOnLongClickListener(v -> {
-                Invitation invitation = invitationList.get(getAdapterPosition());
-                String name = invitation.getInvitedID() + "'s ";
-                Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
-                return true;
+            userImgView.setOnClickListener(view1 -> {
+                Fragment fragment = new InboxUserProfileFragment();
+                Bundle args = new Bundle();
+                args.putString("InboxUserID", InboxUserID);
+                args.putString("FragmentID", "ReceivedFragment");
+                fragment.setArguments(args);
+
+                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout,fragment);
+                fragmentTransaction.commit();
+//                    //Share Preferences
+//                    SharedPreferences sharedPreferences = PreferenceManager
+//                            .getDefaultSharedPreferences(context);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    //Set username clicked into the share preference
+//                    editor.putString("USERNAME_SHARED_PREF", invitation.getInvitedID());
+//                    editor.apply();
+//                    Log.d("userID", invitation.getInvitedID());
+//                    //Switch to next fragment
+//                    Fragment fragment = new UserMatchingProfileFragment();
+//                    ((FragmentActivity)context).getSupportFragmentManager()
+//                            .beginTransaction().replace(R.id.frameLayout, fragment).commit();
             });
         }
     }
@@ -137,23 +167,25 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
 
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(invitation.getOrganiserID());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String name = document.getString("username");
-                        holder.usernameTxt.setText(preText + name);
-                    } else Log.d(TAG, "No such document");
-                } else Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String name = document.getString("username");
+                    holder.usernameTxt.setText(preText + name);
 
+                    String profilePicUrl = document.getString("profilePicUrl");
+                    Glide.with(context).load(profilePicUrl).into(holder.userImgView);
+                } else Log.d(TAG, "No such document");
+            } else Log.d(TAG, "get failed with ", task.getException());
+        });
+//        System.out.println(invitation);
+//        holder.usernameTxt.setText(preText + invitation.getOrganiserName());
         holder.locationTxt.setText(invitation.getLocation());
         holder.dateTxt.setText(invitation.getDateText());
         holder.startTimeTxt.setText(invitation.getStartTimeText());
         holder.endTimeTxt.setText(invitation.getEndTimeText());
+        holder.InboxUserID = invitation.getOrganiserID();
 
         boolean isExpandable = invitationList.get(position).isExpandable();
         holder.cardView_expandable.setVisibility(isExpandable? View.VISIBLE:View.GONE);
@@ -163,6 +195,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
     public int getItemCount() {
         return invitationList.size();
     }
+
 
     public String getUserID() {
         return userID;
