@@ -71,29 +71,30 @@ public class EditProfileFragment extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/"
-                                        + (monthOfYear + 1) + "/" + year);
+                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
         });
 
+        // Edit Circle Profile Image
         view.findViewById(R.id.editProfileImg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ImagePicker.with(EditProfileFragment.this)
-                        .galleryOnly()	//User can only select image from Gallery
+                        .crop()	    		//Crop image(Optional), Check Customization for more option
                         .start(111);//Default Request Code is ImagePicker.REQUEST_CODE
                 indication = "profileImg";
             }
         });
 
+        // Edit Background Image
         view.findViewById(R.id.editBgImg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ImagePicker.with(EditProfileFragment.this)
-                        .galleryOnly()	//User can only select image from Gallery
+                        .crop()	    		//Crop image(Optional), Check Customization for more option
                         .start(111);//Default Request Code is ImagePicker.REQUEST_CODE
                 indication = "bgImg";
             }
