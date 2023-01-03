@@ -23,7 +23,7 @@
 
                 <ImageView
                     android:id="@+id/back_BtnEditProfile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="24sp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/back_arrow"
                     android:layout_margin="10dp"
@@ -154,7 +154,7 @@
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/bg_img"
+                    app:layout_constraintTop_toTopOf="@id/userBgImg"
                     android:layout_marginBottom="10sp" />
             </LinearLayout>
 
