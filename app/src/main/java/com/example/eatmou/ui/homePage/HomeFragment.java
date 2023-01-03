@@ -34,7 +34,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("Testing","Testing");
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
