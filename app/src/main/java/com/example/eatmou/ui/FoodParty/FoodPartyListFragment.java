@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eatmou.R;
+import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.Authentication.LoginPage;
+import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -32,7 +34,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
     ArrayList<FoodPartyModel> foodPartyModels = new ArrayList<>();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
+    UserModel currentUser = MainActivity.user;
 
     boolean showMine = false;
     EventListener<QuerySnapshot> eventListener;
@@ -114,7 +116,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
             listenerRegistration.remove();
         }
         if(showMine) {
-            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", "myid").addSnapshotListener(eventListener);
+            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", currentUser.getUserID()).addSnapshotListener(eventListener);
         }
         else {
             listenerRegistration = firestore.collection("foodParties").addSnapshotListener(eventListener);
