@@ -38,9 +38,9 @@
                 android:textColor="#FF5E51"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/back_Btn"
-                app:layout_constraintStart_toEndOf="@+id/back_Btn"
-                app:layout_constraintTop_toTopOf="@+id/back_Btn" />
+                app:layout_constraintBottom_toBottomOf="@id/back_Btn"
+                app:layout_constraintStart_toEndOf="@id/back_Btn"
+                app:layout_constraintTop_toTopOf="@id/back_Btn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView

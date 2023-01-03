@@ -1,23 +1,20 @@
 package com.example.eatmou.ui.homePage;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
-
-import com.example.eatmou.ui.Inbox.InboxFragment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.eatmou.ui.Inbox.received.ReceivedFragment;
-import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
-import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
+import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
+import com.example.eatmou.ui.Inbox.InboxFragment;
+import com.example.eatmou.ui.Inbox.received.ReceivedFragment;
+import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;

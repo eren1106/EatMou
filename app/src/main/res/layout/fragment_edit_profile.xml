@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ProfilePage.EditProfileFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_profile_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:verticalScrollbarPosition="defaultPosition">
+
+        <ImageView
+            android:id="@+id/back_BtnEditProfile"
+            android:layout_width="24sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20sp"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/edit_profile_back_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:text="@string/profile_page"
+            android:textColor="#FF5E51"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/back_BtnEditProfile"
+            app:layout_constraintStart_toEndOf="@id/back_BtnEditProfile"
+            app:layout_constraintTop_toTopOf="@id/back_BtnEditProfile" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:id="@+id/editProfileScrolllView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/edit_profile_title_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/back_BtnEditProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back_arrow"
-                    android:layout_margin="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.042"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.031" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/Profile_Page"
-                    android:textColor="#FF5E51"
-                    android:textSize="25sp"
-                    android:textStyle="bold">
-                </TextView>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="@string/name"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -97,7 +102,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Birthdate"
+                        android:text="@string/birthdate"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -135,7 +140,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Profile Picture"
+                        android:text="@string/profile_picture"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -154,7 +159,7 @@
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/bg_img"
+                    app:layout_constraintTop_toTopOf="@id/userBgImg"
                     android:layout_marginBottom="10sp" />
             </LinearLayout>
 
@@ -171,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Upload Background Image"
+                        android:text="@string/cover_picture"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -204,7 +209,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Update Bio"
+                        android:text="@string/about_me"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -244,7 +249,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Update Location"
+                        android:text="@string/address"
                         android:textSize="20sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginLeft="20dp"
@@ -334,12 +339,13 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/saveButton"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
+                android:text="@string/save"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp">
             </Button>
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</RelativeLayout>

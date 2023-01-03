@@ -1,10 +1,12 @@
 package com.example.eatmou.model;
 
-import com.google.firebase.Timestamp;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Users {
+public class Users implements Serializable {
     private String bio;
-    private Timestamp dob;
+    private Date dob;
     private String email;
     private String location;
     private String profileBgPicUrl;
@@ -15,7 +17,7 @@ public class Users {
 
     public Users(){}
 
-    public Users(String bio, Timestamp dob, String email, String location, String profileBgPicUrl, String profilePicUrl, String username, String userID) {
+    public Users(String bio, Date dob, String email, String location, String profileBgPicUrl, String profilePicUrl, String username, String userID) {
         this.bio = bio;
         this.dob = dob;
         this.email = email;
@@ -26,11 +28,16 @@ public class Users {
         this.userID = userID;
     }
 
+    public String getDobText() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(this.dob);
+    }
+
     public String getBio() {
         return bio;
     }
 
-    public Timestamp getDob() {
+    public Date getDob() {
         return dob;
     }
 

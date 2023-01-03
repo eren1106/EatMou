@@ -20,25 +20,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 import com.example.eatmou.model.Users;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 
 public class ProfilePage extends Fragment {
 
     Button btnEditProfileFragment, btnManagePwFragment, btnSettingsFragment;
+    ImageView userBgImg, userProfileImg;
+    TextView userName, userBio;
     View view;
-
-    private ImageView profileImage;
-    private ImageView profileBgImage;
-    private TextView username;
-    private TextView bio;
-    private Users currentUser;
+    Users currentUser;
 
     private FirebaseFirestore db;
 
@@ -64,10 +58,10 @@ public class ProfilePage extends Fragment {
         String userID = null;
         if (user != null) userID = user.getUid();
 
-        profileBgImage = view.findViewById(R.id.bg_img);
-        profileImage = view.findViewById(R.id.profile_img);
-        username = view.findViewById(R.id.user_name);
-        bio = view.findViewById(R.id.bio_info);
+        userBgImg = view.findViewById(R.id.userBgImg);
+        userProfileImg = view.findViewById(R.id.userProfileImg);
+        userName = view.findViewById(R.id.userName);
+        userBio = view.findViewById(R.id.userBio);
         currentUser = new Users();
 
         db = FirebaseFirestore.getInstance();
@@ -80,10 +74,10 @@ public class ProfilePage extends Fragment {
                     currentUser = document.toObject(Users.class);
                     Log.d("User document", "DocumentSnapshot data: " + document.getData());
 
-                    Glide.with(view).load(currentUser.getProfilePicUrl()).into(profileImage);
-                    Glide.with(view).load(currentUser.getProfileBgPicUrl()).into(profileBgImage);
-                    username.setText(currentUser.getUsername());
-                    bio.setText(currentUser.getBio());
+                    Glide.with(view).load(currentUser.getProfilePicUrl()).into(userProfileImg);
+                    Glide.with(view).load(currentUser.getProfileBgPicUrl()).into(userBgImg);
+                    userName.setText(currentUser.getUsername());
+                    userBio.setText(currentUser.getBio());
 
                 } else Log.d("User document", "No such document");
             } else Log.d("User document", "get failed with ", task.getException());
@@ -93,8 +87,24 @@ public class ProfilePage extends Fragment {
         btnManagePwFragment = view.findViewById(R.id.btnManagePw);
         btnSettingsFragment = view.findViewById(R.id.btnSettings);
 
-        btnEditProfileFragment.setOnClickListener(v -> replaceFragment(new EditProfileFragment()));
+        btnEditProfileFragment.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+
+            args.putString("UserID", user.getUid());
+            args.putString("Username", currentUser.getUsername());
+            args.putString("Dob", currentUser.getDobText());
+            args.putString("ProfilePicUrl", currentUser.getProfilePicUrl());
+            args.putString("ProfileBgPicUrl", currentUser.getProfileBgPicUrl());
+            args.putString("Bio", currentUser.getBio());
+            args.putString("Location", currentUser.getLocation());
+            args.putSerializable("UserObject", currentUser);
+
+            EditProfileFragment editProfileFragment = new EditProfileFragment();
+            editProfileFragment.setArguments(args);
+            replaceFragment(editProfileFragment);
+        });
         btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
+        btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
     }
 
     private void replaceFragment(Fragment fragment){
