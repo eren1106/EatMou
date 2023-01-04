@@ -79,7 +79,6 @@ public class SignUpPage extends AppCompatActivity {
                     Toast.makeText(SignUpPage.this, "Password not correct", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 //Show Progress dialog
                 progressDialog.show();
 
