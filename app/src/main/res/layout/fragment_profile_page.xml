@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,36 +7,55 @@
     tools:context=".ui.ProfilePage.ProfilePage"
     android:id="@+id/profilePage">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:verticalScrollbarPosition="defaultPosition">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/profile_page"
+            android:textColor="#FF5E51"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/ProfilePageScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/profile_title_bar">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/profile_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Profile_Page"
-                android:textColor="#FF5E51"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.058"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.013" />
-
             <ImageView
                 android:id="@+id/userBgImg"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/mikami_bg"
-                app:layout_constraintTop_toBottomOf="@id/profile_title"
-                tools:layout_editor_absoluteX="0dp"
+
+                android:contentDescription="@string/cover_picture"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/cover_picture" />
+                android:src="@drawable/mikami_bg"
+                app:layout_constraintBottom_toTopOf="@+id/userProfileImg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userProfileImg"
@@ -68,38 +87,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins"
-                android:text="“If you really want to make a friend, go to someone’s house and eat with him... the people who give you their food give you their heart.”"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/userName"
-                tools:layout_editor_absoluteX="54dp"
+                android:text="“If you really want to make a friend, go to someone’s house and eat with him... the people who give you their food give you their heart.”"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userName"
+                tools:layout_editor_absoluteX="54dp" />
 
-        <Button
-            android:id="@+id/btnEditProfile"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="@string/edit_profile"
-            app:layout_constraintTop_toBottomOf="@id/userBio"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/selected_state"
+                android:text="@string/edit_profile"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userBio" />
 
-        <Button
-            android:id="@+id/btnManagePw"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="@string/manage_password"
-            app:layout_constraintTop_toBottomOf="@id/btnEditProfile"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <Button
+                android:id="@+id/btnManagePw"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/selected_state"
+                android:text="@string/manage_password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
 
-        <Button
-            android:id="@+id/btnSettings"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="@string/settings"
-            app:layout_constraintTop_toBottomOf="@id/btnManagePw"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/selected_state"
+                android:text="@string/settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnManagePw" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

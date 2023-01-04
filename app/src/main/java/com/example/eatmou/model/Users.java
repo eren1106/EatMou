@@ -29,7 +29,7 @@ public class Users {
     }
 
     public static Users toObject(Map<String, Object> map) {
-        Users user = new Users(
+        return new Users(
                 (String) map.get("bio"),
                 ((Timestamp) map.get("dob")),
                 (String) map.get("email"),
@@ -38,7 +38,6 @@ public class Users {
                 (String) map.get("profilePicUrl"),
                 (String) map.get("username"),
                 (String) map.get("userID"));
-        return user;
     }
 
     public String getDOBText() {

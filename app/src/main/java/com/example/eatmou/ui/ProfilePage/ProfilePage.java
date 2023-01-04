@@ -1,5 +1,6 @@
 package com.example.eatmou.ui.ProfilePage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 import com.example.eatmou.model.Users;
+import com.example.eatmou.ui.ProfilePage.settings.SettingsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -32,6 +36,7 @@ public class ProfilePage extends Fragment {
     TextView userName, userBio;
     View view;
     Users currentUser;
+    RelativeLayout profilePage;
 
     private FirebaseFirestore db;
 
@@ -52,6 +57,13 @@ public class ProfilePage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        profilePage = view.findViewById(R.id.profilePage);
+        profilePage.setVisibility(View.INVISIBLE);
+
+        ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = null;
@@ -79,6 +91,8 @@ public class ProfilePage extends Fragment {
                     Glide.with(view).load(currentUser.getProfileBgPicUrl()).into(userBgImg);
                     userName.setText(currentUser.getUsername());
                     userBio.setText(currentUser.getBio());
+                    progressDialog.dismiss();
+                    profilePage.setVisibility(View.VISIBLE);
 
                 } else Log.d("User document", "No such document");
             } else Log.d("User document", "get failed with ", task.getException());
@@ -88,18 +102,11 @@ public class ProfilePage extends Fragment {
         btnManagePwFragment = view.findViewById(R.id.btnManagePw);
         btnSettingsFragment = view.findViewById(R.id.btnSettings);
 
+//            args.putSerializable("UserObject", currentUser);
+
         btnEditProfileFragment.setOnClickListener(v -> {
             Bundle args = new Bundle();
-
-//            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
-//            Timestamp timestamp = currentUser.getDob();
-//            Date dateDOB = timestamp.toDate();
-//            sfd.format(dateDOB);
-//            System.out.println(timestamp);
-//            System.out.println(dateDOB);
-//            System.out.println(sfd);
-
-
+            args.putString("Email", user.getEmail());
             args.putString("UserID", user.getUid());
             args.putString("Username", currentUser.getUsername());
             args.putString("Dob", currentUser.getDOBText());
@@ -107,13 +114,16 @@ public class ProfilePage extends Fragment {
             args.putString("ProfileBgPicUrl", currentUser.getProfileBgPicUrl());
             args.putString("Bio", currentUser.getBio());
             args.putString("Location", currentUser.getLocation());
-//            args.putSerializable("UserObject", currentUser);
 
             EditProfileFragment editProfileFragment = new EditProfileFragment();
             editProfileFragment.setArguments(args);
             replaceFragment(editProfileFragment);
         });
-        btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
+        btnManagePwFragment.setOnClickListener(v -> {
+            ManagePwFragment managePwFragment = new ManagePwFragment();
+//            managePwFragment.setArguments(args);
+            replaceFragment(managePwFragment);
+        });
         btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
     }
 
