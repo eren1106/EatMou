@@ -1,5 +1,6 @@
 package com.example.eatmou.ui.ProfilePage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +35,7 @@ public class ProfilePage extends Fragment {
     TextView userName, userBio;
     View view;
     Users currentUser;
+    ScrollView profilePage;
 
     private FirebaseFirestore db;
 
@@ -52,6 +56,13 @@ public class ProfilePage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        profilePage = view.findViewById(R.id.profilePage);
+        profilePage.setVisibility(View.INVISIBLE);
+
+        ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = null;
@@ -79,6 +90,8 @@ public class ProfilePage extends Fragment {
                     Glide.with(view).load(currentUser.getProfileBgPicUrl()).into(userBgImg);
                     userName.setText(currentUser.getUsername());
                     userBio.setText(currentUser.getBio());
+                    progressDialog.dismiss();
+                    profilePage.setVisibility(View.VISIBLE);
 
                 } else Log.d("User document", "No such document");
             } else Log.d("User document", "get failed with ", task.getException());
@@ -90,15 +103,6 @@ public class ProfilePage extends Fragment {
 
         btnEditProfileFragment.setOnClickListener(v -> {
             Bundle args = new Bundle();
-
-//            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy");
-//            Timestamp timestamp = currentUser.getDob();
-//            Date dateDOB = timestamp.toDate();
-//            sfd.format(dateDOB);
-//            System.out.println(timestamp);
-//            System.out.println(dateDOB);
-//            System.out.println(sfd);
-
 
             args.putString("UserID", user.getUid());
             args.putString("Username", currentUser.getUsername());
