@@ -85,10 +85,11 @@ public class AppLockStart extends AppCompatActivity {
                 int ind = changedValue.length();
                 Log.d("clicked","ind = " + ind + "\nLengthOri = " + lengthOri);
                 if(ind < lengthOri) {
-                    dotList.get(ind).setBackgroundResource(R.drawable.dot_grey);
+                    //When the appLockPassword is erase set the black dot become grey dot
+                    dotList.get(ind).setImageResource(R.drawable.dot_grey);
                     lengthOri -= 1;
                 } else {
-                    dotList.get(ind - 1).setBackgroundResource(R.drawable.dot_black);
+                    dotList.get(ind - 1).setImageResource(R.drawable.dot_black);
                 }
             }
         });

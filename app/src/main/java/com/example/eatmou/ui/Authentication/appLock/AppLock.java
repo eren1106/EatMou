@@ -66,41 +66,45 @@ public class AppLock extends AppCompatActivity {
                     Toast.makeText(AppLock.this, "Please fill the field", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    if(pass.equals(confirmPass)) {
-                        //Create fireStore instance
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        String currentUserID = FirebaseAuth.getInstance().getUid();
+                    if(pass.length() == 4) {
+                        if(pass.equals(confirmPass)) {
+                            //Create fireStore instance
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            String currentUserID = FirebaseAuth.getInstance().getUid();
 
-                        if(currentUserID != null) {
-                            com.example.eatmou.model.AppLock appLock = new com.example.eatmou.model.AppLock(currentUserID, pass, true);
-                            //Get map of appLock class
-                            Map<String, Object> appLockMap = appLock.toMap();
+                            if(currentUserID != null) {
+                                com.example.eatmou.model.AppLock appLock = new com.example.eatmou.model.AppLock(currentUserID, pass, true);
+                                //Get map of appLock class
+                                Map<String, Object> appLockMap = appLock.toMap();
 
-                            db.collection("AppLock").document(currentUserID).set(appLockMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()) {
-                                                progressDialog.hide();
-                                                startActivity(new Intent(getApplicationContext(), AppLockStart.class));
-                                                finish();
-                                                Log.d("AppLock", "App lock successfully applied");
-                                            } else {
-                                                Toast.makeText(AppLock.this, "Error creating app lock", Toast.LENGTH_SHORT).show();
-                                                Log.d("AppLock", "Error");
+                                db.collection("AppLock").document(currentUserID).set(appLockMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()) {
+                                                    progressDialog.hide();
+                                                    startActivity(new Intent(getApplicationContext(), AppLockStart.class));
+                                                    finish();
+                                                    Log.d("AppLock", "App lock successfully applied");
+                                                } else {
+                                                    Toast.makeText(AppLock.this, "Error creating app lock", Toast.LENGTH_SHORT).show();
+                                                    Log.d("AppLock", "Error");
+                                                }
                                             }
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("AppLock", e.getMessage());
-                                        }
-                                    });
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("AppLock", e.getMessage());
+                                            }
+                                        });
+                            }
+                        } else {
+                            Toast.makeText(AppLock.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                            return;
                         }
                     } else {
-                        Toast.makeText(AppLock.this, "Password incorrect", Toast.LENGTH_SHORT).show();
-                        return;
+                        Toast.makeText(AppLock.this, "4 digit password allowed ONLY", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

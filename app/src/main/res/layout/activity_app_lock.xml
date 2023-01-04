@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20sp"
-    android:paddingBottom="30sp"
     android:paddingStart="30sp"
+    android:paddingTop="20sp"
     android:paddingEnd="30sp"
+    android:paddingBottom="30sp"
     tools:context=".ui.Authentication.appLock.AppLock">
 
     <LinearLayout
@@ -58,7 +58,7 @@
             android:background="@drawable/inputbg"
             android:elevation="5sp"
             android:ellipsize="end"
-            android:inputType="text"
+            android:inputType="numberPassword"
             android:maxLines="1"
             android:paddingStart="20sp"
             android:paddingEnd="20sp" />
@@ -81,7 +81,7 @@
             android:background="@drawable/inputbg"
             android:elevation="5sp"
             android:ellipsize="end"
-            android:inputType="text"
+            android:inputType="numberPassword"
             android:maxLines="1"
             android:paddingStart="20sp"
             android:paddingEnd="20sp" />
