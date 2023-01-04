@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/fragment_title">
+
+    <ImageView
+        android:id="@+id/empty_image"
+        android:layout_width="wrap_content"
+        android:layout_height="300sp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/no_data"
+        android:padding="36sp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/undraw_mail_sent_re_0ofv" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/empty_image"
+        android:gravity="center"
+        android:text="@string/oops_you_haven_t_sent_any_invitations"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        android:paddingStart="24sp"
+        android:paddingEnd="24sp" />
+
+</RelativeLayout>

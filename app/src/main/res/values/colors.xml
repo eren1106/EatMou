@@ -27,4 +27,6 @@
     <color name="GREY">#9FA3A6</color>
     <color name="LIGHTGREY">#EFF1F3</color>
     <color name="WHITE">#FFFFFF</color>
+    <color name="vanilla">#FFEECC</color>
+
 </resources>

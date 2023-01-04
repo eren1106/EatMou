@@ -3,6 +3,7 @@ package com.example.eatmou.ui.Authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPage extends AppCompatActivity {
 
-    TextView tvSignUp;
+    TextView tvSignUp, forgotPass;
     EditText etEmail, etPassword;
     Button loginBtn;
     FirebaseAuth auth;
@@ -45,25 +46,43 @@ public class LoginPage extends AppCompatActivity {
         etPassword = findViewById(R.id.loginPass);
         loginBtn = findViewById(R.id.loginBtn);
 
+        //Progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Login");
+        progressDialog.setMessage("Please wait...");
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
                 auth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
+                            progressDialog.hide();
                             goToMain();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            progressDialog.hide();
                             Toast.makeText(LoginPage.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
+            }
+        });
+
+        //Forgot password
+        forgotPass = findViewById(R.id.forgotPass);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ForgotPassPage.class));
+                overridePendingTransition(0,0);
             }
         });
 

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ProfilePage.EditProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_profile_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:verticalScrollbarPosition="defaultPosition">
+
+        <ImageView
+            android:id="@+id/back_BtnEditProfile"
+            android:layout_width="24sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20sp"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/edit_profile_back_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:text="@string/profile_page"
+            android:textColor="#FF5E51"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/back_BtnEditProfile"
+            app:layout_constraintStart_toEndOf="@id/back_BtnEditProfile"
+            app:layout_constraintTop_toTopOf="@id/back_BtnEditProfile" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/editProfileScrolllView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/edit_profile_title_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="220dp">
+                    </TextView>
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editNameField"
+                    android:layout_width="370dp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:layout_marginBottom="10sp">
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/birthdate"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="190dp">
+                    </TextView>
+
+                </LinearLayout>
+                    <EditText
+                        android:id="@+id/date"
+                        android:layout_width="375dp"
+                        android:layout_height="40sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/inputbg"
+                        android:elevation="3sp"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:paddingStart="20sp"
+                        android:paddingEnd="20sp"
+                        android:drawableEnd="@drawable/calendar"
+                        android:layout_marginBottom="10sp">
+                    </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_picture"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="145dp">
+                    </TextView>
+                </LinearLayout>
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/editProfileImg"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mikami_profile"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/userBgImg"
+                    android:layout_marginBottom="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cover_picture"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/editBgImg"
+                    android:layout_width="375dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:scaleType="center"
+                    android:src="@drawable/mikami_bg"
+                    android:layout_marginBottom="10sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_me"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="170dp">
+                    </TextView>
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editBioField"
+                    android:layout_width="375dp"
+                    android:layout_height="125sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="5"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:paddingTop="15sp"
+                    android:gravity="top"
+                    android:layout_marginBottom="10sp">
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="115dp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editLocationField"
+                    android:layout_width="375dp"
+                    android:layout_height="125sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="5"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:paddingTop="15sp"
+                    android:gravity="top"
+                    android:layout_marginBottom="10sp">
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Keywords"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="185dp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="375dp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:layout_marginBottom="20dp">
+                </EditText>
+
+                <EditText
+                    android:layout_width="375dp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:layout_marginBottom="20dp">
+                </EditText>
+
+                <EditText
+                    android:layout_width="375dp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/inputbg"
+                    android:elevation="3sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="20sp"
+                    android:layout_marginBottom="20dp">
+                </EditText>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp">
+            </Button>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
