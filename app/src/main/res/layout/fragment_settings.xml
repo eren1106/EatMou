@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfilePage.SettingsFragment">
+    tools:context=".ui.ProfilePage.settings.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setting_title_bar"
@@ -100,7 +100,7 @@
             android:layout_marginEnd="20dp"/>
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/appLockBtn"
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/applock"
