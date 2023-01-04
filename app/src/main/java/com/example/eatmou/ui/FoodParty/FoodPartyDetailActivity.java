@@ -137,7 +137,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 @Override
                 public void onClick(View view) {
                     ArrayList<JoinedPersonModel> tempList = foodPartyModel.getJoinedPersons();
-                    JoinedPersonModel me = new JoinedPersonModel(currentUser.getUserID(), currentUser.getUsername(), R.drawable.eren); // R.drawable.eren juz temporary image
+                    JoinedPersonModel me = new JoinedPersonModel(currentUser.getUserID(), currentUser.getUsername(), currentUser.getProfilePicUrl()); // R.drawable.eren juz temporary image
                     tempList.add(me);
                     foodPartyModel.setJoinedPersons(tempList);
                     firebaseMethods.updateFoodParty(foodPartyModel);

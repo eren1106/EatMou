@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class JoinedPersonRecyclerViewAdapter extends RecyclerView.Adapter<Joined
 
     @Override
     public void onBindViewHolder(@NonNull JoinedPersonRecyclerViewAdapter.JoinedPersonViewHolder holder, int position) {
-        holder.profilePic.setImageResource(joinedPersonModels.get(position).getProfilePic());
+//        holder.profilePic.setImageResource(joinedPersonModels.get(position).getProfilePicUrl());
+        Glide.with(context).load(joinedPersonModels.get(position).getProfilePicUrl()).into(holder.profilePic);
         holder.name.setText(joinedPersonModels.get(position).getName());
     }
 

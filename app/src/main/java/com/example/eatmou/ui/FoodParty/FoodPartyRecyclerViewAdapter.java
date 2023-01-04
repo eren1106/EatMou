@@ -142,7 +142,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
                 @Override
                 public void onClick(View view) {
                     ArrayList<JoinedPersonModel> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
-                    JoinedPersonModel me = new JoinedPersonModel(currentUser.getUserID(), currentUser.getUsername(), R.drawable.eren); // R.drawable.eren juz temporary image
+                    JoinedPersonModel me = new JoinedPersonModel(currentUser.getUserID(), currentUser.getUsername(), currentUser.getProfilePicUrl()); // R.drawable.eren juz temporary image
                     tempList.add(me);
                     foodPartyModels.get(currentPosition).setJoinedPersons(tempList);
                     firebaseMethods.updateFoodParty(foodPartyModels.get(currentPosition));
