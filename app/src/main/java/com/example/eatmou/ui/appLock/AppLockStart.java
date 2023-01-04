@@ -3,11 +3,19 @@ package com.example.eatmou.ui.appLock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.example.eatmou.model.AppLock;
@@ -19,8 +27,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppLockStart extends AppCompatActivity {
     ConstraintLayout appLockLayout, splashScreen;
+    TextView num1,num2,num3,num4,num5,num6,num7,num8,num9,num0;
+    ImageView eraseIcon, tickIcon;
+    ImageView appCode1,appCode2,appCode3,appCode4;
+    MutableLiveData<String> listen = new MutableLiveData<>();
+    AppLock appLock = new AppLock();
+    String appLockPassword = "";
+    int lengthOri = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +50,48 @@ public class AppLockStart extends AppCompatActivity {
 
         //Set appLockLayout as invisible
         appLockLayout.setVisibility(View.INVISIBLE);
+
+        //Number pad functionality
+        numberPad();
+
+        //Erase function
+        eraseIcon = findViewById(R.id.eraseIcon);
+        eraseIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int length = appLockPassword.length();
+                if(length > 0 && length <= 4) {
+                    appLockPassword = appLockPassword.substring(0, length - 1);
+                    listen.setValue(appLockPassword);
+                }
+            }
+        });
+
+        //Dot change function
+        appCode1 = findViewById(R.id.appCode1);
+        appCode2 = findViewById(R.id.appCode2);
+        appCode3 = findViewById(R.id.appCode3);
+        appCode4 = findViewById(R.id.appCode4);
+        List<ImageView> dotList = new ArrayList<>();
+        dotList.add(appCode1);
+        dotList.add(appCode2);
+        dotList.add(appCode3);
+        dotList.add(appCode4);
+
+        listen.observe(this,new Observer<String>() {
+            @Override
+            public void onChanged(String changedValue) {
+                //Do something with the changed value
+                int ind = changedValue.length();
+                Log.d("clicked","ind = " + ind + "\nLengthOri = " + lengthOri);
+                if(ind < lengthOri) {
+                    dotList.get(ind).setBackgroundResource(R.drawable.dot_grey);
+                    lengthOri -= 1;
+                } else {
+                    dotList.get(ind - 1).setBackgroundResource(R.drawable.dot_black);
+                }
+            }
+        });
 
         //Check the user has set ap lock
         String currentUserID = FirebaseAuth.getInstance().getUid();
@@ -48,13 +108,27 @@ public class AppLockStart extends AppCompatActivity {
                             splashScreen.setVisibility(View.GONE);
 
                             //Convert the document to AppLock object
-                            AppLock appLock = new AppLock();
                             appLock = document.toObject(AppLock.class);
                             boolean check = false;
                             if(appLock != null) {
                                 check = appLock.isExistPass();
                                 if(check) {
-                                    //TODO: Button check app lock password logic
+                                    //Tick function
+                                    tickIcon = findViewById(R.id.tickIcon);
+                                    tickIcon.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if(appLockPassword != null) {
+                                                if(appLockPassword.equals(appLock.getPassword())) {
+                                                    toMain();
+                                                } else {
+                                                    Toast.makeText(AppLockStart.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } else {
+                                                Toast.makeText(AppLockStart.this, "Password incomplete", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 } else {
                                     toMain();
                                 }
@@ -73,4 +147,140 @@ public class AppLockStart extends AppCompatActivity {
         overridePendingTransition(0,0);
         finish();
     }
+
+    private void numberPad() {
+        //NumberPad 0
+        num0 = findViewById(R.id.num0);
+        num0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num0.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num1 = findViewById(R.id.num1);
+        num1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num1.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num2 = findViewById(R.id.num2);
+        num2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num2.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num3 = findViewById(R.id.num3);
+        num3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num3.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num4 = findViewById(R.id.num4);
+        num4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num4.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num5 = findViewById(R.id.num5);
+        num5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num5.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num6 = findViewById(R.id.num6);
+        num6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num6.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num7 = findViewById(R.id.num7);
+        num7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num7.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num8 = findViewById(R.id.num8);
+        num8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num8.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+
+        num9 = findViewById(R.id.num9);
+        num9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword.length() < 4) {
+                    appLockPassword += num9.getText().toString();
+                    listen.setValue(appLockPassword);
+                    lengthOri = appLockPassword.length();
+                }
+            }
+        });
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
