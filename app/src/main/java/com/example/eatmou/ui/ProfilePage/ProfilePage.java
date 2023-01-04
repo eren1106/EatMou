@@ -35,7 +35,7 @@ public class ProfilePage extends Fragment {
     TextView userName, userBio;
     View view;
     Users currentUser;
-    ScrollView profilePage;
+    RelativeLayout profilePage;
 
     private FirebaseFirestore db;
 
@@ -101,9 +101,11 @@ public class ProfilePage extends Fragment {
         btnManagePwFragment = view.findViewById(R.id.btnManagePw);
         btnSettingsFragment = view.findViewById(R.id.btnSettings);
 
+//            args.putSerializable("UserObject", currentUser);
+
         btnEditProfileFragment.setOnClickListener(v -> {
             Bundle args = new Bundle();
-
+            args.putString("Email", user.getEmail());
             args.putString("UserID", user.getUid());
             args.putString("Username", currentUser.getUsername());
             args.putString("Dob", currentUser.getDOBText());
@@ -111,13 +113,16 @@ public class ProfilePage extends Fragment {
             args.putString("ProfileBgPicUrl", currentUser.getProfileBgPicUrl());
             args.putString("Bio", currentUser.getBio());
             args.putString("Location", currentUser.getLocation());
-//            args.putSerializable("UserObject", currentUser);
 
             EditProfileFragment editProfileFragment = new EditProfileFragment();
             editProfileFragment.setArguments(args);
             replaceFragment(editProfileFragment);
         });
-        btnManagePwFragment.setOnClickListener(v -> replaceFragment(new ManagePwFragment()));
+        btnManagePwFragment.setOnClickListener(v -> {
+            ManagePwFragment managePwFragment = new ManagePwFragment();
+//            managePwFragment.setArguments(args);
+            replaceFragment(managePwFragment);
+        });
         btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
     }
 

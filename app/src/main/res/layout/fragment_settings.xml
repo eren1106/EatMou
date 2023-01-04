@@ -1,94 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ProfilePage.SettingsFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:verticalScrollbarPosition="defaultPosition">
+
+        <ImageView
+            android:id="@+id/back_BtnSettings"
+            android:layout_width="24sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/settings"
+            android:textColor="#FF5E51"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back_BtnSettings"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/back_BtnSettings"
-                android:layout_width="24sp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/back_arrow"
-                android:layout_margin="10dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/settings"
-                android:textColor="#FF5E51"
-                android:textSize="25sp"
-                android:textStyle="bold">
-            </TextView>
-
-        </LinearLayout>
+        android:orientation="vertical"
+        android:layout_below="@id/setting_title_bar">
 
         <Button
             android:id="@+id/button"
-            android:layout_width="375dp"
-            android:layout_height="75dp"
-            android:text="Feedback"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/feedback"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="16sp"/>
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="375dp"
-            android:layout_height="75dp"
-            android:text="Privacy Policy"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/privacy_policy"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="375dp"
-            android:layout_height="75dp"
-            android:text="Terms of Service"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/terms_of_service"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="375dp"
-            android:layout_height="75dp"
-            android:text="Community Guideline"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/community_guideline"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="375dp"
-            android:layout_height="75dp"
-            android:text="AppLock"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/applock"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
 
         <Button
             android:id="@+id/btnLogOut"
-            android:layout_width="375dp"
-            android:layout_height="60dp"
-            android:text="Logout"
-            android:layout_gravity="center"/>
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="@string/logout"
+            android:layout_gravity="center"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>
