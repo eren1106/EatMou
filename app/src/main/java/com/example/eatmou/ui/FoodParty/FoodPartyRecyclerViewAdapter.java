@@ -1,5 +1,6 @@
 package com.example.eatmou.ui.FoodParty;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.homePage.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -23,9 +27,10 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
 
     Context context;
     ArrayList<FoodPartyModel> foodPartyModels;
-//    FoodPartyModel foodPartyModel;
     UserModel currentUser = MainActivity.user;
     FirebaseMethods firebaseMethods;
+    int currentPosition;
+    String organiserName;
 
     private OnCardListener onCardListener;
 
@@ -43,13 +48,13 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         return new FoodPartyRecyclerViewAdapter.MyViewHolder(view, this.onCardListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FoodPartyRecyclerViewAdapter.MyViewHolder holder, int position) {
         firebaseMethods = new FirebaseMethods();
-        int currentPosition = holder.getAdapterPosition();
-//        foodPartyModel = foodPartyModels.get(currentPosition);
+        currentPosition = holder.getAdapterPosition();
+        fetchOrganiserName(holder);
         holder.title.setText(foodPartyModels.get(currentPosition).getTitle());
-        holder.organizer.setText(foodPartyModels.get(currentPosition).getOrganiserName());
         holder.location.setText(foodPartyModels.get(currentPosition).getLocation());
         holder.date.setText(foodPartyModels.get(currentPosition).getDateText());
         holder.time.setText(foodPartyModels.get(currentPosition).getStartTimeText() + " - " + foodPartyModels.get(currentPosition).getEndTimeText());
@@ -58,9 +63,9 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         setCardButton(holder, currentPosition);
     }
 
-    private boolean checkJoined(String userId, int currentPosition) {
-        for(JoinedPersonModel joinedPerson : foodPartyModels.get(currentPosition).getJoinedPersons()) {
-            if(joinedPerson.getUserId().equals(userId)) return true;
+    private boolean checkJoined(int currentPosition) {
+        for(String joinedPerson : foodPartyModels.get(currentPosition).getJoinedPersons()) {
+            if(joinedPerson.equals(currentUser.getUserID())) return true;
         }
         return false;
     }
@@ -118,14 +123,14 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
                 }
             });
         }
-        else if(checkJoined(currentUser.getUserID(), currentPosition)){
+        else if(checkJoined(currentPosition)){
             holder.cardBtn.setText("Leave");
             holder.cardBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArrayList<JoinedPersonModel> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
+                    ArrayList<String> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
                     for (int i = 0; i < tempList.size(); i++) {
-                        if(tempList.get(i).getUserId().equals(currentUser.getUserID())){
+                        if(tempList.get(i).equals(currentUser.getUserID())){
                             tempList.remove(i);
                             break;
                         }
@@ -141,15 +146,35 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
             holder.cardBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArrayList<JoinedPersonModel> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
-                    JoinedPersonModel me = new JoinedPersonModel(currentUser.getUserID(), currentUser.getUsername(), currentUser.getProfilePicUrl()); // R.drawable.eren juz temporary image
-                    tempList.add(me);
+                    ArrayList<String> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
+                    tempList.add(currentUser.getUserID());
                     foodPartyModels.get(currentPosition).setJoinedPersons(tempList);
                     firebaseMethods.updateFoodParty(foodPartyModels.get(currentPosition));
                     setCardButton(holder, currentPosition);
                 }
             });
         }
+    }
+
+    private void fetchOrganiserName (FoodPartyRecyclerViewAdapter.MyViewHolder holder) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection("users").document(foodPartyModels.get(currentPosition).getOrganiserId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        UserModel tempUser = UserModel.toObject(document.getData());
+                        holder.organizer.setText(tempUser.getUsername());
+                    } else {
+                        // Document with the specified ID does not exist
+                    }
+                } else {
+                    // Task failed
+                }
+            }
+        });
     }
 }
 

@@ -13,19 +13,17 @@ public class FoodPartyModel implements Serializable{
     String id;
     String title;
     String organiserId;
-    String organiserName;
     String location;
     Date date;
     Date startTime;
     Date endTime;
     int maxParticipant;
-    ArrayList<JoinedPersonModel> joinedPersons;
+    ArrayList<String> joinedPersons;
 
-    public FoodPartyModel(String id, String title, String organiserId, String organiserName, String location, Date date, Date startTime, Date endTime, int maxParticipant, ArrayList<JoinedPersonModel> joinedPersons) {
+    public FoodPartyModel(String id, String title, String organiserId, String location, Date date, Date startTime, Date endTime, int maxParticipant, ArrayList<String> joinedPersons) {
         this.id = id;
         this.title = title;
         this.organiserId = organiserId;
-        this.organiserName = organiserName;
         this.location = location;
         this.date = date;
         this.startTime = startTime;
@@ -38,7 +36,6 @@ public class FoodPartyModel implements Serializable{
         this.id = fpm.getId();
         this.title = fpm.getTitle();
         this.organiserId = fpm.getOrganiserId();
-        this.organiserName = fpm.getOrganiserName();
         this.location = fpm.getLocation();
         this.date = fpm.getDate();
         this.startTime = fpm.getStartTime();
@@ -52,7 +49,6 @@ public class FoodPartyModel implements Serializable{
         map.put("id", id);
         map.put("title", title);
         map.put("organiserId", organiserId);
-        map.put("organiserName", organiserName);
         map.put("location", location);
         map.put("date", date);
         map.put("startTime", startTime);
@@ -64,23 +60,17 @@ public class FoodPartyModel implements Serializable{
     }
 
     public static FoodPartyModel toObject(Map<String, Object> map) {
-        ArrayList<Map<String, Object>> mapList = (ArrayList<Map<String, Object>>) map.get("joinedPersons"); // the ArrayList of Map objects from Firestore
-        ArrayList<JoinedPersonModel> modelList = new ArrayList<>();
-        for (Map<String, Object> tempMap : mapList) {
-            JoinedPersonModel model = JoinedPersonModel.toObject(tempMap);
-            modelList.add(model);
-        }
         FoodPartyModel fpm = new FoodPartyModel(
                 (String) map.get("id"),
                 (String) map.get("title"),
                 (String) map.get("organiserId"),
-                (String) map.get("organiserName"),
                 (String) map.get("location"),
                 ((Timestamp) map.get("date")).toDate(),
                 ((Timestamp) map.get("startTime")).toDate(),
                 ((Timestamp) map.get("endTime")).toDate(),
                 (int) ((long) map.get("maxParticipant")),
-                modelList);
+                (ArrayList<String>) map.get("joinedPersons")
+                );
         return fpm;
     }
 
@@ -111,10 +101,6 @@ public class FoodPartyModel implements Serializable{
         return organiserId;
     }
 
-    public String getOrganiserName() {
-        return organiserName;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -135,7 +121,7 @@ public class FoodPartyModel implements Serializable{
         return maxParticipant;
     }
 
-    public ArrayList<JoinedPersonModel> getJoinedPersons() {
+    public ArrayList<String> getJoinedPersons() {
         return joinedPersons;
     }
 
@@ -149,10 +135,6 @@ public class FoodPartyModel implements Serializable{
 
     public void setOrganiserId(String organiserId) {
         this.organiserId = organiserId;
-    }
-
-    public void setOrganiserName(String organiserName) {
-        this.organiserName = organiserName;
     }
 
     public void setLocation(String location) {
@@ -175,7 +157,7 @@ public class FoodPartyModel implements Serializable{
         this.maxParticipant = maxParticipant;
     }
 
-    public void setJoinedPersons(ArrayList<JoinedPersonModel> joinedPersons) {
+    public void setJoinedPersons(ArrayList<String> joinedPersons) {
         this.joinedPersons = joinedPersons;
     }
 }

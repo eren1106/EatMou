@@ -156,7 +156,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //create food party logic
-                    firebaseMethods.addFoodParty(etTitle.getText().toString(), currentUser.getUserID(), currentUser.getUsername(), etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
+                    firebaseMethods.addFoodParty(etTitle.getText().toString(), currentUser.getUserID(), etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
 
                     finish();
                 }
@@ -179,7 +179,6 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                             foodPartyModel.getId(),
                             etTitle.getText().toString(),
                             foodPartyModel.getOrganiserId(),
-                            foodPartyModel.getOrganiserName(),
                             etLocation.getText().toString(),
                             date,
                             startTime,
