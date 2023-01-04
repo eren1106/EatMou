@@ -17,12 +17,13 @@ import com.google.android.material.tabs.TabLayout;
 
 public class RestaurantDetails extends AppCompatActivity {
 
-    private TextView restaurantName;        // temp code
     private ImageView restaurantImage;
     private TabLayout TL_details;
     private ViewPager2 viewPager2;
     private MaterialButton holdPartyBtn;
     RestaurantDetailsVPAdapter adapter;
+
+    Intent intent;
 
 
     @Override
@@ -30,16 +31,12 @@ public class RestaurantDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_details);
 
-        restaurantName = findViewById(R.id.restaurantName);     // temp code
+        intent = getIntent();
+        
         restaurantImage = findViewById(R.id.restaurantImage);
         TL_details = findViewById(R.id.TL_details);
         viewPager2 = findViewById(R.id.VP2_details);
         holdPartyBtn = findViewById(R.id.holdPartyBtn);
-
-        Intent intent = getIntent();        // temp code
-        String name = intent.getStringExtra("restaurant");    // temp code
-
-        restaurantName.setText(name);       // temp code
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new RestaurantDetailsVPAdapter(fragmentManager, getLifecycle());

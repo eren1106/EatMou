@@ -2,6 +2,8 @@ package com.example.eatmou.Restaurant;
 
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
 import com.google.type.DateTime;
 
 import java.time.LocalTime;
@@ -18,7 +20,6 @@ public class Restaurant {
     private String category;
     private String location;
     private String description;
-    private boolean isOpen;
     private List<Integer> openingHours;        // {hours, minutes}
     private List<Integer> closingHours;        // {hours, minutes}
 
@@ -28,7 +29,7 @@ public class Restaurant {
 
     // Constructor
     public Restaurant(String id, String name, double rating, String category, String location, String description,
-                      List<Integer> openingHours, List<Integer> closingHours, boolean isOpen) {
+                      List<Integer> openingHours, List<Integer> closingHours) {
         this.id = id;
         this.name = name;
 //        this.imageURL = imageURL;
@@ -38,7 +39,6 @@ public class Restaurant {
         this.description = description;
         this.openingHours = openingHours;
         this.closingHours = closingHours;
-        this.isOpen = isOpen;
     }
 
     public void setId(String id) {
@@ -107,19 +107,20 @@ public class Restaurant {
         return closingHours;
     }
 
-    public String isOpen() {
-        if (isOpen) return "OPEN";
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getStatus() {
+        if (isOpen(LocalTime.now())) return "OPEN";
         else return "CLOSED";
     }
 
     // cannot perform validity check and no action for invalid time (if open >= close --> X )
-//    public boolean isOpen(LocalTime now) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            LocalTime open = LocalTime.of(openingHours[0], openingHours[1]);
-//            LocalTime close = LocalTime.of(closingHours[0], closingHours[1]);
-//            return (now.isAfter(open) && now.isBefore(close));
-//        }
-//        return false;
-//    }
+    public boolean isOpen(LocalTime now) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalTime open = LocalTime.of(openingHours.get(0), openingHours.get(1));
+            LocalTime close = LocalTime.of(closingHours.get(0), closingHours.get(1));
+            return (now.isAfter(open) && now.isBefore(close));
+        }
+        return false;
+    }
 }
 
