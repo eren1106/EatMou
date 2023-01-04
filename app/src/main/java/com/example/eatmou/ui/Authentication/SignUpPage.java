@@ -62,7 +62,7 @@ public class SignUpPage extends AppCompatActivity {
 
         //Progress dialog
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading");
+        progressDialog.setTitle("Sign up");
         progressDialog.setMessage("Please wait...");
 
         //Check any empty field haven't fill
@@ -83,10 +83,7 @@ public class SignUpPage extends AppCompatActivity {
                     return;
                 }
 
-                //Progress dialog
-                final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
-                progressDialog.setTitle("Sign up");
-                progressDialog.setMessage("Please wait...");
+                //Show loading dialog
                 progressDialog.show();
 
                 // SIGN UP USER
