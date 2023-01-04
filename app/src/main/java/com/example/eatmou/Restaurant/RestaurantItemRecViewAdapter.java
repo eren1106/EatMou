@@ -2,7 +2,9 @@ package com.example.eatmou.Restaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +56,14 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         holder.restaurantStatus.setText(restaurant.getStatus());
         holder.restaurantCategory.setText(restaurant.getCategory());
         holder.restaurantImage.setImageResource(R.drawable.samanja);
+
+        Log.i("restaurant status: " , holder.restaurantStatus.getText().toString());
+
+        if (holder.restaurantStatus.getText().toString().equals("OPEN")) {
+            holder.restaurantStatus.setTextColor(Color.parseColor("#00D408"));
+        } else {
+            holder.restaurantStatus.setTextColor(Color.parseColor("#D40000"));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +107,8 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
             restaurantStatus = itemView.findViewById(R.id.restaurantStatus);
             restaurantCategory = itemView.findViewById(R.id.restaurantCategory);
             restaurantImage = itemView.findViewById(R.id.restaurantImage);
+
+
 
         }
     }

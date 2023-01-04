@@ -54,9 +54,7 @@
             android:fontFamily="@font/poppins_bold"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="@string/open_status"
             android:textAlignment="viewEnd"
-            android:textColor="#00D408"
             android:textSize="14sp" />
 
         <TextView
