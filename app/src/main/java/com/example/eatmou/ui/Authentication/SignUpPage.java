@@ -1,9 +1,5 @@
 package com.example.eatmou.ui.Authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.eatmou.ui.homePage.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +59,7 @@ public class SignUpPage extends AppCompatActivity {
 
         //Progress dialog
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading");
+        progressDialog.setTitle("Signing Up...");
         progressDialog.setMessage("Please wait...");
 
         //Check any empty field haven't fill
@@ -82,11 +79,7 @@ public class SignUpPage extends AppCompatActivity {
                     Toast.makeText(SignUpPage.this, "Password not correct", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                //Progress dialog
-                final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
-                progressDialog.setTitle("Sign up");
-                progressDialog.setMessage("Please wait...");
+                //Show Progress dialog
                 progressDialog.show();
 
                 // SIGN UP USER
@@ -102,7 +95,12 @@ public class SignUpPage extends AppCompatActivity {
 
                             Date tempDate = new Date(); // mock
 
-                            UserModel userModel = new UserModel(user.getUid(), usernameTemp, emailTemp, tempDate, "", "", "", "");
+                            String tempBio = "Hello! Nice to meet you!";
+                            String tempAddress = "I'm at where I am";
+                            String tempProfilePicUrl = "https://firebasestorage.googleapis.com/v0/b/eatlan-4403e.appspot.com/o/TempProfilePic.png?alt=media&token=b0e7c932-3936-4ba6-bb74-4c8909c5c1fd";
+                            String tempProfileBgPicUrl = "https://firebasestorage.googleapis.com/v0/b/eatlan-4403e.appspot.com/o/TempCoverPic.png?alt=media&token=d66811ae-272a-406a-a5f6-e22ed408a1d8";
+
+                            UserModel userModel = new UserModel(user.getUid(), usernameTemp, emailTemp, tempDate, tempBio, tempAddress, tempProfilePicUrl, tempProfileBgPicUrl);
                             firestore.collection("users").document(user.getUid()).set(userModel.toMap());
                             //Hide the progress dialog
                             progressDialog.hide();

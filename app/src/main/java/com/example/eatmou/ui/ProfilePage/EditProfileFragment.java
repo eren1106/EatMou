@@ -3,6 +3,7 @@ package com.example.eatmou.ui.ProfilePage;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,42 +24,58 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class EditProfileFragment extends Fragment {
 
-    private View view;
     private EditText date, editNameField, editBioField, editLocationField;
-    private DatePickerDialog datePickerDialog;
     private CircleImageView editProfileImg;
     private ImageView editBgImg;
     private ImageView backBtn;
+    private ImageView calendar_icon;
     private Button saveButton;
     private Uri bgImageUri, profileImgUri;
     private FirebaseFirestore db;
     private String UserID;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    String imageURL;
 
     //global test
     String indication;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         editNameField = view.findViewById(R.id.editNameField);
         date = view.findViewById(R.id.date);
+        calendar_icon = view.findViewById(R.id.calendar_icon);
         editProfileImg = view.findViewById(R.id.editProfileImg);
         editBgImg = view.findViewById(R.id.editBgImg);
         editBioField = view.findViewById(R.id.editBioField);
@@ -80,21 +97,22 @@ public class EditProfileFragment extends Fragment {
 
         backBtn.setOnClickListener(v -> replaceFragment(new ProfilePage()));
 
-        // perform click event on edit text
-        date.setOnClickListener(v -> {
-            // calender class's instance and get current date , month and year from calender
-            final Calendar c = Calendar.getInstance();
-            int mYear = c.get(Calendar.YEAR); // current year
-            int mMonth = c.get(Calendar.MONTH); // current month
-            int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-            // date picker dialog
-            datePickerDialog = new DatePickerDialog(date.getContext(),
-                    (view1, year, monthOfYear, dayOfMonth) -> {
-                        // set day of month , month and year value in the edit text
-                        date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
+        // Edit DOB
+        MaterialDatePicker datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Select Date").build();
+        calendar_icon.setOnClickListener(view15 -> {
+            datePicker.show(getParentFragmentManager(), "Material Date Picker");
+            datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+                @Override
+                public void onPositiveButtonClick(Object selection) {
+                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    calendar.setTimeInMillis((Long)selection);
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    String formattedDate  = format.format(calendar.getTime());
+                    date.setText(formattedDate);
+                }
+            });
         });
+
 
         // Edit Circle Profile Image
         editProfileImg.setOnClickListener(view12 -> {
@@ -114,30 +132,13 @@ public class EditProfileFragment extends Fragment {
 
         // Save Button
         saveButton.setOnClickListener(view14 -> {
-//                String timestampString = "2022-01-01T00:00:00Z";
-//                String format = "dd/MM/yyyy";
-//
-//                SimpleDateFormat sdf = new SimpleDateFormat(format);
-//                Date date = null;
-//                try {
-//                    date = sdf.parse(timestampString);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                Timestamp dob = new Timestamp(date);
-
-//                Map<String, Object> user = new HashMap<>();
-//                user.put("username", editNameField.getText().toString());
-//                user.put("dob", dob);
-//                user.put("profilePicUrl", editProfileImg);
-//                user.put("profileBgPicUrl", "USA");
-//                user.put("bio", editBioField.getText().toString());
-//                user.put("location", editLocationField.getText().toString());
-
+            //edit name
             if(!editNameField.getText().toString().equals(args.getString("Username"))){
                 db.collection("users").document(UserID)
                         .update("username", editNameField.getText().toString());
             }
+
+            //edit DOB
             if (!date.getText().toString().equals(args.getString("Dob"))){
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 try {
@@ -149,10 +150,14 @@ public class EditProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
+            //edit Bio
             if(!editBioField.getText().toString().equals(args.getString("Bio"))){
                 db.collection("users").document(UserID)
                         .update("bio", editBioField.getText().toString());
             }
+
+            //edit Address
             if(!editLocationField.getText().toString().equals(args.getString("Location"))){
                 db.collection("users").document(UserID)
                         .update("username", editLocationField.getText().toString());
@@ -165,8 +170,7 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-       return view;
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
 
     private void replaceFragment(Fragment fragment){
@@ -175,7 +179,6 @@ public class EditProfileFragment extends Fragment {
         fragmentTransaction.replace(R.id.profilePageFrame, fragment);
         fragmentTransaction.commit();
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
@@ -186,12 +189,15 @@ public class EditProfileFragment extends Fragment {
                 case "profileImg":
                     profileImgUri = data.getData();
                     editProfileImg.setImageURI(profileImgUri);
+                    uploadImage("profilePicUrl", profileImgUri);
                     break;
 
                 case "bgImg":
                     bgImageUri = data.getData();
                     editBgImg.setImageURI(bgImageUri);
+                    uploadImage("profileBgPicUrl", bgImageUri);
                     break;
+
                 default:
                     Toast.makeText(requireContext(),"Test", Toast.LENGTH_SHORT).show();
             }
@@ -199,5 +205,40 @@ public class EditProfileFragment extends Fragment {
         }else if (resultCode == ImagePicker.RESULT_ERROR){
             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void uploadImage(String imageField, Uri imageUri){
+        if (imageUri != null) {
+            ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"  + UUID.randomUUID().toString());
+
+            ref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Picture Uploaded!", Toast.LENGTH_SHORT).show();
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        imageURL = uri.toString();
+                        System.out.println(imageURL);
+                        updateImage(imageField, imageURL);
+                    }
+                });
+
+            }).addOnFailureListener(e -> {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }).addOnProgressListener(snapshot -> {
+                double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                progressDialog.setMessage("Uploaded " + (int)progress + "%");
+            });
+        }
+    }
+
+    private void updateImage(String imageField, String imageURL){
+        db.collection("users").document(UserID).update(imageField, imageURL);
     }
 }

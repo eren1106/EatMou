@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,8 +28,6 @@ import com.bumptech.glide.Glide;
 import com.example.eatmou.model.Invitation;
 import com.example.eatmou.R;
 import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,13 +42,13 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
     private String userID;
     private Context context;
 
-    public SentAdapter(ArrayList<Invitation> invitationList, String userID, Context context){
+    public SentAdapter(ArrayList<Invitation> invitationList, String userID, Context context) {
         this.invitationList = invitationList;
         this.userID = userID;
         this.context = context;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView userImgView;
         private TextView usernameTxt;
         private TextView locationTxt;
@@ -66,7 +64,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         RelativeLayout cardView_expandable;
         RelativeLayout cardView_mainBar;
 
-        public MyViewHolder(final View view){
+        public MyViewHolder(final View view) {
             super(view);
             userImgView = view.findViewById(R.id.userImgView);
             usernameTxt = view.findViewById(R.id.usernameTxt);
@@ -82,10 +80,20 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
             cardView_linearLayout = view.findViewById(R.id.cardView_linearLayout);
             cardView_expandable = view.findViewById(R.id.cardView_expandable);
 
-            cardView_linearLayout.setOnClickListener( v -> {
-                Invitation invitation =  invitationList.get(getAdapterPosition());
+            cardView_linearLayout.setOnClickListener(v -> {
+                Invitation invitation = invitationList.get(getAdapterPosition());
                 invitation.setExpandable(!invitation.isExpandable());
                 notifyItemChanged(getAdapterPosition());
+            });
+
+            usernameTxt.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Invitation invitation = invitationList.get(getAdapterPosition());
+                    String name = invitation.getInvitedID() + "'s ";
+                    Toast.makeText(view.getContext(), "View " + name + "profile", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
             });
 
             userImgView.setOnClickListener(v -> {
@@ -95,17 +103,17 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                 args.putString("FragmentID", "SentFragment");
                 fragment.setArguments(args);
 
-                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout,fragment);
+                fragmentTransaction.replace(R.id.frameLayout, fragment);
                 fragmentTransaction.commit();
             });
 
-            cancelBtn.setOnClickListener( v -> new AlertDialog.Builder(view.getContext())
+            cancelBtn.setOnClickListener(v -> new AlertDialog.Builder(view.getContext())
                     .setTitle("Cancel Invitation")
                     .setMessage("Are you sure you want to cancel this invitation?\nThis action cannot be undone!")
                     .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
-                        Invitation invitation =  invitationList.get(getAdapterPosition());
+                        Invitation invitation = invitationList.get(getAdapterPosition());
                         invitation.setCanceled(true);
                         invitation.setStatus("Canceled");
                         db.collection("Invitations")
@@ -177,7 +185,7 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         holder.InboxUserID = invitation.getInvitedID();
 
         boolean isExpandable = invitationList.get(position).isExpandable();
-        holder.cardView_expandable.setVisibility(isExpandable? View.VISIBLE:View.GONE);
+        holder.cardView_expandable.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
     }
 
     @Override
