@@ -3,22 +3,23 @@ package com.example.eatmou.ui.appLock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.example.eatmou.model.AppLock;
+import com.example.eatmou.ui.Authentication.LoginPage;
 import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,8 +33,9 @@ import java.util.List;
 
 public class AppLockStart extends AppCompatActivity {
     ConstraintLayout appLockLayout, splashScreen;
+    RelativeLayout relativeLayout4;
     TextView num1,num2,num3,num4,num5,num6,num7,num8,num9,num0;
-    ImageView eraseIcon, tickIcon;
+    ImageView eraseIcon, tickIcon, lockIcon;
     ImageView appCode1,appCode2,appCode3,appCode4;
     MutableLiveData<String> listen = new MutableLiveData<>();
     AppLock appLock = new AppLock();
@@ -95,6 +97,9 @@ public class AppLockStart extends AppCompatActivity {
         });
 
         //Check the user has set ap lock
+        lockIcon = findViewById(R.id.lockIcon);
+        relativeLayout4 = findViewById(R.id.relativeLayout4);
+
         String currentUserID = FirebaseAuth.getInstance().getUid();
         if(currentUserID != null) {
             DocumentReference docRef = FirebaseFirestore.getInstance().collection("AppLock").document(currentUserID);
@@ -121,7 +126,24 @@ public class AppLockStart extends AppCompatActivity {
                                         public void onClick(View view) {
                                             if(appLockPassword != null) {
                                                 if(appLockPassword.equals(appLock.getPassword())) {
-                                                    toMain();
+                                                    //Change the lock to unlock icon
+                                                    lockIcon.setImageResource(R.drawable.unlock_icon);
+
+                                                    //Add animation of rotation of unlock
+                                                    lockIcon.startAnimation(AnimationUtils.loadAnimation(
+                                                            getApplicationContext(),
+                                                            R.anim.rotate
+                                                    ));
+
+                                                    //Delay action
+                                                    Handler handler = new Handler();
+                                                    handler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            //Navigate to main activity
+                                                            toMain();
+                                                        }
+                                                    }, 500);
                                                 } else {
                                                     Toast.makeText(AppLockStart.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                                                 }
@@ -140,12 +162,14 @@ public class AppLockStart extends AppCompatActivity {
                     }
                 }
             });
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginPage.class));
+            finish();
         }
     }
 
     private void toMain() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(0,0);
         finish();
     }
 
