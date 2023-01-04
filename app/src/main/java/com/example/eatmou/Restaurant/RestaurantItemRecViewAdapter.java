@@ -57,8 +57,7 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         holder.restaurantCategory.setText(restaurant.getCategory());
         holder.restaurantImage.setImageResource(R.drawable.samanja);
 
-        Log.i("restaurant status: " , holder.restaurantStatus.getText().toString());
-
+        // change restaurant color
         if (holder.restaurantStatus.getText().toString().equals("OPEN")) {
             holder.restaurantStatus.setTextColor(Color.parseColor("#00D408"));
         } else {
