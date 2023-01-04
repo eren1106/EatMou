@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.eatmou.R;
+import com.example.eatmou.Restaurant.RestaurantFragment;
 import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
 import com.example.eatmou.ui.Inbox.InboxFragment;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fetchUser();
+//        fetchUser();
 
         //Set the background of bottomAppBar as null
         bottomBarChart = findViewById(R.id.bottomBarChart);
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.party:
                     selectedFragment = new FoodPartyListFragment();
                     break;
+                case R.id.restaurant:
+                    selectedFragment = new RestaurantFragment();
+                    break;
                 case R.id.inbox:
                     selectedFragment = new InboxFragment(new ReceivedFragment());
                     Bundle args = new Bundle();
@@ -89,25 +93,25 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void fetchUser() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        firestore = FirebaseFirestore.getInstance();
-
-        firestore.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        user = UserModel.toObject(document.getData());
-                        Log.d("USER", user.toString());
-                    } else {
-                        Log.e("USER", "User not exists");
-                    }
-                } else {
-                    Log.e("USER", "User error");
-                }
-            }
-        });
-    }
+//    private void fetchUser() {
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        firestore = FirebaseFirestore.getInstance();
+//
+//        firestore.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        user = UserModel.toObject(document.getData());
+//                        Log.d("USER", user.toString());
+//                    } else {
+//                        Log.e("USER", "User not exists");
+//                    }
+//                } else {
+//                    Log.e("USER", "User error");
+//                }
+//            }
+//        });
+//    }
 }

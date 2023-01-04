@@ -7,10 +7,11 @@ import com.google.type.DateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Restaurant {
 
-    private int id;
+    private String id;
     private String name;
 //    private String imageURL;
     private double rating;
@@ -18,12 +19,16 @@ public class Restaurant {
     private String location;
     private String description;
     private boolean isOpen;
-    private final int[] openingHours;        // {hours, minutes}
-    private final int[] closingHours;        // {hours, minutes}
+    private List<Integer> openingHours;        // {hours, minutes}
+    private List<Integer> closingHours;        // {hours, minutes}
+
+    public Restaurant() {
+        // empty no-arg constructor
+    }
 
     // Constructor
-    public Restaurant(int id, String name, double rating, String category, String location, String description,
-                      int[] openingHours, int[] closingHours, boolean isOpen) {
+    public Restaurant(String id, String name, double rating, String category, String location, String description,
+                      List<Integer> openingHours, List<Integer> closingHours, boolean isOpen) {
         this.id = id;
         this.name = name;
 //        this.imageURL = imageURL;
@@ -36,9 +41,41 @@ public class Restaurant {
         this.isOpen = isOpen;
     }
 
-    // Getters
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public int getId() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOpeningHours(List<Integer> openingHours) {
+        this.openingHours = openingHours;
+    }
+
+    public void setClosingHours(List<Integer> closingHours) {
+        this.closingHours = closingHours;
+    }
+
+// Getters
+
+    public String getId() {
         return id;
     }
 
@@ -62,11 +99,11 @@ public class Restaurant {
         return description;
     }
 
-    public int[] getOpeningHours() {
+    public List<Integer> getOpeningHours() {
         return openingHours;
     }
 
-    public int[] getClosingHours() {
+    public List<Integer> getClosingHours() {
         return closingHours;
     }
 

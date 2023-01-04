@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eatmou.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class RestaurantItemRecViewAdapter extends FirestoreRecyclerAdapter<Restaurant, RestaurantItemRecViewAdapter.RestaurantHolder> {
+
+    private OnItemClickListener listener;
 
     public RestaurantItemRecViewAdapter(@NonNull FirestoreRecyclerOptions<Restaurant> options) {
         super(options);
@@ -52,9 +55,26 @@ public class RestaurantItemRecViewAdapter extends FirestoreRecyclerAdapter<Resta
             restaurantRating = itemView.findViewById(R.id.restaurantRating);
             restaurantStatus = itemView.findViewById(R.id.restaurantStatus);
             restaurantCategory = itemView.findViewById(R.id.restaurantCategory);
-
             restaurantImage = itemView.findViewById(R.id.restaurantImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
 
