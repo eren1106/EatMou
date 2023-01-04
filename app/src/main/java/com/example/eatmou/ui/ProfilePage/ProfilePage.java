@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eatmou.R;
 import com.example.eatmou.model.Users;
+import com.example.eatmou.ui.ProfilePage.settings.SettingsFragment;
 
 public class ProfilePage extends Fragment {
 

@@ -17,6 +17,10 @@ public class AppLock {
         this.existPass = existPass;
     }
 
+    public void setExistPass(boolean existPass) {
+        this.existPass = existPass;
+    }
+
     public String getUserID() {
         return userID;
     }

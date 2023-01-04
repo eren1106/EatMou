@@ -158,7 +158,13 @@ public class AppLockStart extends AppCompatActivity {
                             }
 
                             Log.d("AppLock", "Successfully get the app lock details");
+                        } else {
+                            appLockLayout.setVisibility(View.GONE);
+                            toMain();
                         }
+                    } else {
+                        appLockLayout.setVisibility(View.GONE);
+                        toMain();
                     }
                 }
             });
