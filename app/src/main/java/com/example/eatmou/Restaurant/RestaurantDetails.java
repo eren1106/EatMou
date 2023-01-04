@@ -15,12 +15,14 @@ import com.example.eatmou.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class RestaurantDetails extends AppCompatActivity {
 
     private ImageView restaurantImage;
-    private TabLayout TL_details;
-    private ViewPager2 viewPager2;
     private MaterialButton holdPartyBtn;
+    TabLayout TL_details;
+    ViewPager2 viewPager2;
     RestaurantDetailsVPAdapter adapter;
 
     Intent intent;
@@ -32,14 +34,25 @@ public class RestaurantDetails extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant_details);
 
         intent = getIntent();
-        
+        String name = intent.getStringExtra("name").toString();
+        double rating = intent.getDoubleExtra("rating",0);
+        String category = intent.getStringExtra("category").toString();
+        String location = intent.getStringExtra("location").toString();
+        ArrayList<Integer> openingHours = intent.getIntegerArrayListExtra("openingHours");
+        ArrayList<Integer> closingHours = intent.getIntegerArrayListExtra("closingHours");
+        String description = intent.getStringExtra("description").toString();
+
+        Restaurant restaurant = new Restaurant(name, rating, category, location, description, openingHours, closingHours);
+
+        System.out.println(restaurant.getLocation());
+
         restaurantImage = findViewById(R.id.restaurantImage);
         TL_details = findViewById(R.id.TL_details);
         viewPager2 = findViewById(R.id.VP2_details);
         holdPartyBtn = findViewById(R.id.holdPartyBtn);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        adapter = new RestaurantDetailsVPAdapter(fragmentManager, getLifecycle());
+        adapter = new RestaurantDetailsVPAdapter(fragmentManager, getLifecycle(), restaurant);
         viewPager2.setAdapter(adapter);
 
         TL_details.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

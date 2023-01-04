@@ -8,8 +8,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class RestaurantDetailsVPAdapter extends FragmentStateAdapter {
 
-    public RestaurantDetailsVPAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    Restaurant restaurant;
+
+    public RestaurantDetailsVPAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, Restaurant restaurant) {
         super(fragmentManager, lifecycle);
+        this.restaurant = restaurant;
+
     }
 
     @NonNull
@@ -17,9 +21,9 @@ public class RestaurantDetailsVPAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if (position == 1)
-            return new ReviewFragment();
+            return new ReviewFragment(restaurant);
         else
-            return new AboutFragment();
+            return new AboutFragment(restaurant);
     }
 
     @Override

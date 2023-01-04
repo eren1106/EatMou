@@ -22,8 +22,13 @@ public class ReviewFragment extends Fragment {
 
     private MaterialButton leaveReviewBtn;
     private RecyclerView userCommentRecView;
+    Restaurant restaurant;
 
     ArrayList<Comment> comments = new ArrayList<>();
+
+    public ReviewFragment(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

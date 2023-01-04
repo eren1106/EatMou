@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import com.google.type.DateTime;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,17 +21,16 @@ public class Restaurant {
     private String category;
     private String location;
     private String description;
-    private List<Integer> openingHours;        // {hours, minutes}
-    private List<Integer> closingHours;        // {hours, minutes}
+    private ArrayList<Integer> openingHours;        // {hours, minutes}
+    private ArrayList<Integer> closingHours;        // {hours, minutes}
 
     public Restaurant() {
         // empty no-arg constructor
     }
 
     // Constructor
-    public Restaurant(String id, String name, double rating, String category, String location, String description,
-                      List<Integer> openingHours, List<Integer> closingHours) {
-        this.id = id;
+    public Restaurant(String name, double rating, String category, String location, String description,
+                      ArrayList<Integer> openingHours, ArrayList<Integer> closingHours) {
         this.name = name;
 //        this.imageURL = imageURL;
         this.rating = rating;
@@ -65,11 +65,11 @@ public class Restaurant {
         this.description = description;
     }
 
-    public void setOpeningHours(List<Integer> openingHours) {
+    public void setOpeningHours(ArrayList<Integer> openingHours) {
         this.openingHours = openingHours;
     }
 
-    public void setClosingHours(List<Integer> closingHours) {
+    public void setClosingHours(ArrayList<Integer> closingHours) {
         this.closingHours = closingHours;
     }
 
@@ -99,11 +99,11 @@ public class Restaurant {
         return description;
     }
 
-    public List<Integer> getOpeningHours() {
+    public ArrayList<Integer> getOpeningHours() {
         return openingHours;
     }
 
-    public List<Integer> getClosingHours() {
+    public ArrayList<Integer> getClosingHours() {
         return closingHours;
     }
 

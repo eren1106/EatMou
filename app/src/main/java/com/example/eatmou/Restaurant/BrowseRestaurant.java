@@ -161,6 +161,9 @@ public class BrowseRestaurant extends AppCompatActivity {
 
                 for (DocumentChange documentChange : value.getDocumentChanges()) {
                     Restaurant restaurant = documentChange.getDocument().toObject(Restaurant.class);
+                    QueryDocumentSnapshot documentSnapshot = documentChange.getDocument();
+                    restaurant.setId(documentSnapshot.getId());
+                    System.out.println(restaurant.getId());
 
                     switch (documentChange.getType()) {
                         case ADDED:

@@ -60,15 +60,16 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
                 int position = holder.getBindingAdapterPosition();
                 Restaurant restaurant = restaurants.get(position);
                 Intent intent = new Intent(holder.itemView.getContext(), RestaurantDetails.class);
+                intent.putExtra("id", restaurant.getId());
                 intent.putExtra("name", restaurant.getName());
                 intent.putExtra("rating", restaurant.getRating());
                 intent.putExtra("category", restaurant.getCategory());
                 intent.putExtra("location", restaurant.getLocation());
                 intent.putExtra("description", restaurant.getDescription());
-                intent.putExtra("openingHours", restaurant.getOpeningHours().toArray());
-                intent.putExtra("closingHours", restaurant.getClosingHours().toArray());
+                intent.putIntegerArrayListExtra("openingHours", (ArrayList<Integer>) restaurant.getOpeningHours());
+                intent.putIntegerArrayListExtra("closingHours", (ArrayList<Integer>) restaurant.getClosingHours());
                 holder.itemView.getContext().startActivity(intent);
-                Toast.makeText(holder.itemView.getContext(), "Item clicked: " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 

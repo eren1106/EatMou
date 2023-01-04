@@ -1,14 +1,9 @@
 package com.example.eatmou.Restaurant;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +11,22 @@ import android.widget.TextView;
 
 import com.example.eatmou.R;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class AboutFragment extends Fragment {
+
+    Restaurant restaurant;
 
     private TextView restaurantName;
     private TextView restaurantCategory;
     private TextView restaurantLocation;
     private TextView restaurantOperatingHours;
+    private TextView restaurantDescription;
 
     OnRestaurantListener restaurantListener;
 
-    public AboutFragment() {
-        // empty public constructor
+    public AboutFragment(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public interface OnRestaurantListener {
@@ -39,20 +37,19 @@ public class AboutFragment extends Fragment {
         this.restaurantListener = restaurantListener;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//
+//        Activity activity = (Activity) context;
+//
+//        try {
+//            restaurantListener = (OnRestaurantListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString() + " must be override setRestaurantDetails");
+//        }
+//    }
 
-        Activity activity = (Activity) context;
-
-        try {
-            restaurantListener = (OnRestaurantListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must be override setRestaurantDetails");
-        }
-    }
-
-    private TextView restaurantDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,16 +74,18 @@ public class AboutFragment extends Fragment {
 //        System.out.println(Arrays.toString(openingHours));
 //        System.out.println(Arrays.toString(closingHours));
 //
-//        restaurantName.setText(name);
-//        restaurantCategory.setText(category);
-//        restaurantLocation.setText(location);
-//        restaurantOperatingHours.setText(setOperatingHours(openingHours, closingHours));
-//        restaurantDescription.setText(description);
+        restaurantName.setText(restaurant.getName());
+        restaurantCategory.setText(restaurant.getCategory());
+        restaurantLocation.setText(restaurant.getLocation());
+        restaurantOperatingHours.setText(setOperatingHours(restaurant.getOpeningHours(), restaurant.getClosingHours()));
+        restaurantDescription.setText(restaurant.getDescription());
 
         return view;
     }
 
-    private String setOperatingHours(int[] openingHours, int[] closingHours) {
-        return openingHours[0] + ":" + openingHours[1] + " - " + closingHours[0] + ":" + closingHours[1];
+    private String setOperatingHours(ArrayList<Integer> openingHours, ArrayList<Integer> closingHours) {
+        String str =String.format("%02d:%02d - %02d:%02d\n(Monday - Sunday)",
+                openingHours.get(0), openingHours.get(1), closingHours.get(0), closingHours.get(1));
+        return str;
     }
 }
