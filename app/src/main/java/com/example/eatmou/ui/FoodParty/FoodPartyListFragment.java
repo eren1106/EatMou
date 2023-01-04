@@ -54,7 +54,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching Data...");
-        progressDialog.show();
+//        progressDialog.show();
 
         eventListener = new EventListener<QuerySnapshot>() { // addSnapshotListener -> will update the recyclerview whenever there is data change in database
             @Override
