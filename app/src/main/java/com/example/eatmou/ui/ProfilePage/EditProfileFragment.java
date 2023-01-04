@@ -114,30 +114,13 @@ public class EditProfileFragment extends Fragment {
 
         // Save Button
         saveButton.setOnClickListener(view14 -> {
-//                String timestampString = "2022-01-01T00:00:00Z";
-//                String format = "dd/MM/yyyy";
-//
-//                SimpleDateFormat sdf = new SimpleDateFormat(format);
-//                Date date = null;
-//                try {
-//                    date = sdf.parse(timestampString);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                Timestamp dob = new Timestamp(date);
-
-//                Map<String, Object> user = new HashMap<>();
-//                user.put("username", editNameField.getText().toString());
-//                user.put("dob", dob);
-//                user.put("profilePicUrl", editProfileImg);
-//                user.put("profileBgPicUrl", "USA");
-//                user.put("bio", editBioField.getText().toString());
-//                user.put("location", editLocationField.getText().toString());
-
+            //edit name
             if(!editNameField.getText().toString().equals(args.getString("Username"))){
                 db.collection("users").document(UserID)
                         .update("username", editNameField.getText().toString());
             }
+
+            //edit DOB
             if (!date.getText().toString().equals(args.getString("Dob"))){
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 try {
@@ -149,10 +132,18 @@ public class EditProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
+            //edit Profile Pic
+
+            //edit BG pic
+
+            //edit Bio
             if(!editBioField.getText().toString().equals(args.getString("Bio"))){
                 db.collection("users").document(UserID)
                         .update("bio", editBioField.getText().toString());
             }
+
+            //edit Address
             if(!editLocationField.getText().toString().equals(args.getString("Location"))){
                 db.collection("users").document(UserID)
                         .update("username", editLocationField.getText().toString());
