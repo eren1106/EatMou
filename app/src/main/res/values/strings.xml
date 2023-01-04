@@ -55,4 +55,13 @@
     <string name="save">SAVE</string>
     <string name="manage_password">Manage Password</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="logout">Logout</string>
+    <string name="applock">AppLock</string>
+    <string name="community_guideline">Community Guideline</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="feedback">Feedback</string>
 </resources>

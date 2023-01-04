@@ -2,6 +2,7 @@ package com.example.eatmou.ui.Inbox.received;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,7 @@ public class ReceivedFragment extends Fragment {
     RelativeLayout empty_view;
 
     ReceivedAdapter adapter;
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,10 @@ public class ReceivedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
 
         Bundle bundle = this.getArguments();
         if(bundle != null) userID = bundle.getString("userID");
@@ -153,5 +159,6 @@ public class ReceivedFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 });
+        progressDialog.dismiss();
     }
 }

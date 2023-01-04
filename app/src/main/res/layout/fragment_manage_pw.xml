@@ -1,125 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ProfilePage.ManagePwFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_profile_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:verticalScrollbarPosition="defaultPosition">
+
+        <ImageView
+            android:id="@+id/back_BtnManagePw"
+            android:layout_width="24sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/edit_profile_back_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/manage_password"
+            android:textColor="#FF5E51"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/back_BtnManagePw"
+            app:layout_constraintStart_toEndOf="@id/back_BtnManagePw"
+            app:layout_constraintTop_toTopOf="@id/back_BtnManagePw" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_below="@id/edit_profile_title_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/old_password"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/input_old_pw"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/back_BtnManagePw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back_arrow"
-                    android:layout_margin="10dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/Manage_Password"
-                    android:textColor="#FF5E51"
-                    android:textSize="25sp"
-                    android:textStyle="bold">
-                </TextView>
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Old Password"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="220dp">
-            </TextView>
-
-
-            <EditText
-                android:layout_width="370dp"
                 android:layout_height="40sp"
                 android:layout_gravity="center"
                 android:background="@drawable/inputbg"
                 android:elevation="3sp"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="20sp"
-                android:paddingEnd="20sp">
-            </EditText>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Password"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="220dp">
-            </TextView>
-
-
-            <EditText
-                android:layout_width="370dp"
-                android:layout_height="40sp"
-                android:layout_gravity="center"
-                android:background="@drawable/inputbg"
-                android:elevation="3sp"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="20sp"
-                android:paddingEnd="20sp">
-            </EditText>
-
-            <TextView
-                android:layout_width="358dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="220dp"
-                android:fontFamily="@font/poppins"
-                android:text="Confirm Password"
-                android:textSize="20sp">
-            </TextView>
-
-
-            <EditText
-                android:layout_width="370dp"
-                android:layout_height="40sp"
-                android:layout_gravity="center"
-                android:background="@drawable/inputbg"
-                android:elevation="3sp"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:paddingStart="20sp"
                 android:paddingEnd="20sp"
-                android:layout_marginBottom="50sp">
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+            </EditText>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_password"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/input_new_pw"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:background="@drawable/inputbg"
+                android:elevation="3sp"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="@string/confirm_password"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
+
+
+            <EditText
+                android:id="@+id/confirm_pw"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:background="@drawable/inputbg"
+                android:elevation="3sp"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:layout_marginBottom="50sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
             </EditText>
 
             <Button
-                android:layout_width="300sp"
-                android:layout_height="50sp"
-                android:text="Confirm"
-                android:layout_gravity="center">
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
             </Button>
-
-
         </LinearLayout>
-
-
     </ScrollView>
-</FrameLayout>
+</RelativeLayout>
