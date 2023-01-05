@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="toggleButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/toggle_btn_textcolor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:background">@drawable/toggle_btn_bg_selector</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="primaryButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:background">@drawable/primary_dialog_btn</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="secondaryButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/RED</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:background">@drawable/secondary_dialog_btn</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AlertDialogFeedbackBackground">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/feedback_dialog_bg</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="AlertDialogFeedbackBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/toggle_btn_bg_off</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+</resources>
