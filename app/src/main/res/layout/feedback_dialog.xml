@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/secondaryButton"
-            app:backgroundTint="@color/transparent"
+            app:backgroundTint="@color/paleGrey2"
             android:background="@drawable/secondary_dialog_btn"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
