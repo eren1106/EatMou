@@ -41,8 +41,6 @@ public class CategoryFilterRecViewAdapter extends RecyclerView.Adapter<CategoryF
         holder.categoryBtn.setTextOn(category.get(position));
         holder.categoryBtn.setTextOff(category.get(position));
 
-        // filter function
-
     }
 
 

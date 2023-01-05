@@ -3,12 +3,14 @@ package com.example.eatmou.ui.Restaurant;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,14 +30,15 @@ public class BrowseRestaurant extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference restaurantRef;
 
+    private SearchView searchRestaurantBar;
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
     private RestaurantItemRecViewAdapter restaurantItemRecViewAdapter;
 
     private List<Restaurant> restaurantsList;
+    ArrayList<String> filteredCategory = new ArrayList<>();
 
     Query query;
-    ArrayList<String> filters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,21 @@ public class BrowseRestaurant extends AppCompatActivity {
         Log.i("Restaurant list: ", String.valueOf(restaurantsList.size()));
 
 
+        searchRestaurantBar = findViewById(R.id.searchRestaurantBar);
+        searchRestaurantBar.clearFocus();
+        searchRestaurantBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterData(newText);
+                return false;
+            }
+        });
+
         categoryFilterRecView = findViewById(R.id.categoryFilterRecView);
         categoryFilterRecView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
@@ -85,16 +103,60 @@ public class BrowseRestaurant extends AppCompatActivity {
             @Override
             public void onItemClick(String filter, boolean isChecked) {
                 if (isChecked)
-                    filters.add(filter);
+                    filteredCategory.add(filter);
                 else
-                    filters.remove(filter);
+                    filteredCategory.remove(filter);
 
-                if (!filters.isEmpty())
+                if (!filteredCategory.isEmpty())
                     filterData();
                 else
-                    EventChangeListener();
+                    restaurantItemRecViewAdapter.setFilteredList(restaurantsList);
             }
         });
+
+    }
+
+    private void filterData(String newText) {
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurantsList) {
+            if (restaurant.getName().toLowerCase().contains(newText.toLowerCase())) {
+                filteredList.add(restaurant);
+            }
+        }
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(this, "No restaurant found", Toast.LENGTH_SHORT).show();
+        } else {
+            restaurantItemRecViewAdapter.setFilteredList(filteredList);
+        }
+
+    }
+
+    private void filterData() {
+        List<Restaurant> filteredList = new ArrayList<>();
+
+        for (String filter: filteredCategory) {
+            query = setQuery(filter);
+
+            query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.getMessage());
+                        return;
+                    }
+
+                    for (QueryDocumentSnapshot documentSnapshot : value) {
+                        Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+                        restaurant.setId(documentSnapshot.getId());
+                        filteredList.add(restaurant);
+                        restaurantItemRecViewAdapter.setFilteredList(filteredList);
+                        restaurantItemRecViewAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            });
+        }
 
     }
 
@@ -114,39 +176,12 @@ public class BrowseRestaurant extends AppCompatActivity {
     }
 
 
-    public void filterData() {
-        restaurantsList.clear();
 
-        for (String filter: filters) {
-            query = setQuery(filter);
-
-            query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                    if (error != null) {
-                        Log.e("Firestore Error", error.getMessage());
-                        return;
-                    }
-
-                    for (QueryDocumentSnapshot documentSnapshot : value) {
-                        Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
-                        restaurant.setId(documentSnapshot.getId());
-                        restaurantsList.add(restaurant);
-                        restaurantItemRecViewAdapter.notifyDataSetChanged();
-                    }
-
-                }
-            });
-        }
-
-    }
 
     public void EventChangeListener() {
         Log.i("Method called: ", "Event Change Listener");
 
-        restaurantsList.clear();
-
-        query = setQuery("");
+        query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -201,12 +236,8 @@ public class BrowseRestaurant extends AppCompatActivity {
     }
 
     private Query setQuery(String filter) {
-        Query query;
+        Query query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING).whereEqualTo("category", filter);
         System.out.println(filter);
-        if (!filter.isEmpty())
-            query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING).whereEqualTo("category", filter);
-        else
-            query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING);
         return query;
     }
 
