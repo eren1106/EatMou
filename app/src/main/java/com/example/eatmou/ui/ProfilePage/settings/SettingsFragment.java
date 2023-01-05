@@ -36,6 +36,7 @@ public class SettingsFragment extends Fragment {
     ImageView backBtn;
     Button appLockBtn;
     AppLock appLock = new AppLock();
+    Button btnLogOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,9 +92,16 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         backBtn = view.findViewById(R.id.back_BtnSettings);
         backBtn.setOnClickListener(v -> replaceFragment(new ProfilePage()));
+
+        btnLogOut = view.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(view1 -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), LoginPage.class);
+            startActivity(intent);
+            getActivity().finish();
+        });
     }
 
     private void replaceFragment(Fragment fragment){
