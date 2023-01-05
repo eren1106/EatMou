@@ -2,6 +2,7 @@ package com.example.eatmou.ui.Inbox.joined;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class JoinedFragment extends Fragment {
     private FirebaseFirestore db;
     private String userID;
     Invitation removedInvitation = null;
+    ProgressDialog progressDialog;
 
     JoinedAdapter adapter;
 
@@ -65,6 +67,10 @@ public class JoinedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(this.getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
 
         Bundle bundle = this.getArguments();
         if(bundle != null) userID = bundle.getString("userID");
@@ -221,7 +227,9 @@ public class JoinedFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                         }
+
                     }
                 });
+        progressDialog.dismiss();
     }
 }

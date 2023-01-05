@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FoodPartyModel implements Serializable {
+public class FoodPartyModel implements Serializable{
     String id;
     String title;
     String organiserId;
@@ -18,9 +18,9 @@ public class FoodPartyModel implements Serializable {
     Date startTime;
     Date endTime;
     int maxParticipant;
-    ArrayList<JoinedPersonModel> joinedPersons;
+    ArrayList<String> joinedPersons;
 
-    public FoodPartyModel(String id, String title, String organiserId, String location, Date date, Date startTime, Date endTime, int maxParticipant, ArrayList<JoinedPersonModel> joinedPersons) {
+    public FoodPartyModel(String id, String title, String organiserId, String location, Date date, Date startTime, Date endTime, int maxParticipant, ArrayList<String> joinedPersons) {
         this.id = id;
         this.title = title;
         this.organiserId = organiserId;
@@ -30,6 +30,18 @@ public class FoodPartyModel implements Serializable {
         this.endTime = endTime;
         this.maxParticipant = maxParticipant;
         this.joinedPersons = joinedPersons;
+    }
+
+    public FoodPartyModel(FoodPartyModel fpm){
+        this.id = fpm.getId();
+        this.title = fpm.getTitle();
+        this.organiserId = fpm.getOrganiserId();
+        this.location = fpm.getLocation();
+        this.date = fpm.getDate();
+        this.startTime = fpm.getStartTime();
+        this.endTime = fpm.getEndTime();
+        this.maxParticipant = fpm.getMaxParticipant();
+        this.joinedPersons = fpm.getJoinedPersons();
     }
 
     public Map<String, Object> toMap() {
@@ -57,7 +69,8 @@ public class FoodPartyModel implements Serializable {
                 ((Timestamp) map.get("startTime")).toDate(),
                 ((Timestamp) map.get("endTime")).toDate(),
                 (int) ((long) map.get("maxParticipant")),
-                (ArrayList<JoinedPersonModel>) map.get("joinedPersons"));
+                (ArrayList<String>) map.get("joinedPersons")
+                );
         return fpm;
     }
 
@@ -108,8 +121,44 @@ public class FoodPartyModel implements Serializable {
         return maxParticipant;
     }
 
-    public ArrayList<JoinedPersonModel> getJoinedPersons() {
+    public ArrayList<String> getJoinedPersons() {
         return joinedPersons;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setOrganiserId(String organiserId) {
+        this.organiserId = organiserId;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setMaxParticipant(int maxParticipant) {
+        this.maxParticipant = maxParticipant;
+    }
+
+    public void setJoinedPersons(ArrayList<String> joinedPersons) {
+        this.joinedPersons = joinedPersons;
     }
 }
 
