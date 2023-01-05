@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -31,11 +33,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class FoodPartyDetailActivity extends AppCompatActivity implements Serializable {
 
+    Context context;
     UserModel currentUser;
     TextView title, organizer, location, date, time, joinedPersonNumber;
     ImageButton backBtn;
@@ -59,6 +63,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_party_detail);
 
+        context = this;
         currentUser = MainActivity.user;
         foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject"); //get data pass from previous activity/fragment
         joined = checkJoined(currentUser.getUserID());
@@ -158,6 +163,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                     joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/" + foodPartyModel.getMaxParticipant());
                     joined = true;
                     setBottomBtn();
+                    setReminder();
                 }
             });
         }
@@ -248,6 +254,40 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 adapter = new JoinedPersonRecyclerViewAdapter(context, joinedPersonModels);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            }
+        });
+    }
+
+    private void setReminder() {
+        FirebaseFirestore.getInstance().collection("foodParties").document(foodPartyModel.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // Convert the retrieved time to a Calendar object
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(document.getDate("date").getTime());
+
+                        Calendar timeCalendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(document.getDate("startTime").getTime());
+
+                        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+                        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+
+                        calendar.add(Calendar.HOUR_OF_DAY, -1); // show reminder before 1 hour
+
+                        // Set an alarm with the AlarmManager class
+                        Intent intent = new Intent(context, AlarmReceiver.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    } else {
+                        Log.d("Reminder", "No such document");
+                    }
+                } else {
+                    Log.d("Reminder", "get failed with ", task.getException());
+                }
             }
         });
     }
