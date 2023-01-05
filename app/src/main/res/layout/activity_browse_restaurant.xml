@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Restaurant.BrowseRestaurant">
+
+    <!-- Cibai I forgot to do search bar -->
+    <TextView
+        android:id="@+id/selectCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Select Category:"
+        android:textSize="20sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryFilterRecView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectCategory"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userCommentRecView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurantItemRecView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/restaurantItemRecView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryFilterRecView"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp" />
+
+
+</RelativeLayout>

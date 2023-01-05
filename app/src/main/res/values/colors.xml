@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#A3ADAE</color>
+    <color name="gold">#ECB84E</color>
     <color name="paleGrey">#EFE1E1</color>
     <color name="paleGrey2">#FAFAFA</color>
     <color name="transparent">#00000000</color>
@@ -22,11 +23,12 @@
     <color name="RED">#FF5E51</color>
     <color name="ORANGE">#FF7F50</color>
     <color name="YELLOW">#FFC859</color>
+    <color name="paleYellow">#FFEECC</color>
     <color name="RICE">#FFEECC</color>
     <color name="BLACK">#000000</color>
     <color name="GREY">#9FA3A6</color>
     <color name="LIGHTGREY">#EFF1F3</color>
     <color name="WHITE">#FFFFFF</color>
     <color name="vanilla">#FFEECC</color>
-
+    <color name="button_bg">#F5F5F5</color>
 </resources>
