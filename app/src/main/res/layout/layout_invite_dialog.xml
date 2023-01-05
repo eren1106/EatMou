@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/ic_getstartedbtnbg2"
-    android:elevation="3sp">
+    android:elevation="3dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="60sp"
+        android:layout_height="60dp"
         android:background="@drawable/invite_dialog_bg"
         apps:layout_constraintEnd_toEndOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20sp"
+            android:layout_marginLeft="20dp"
             android:gravity="center"
             android:text="Invite Galileo Galilei ?"
             android:textColor="@color/black"
@@ -33,8 +33,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="Pick Restaurant"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -44,16 +44,16 @@
     <EditText
         android:id="@+id/input_restaurant"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginRight="20sp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/inputbg"
         android:ellipsize="end"
         android:inputType="text"
         android:maxLines="1"
-        android:paddingStart="20sp"
-        android:paddingEnd="20sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         apps:layout_constraintEnd_toEndOf="@+id/textView3"
         apps:layout_constraintStart_toStartOf="@+id/textView3"
         apps:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -62,8 +62,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="Pick Date"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -73,10 +73,10 @@
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginRight="20sp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/inputbg"
         apps:layout_constraintEnd_toEndOf="@+id/textView4"
         apps:layout_constraintStart_toStartOf="@+id/textView4"
@@ -85,23 +85,25 @@
         <EditText
             android:id="@+id/input_date"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/calendar_icon"
             android:background="@drawable/inputbg"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingStart="20sp" />
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"/>
 
         <ImageView
             android:id="@+id/calendar_icon"
-            android:layout_width="25sp"
-            android:layout_height="25sp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="20sp"
-            android:padding="1sp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:padding="1dp"
             android:src="@drawable/calendar_icon" />
     </RelativeLayout>
 
@@ -109,8 +111,8 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:text="Time"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -120,18 +122,18 @@
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginEnd="20sp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         apps:layout_constraintEnd_toEndOf="@+id/textView5"
         apps:layout_constraintStart_toStartOf="@+id/textView5"
         apps:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <RelativeLayout
             android:id="@+id/time1"
-            android:layout_width="120sp"
-            android:layout_height="50sp"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:background="@drawable/inputbg">
 
@@ -140,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="15sp"
+                android:layout_marginStart="15dp"
                 android:layout_toStartOf="@+id/arrow_down_icon"
                 android:gravity="center"
                 android:text="Start"
@@ -149,12 +151,12 @@
 
             <ImageView
                 android:id="@+id/arrow_down_icon"
-                android:layout_width="10sp"
-                android:layout_height="20sp"
+                android:layout_width="10dp"
+                android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15sp"
+                android:layout_marginEnd="15dp"
                 android:src="@drawable/arrow_down_icon" />
 
         </RelativeLayout>
@@ -173,8 +175,8 @@
 
         <RelativeLayout
             android:id="@+id/time2"
-            android:layout_width="120sp"
-            android:layout_height="50sp"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/inputbg">
 
@@ -183,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="15sp"
+                android:layout_marginStart="15dp"
                 android:layout_toStartOf="@+id/arrow_down_icon1"
                 android:gravity="center"
                 android:text="End"
@@ -192,12 +194,12 @@
 
             <ImageView
                 android:id="@+id/arrow_down_icon1"
-                android:layout_width="10sp"
-                android:layout_height="20sp"
+                android:layout_width="10dp"
+                android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15sp"
+                android:layout_marginEnd="15dp"
                 android:src="@drawable/arrow_down_icon" />
 
         </RelativeLayout>
@@ -205,14 +207,14 @@
 
     <Button
         android:id="@+id/inviteBtn"
-        android:layout_width="120sp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/ic_getstartedbtnbg2"
         android:text="Invite"
         android:textAllCaps="false"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"
