@@ -1,4 +1,4 @@
-package com.example.eatmou.Restaurant;
+package com.example.eatmou.ui.Restaurant;
 
 import android.os.Bundle;
 
@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.google.android.material.button.MaterialButton;

@@ -76,7 +76,7 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
                 notifyItemChanged(getAdapterPosition());
             });
 
-            System.out.println("--->>>" + InboxUserID);
+//            System.out.println("--->>>" + InboxUserID);
             userImgView.setOnClickListener(v -> {
                 Fragment fragment = new InboxUserProfileFragment();
                 Bundle args = new Bundle();
@@ -124,7 +124,7 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
                     String userID = document.getString("userID");
                     holder.usernameTxt.setText(preText + name);
                     holder.InboxUserID = userID;
-                    System.out.println(userID);
+//                    System.out.println(userID);
 
                     String profilePicUrl = document.getString("profilePicUrl");
                     Glide.with(context).load(profilePicUrl).into(holder.userImgView);

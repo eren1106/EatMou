@@ -1,4 +1,4 @@
-package com.example.eatmou.Restaurant;
+package com.example.eatmou.ui.Restaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +69,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
             @Override
             public void onClick(View view) {
                 int position = holder.getBindingAdapterPosition();
-                System.out.println(position);
                 Restaurant restaurant = restaurants.get(position);
                 Intent intent = new Intent(context, RestaurantDetails.class);
                 intent.putExtra("id", restaurant.getId());
