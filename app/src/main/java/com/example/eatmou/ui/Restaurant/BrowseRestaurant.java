@@ -1,4 +1,4 @@
-package com.example.eatmou.Restaurant;
+package com.example.eatmou.ui.Restaurant;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
-import com.example.eatmou.ui.homePage.MainActivity;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
