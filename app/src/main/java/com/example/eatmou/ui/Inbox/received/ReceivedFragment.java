@@ -127,6 +127,7 @@ public class ReceivedFragment extends Fragment {
     }
 
     private void setInvitationList() {
+        System.out.println(userID);
         db.collection("Invitations")
                 .whereEqualTo("InvitedID", userID)
                 .whereEqualTo("Status","Pending")

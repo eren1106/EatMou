@@ -181,54 +181,53 @@ public class JoinedFragment extends Fragment {
     }
 
     private void setInvitationList() {
-
+        System.out.println(userID);
         db.collection("Invitations")
                 .whereEqualTo("Status", "Accepted")
                 .orderBy("Date")
                 .orderBy("StartTime")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error!=null){
-                            Log.e("Firestore error", error.getMessage());
-                            return;
-                        }
-                        for(DocumentChange doc : value.getDocumentChanges()){
-                            if (doc.getType() == DocumentChange.Type.ADDED) {
-                                Invitation invitation = Invitation.toObject(doc.getDocument().getData());
-                                if(invitation.getInvitedID().equals(userID)){
-                                    //get and set organiser name
-                                    DocumentReference docRef = db.collection("users").document(invitation.getOrganiserID());
-                                    docRef.get().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
-                                                String name = document.getString("username");
-                                                invitation.setOrganiserName(name);
-                                                invitation.setCurrentUserInvitation(false);
-                                            } else Log.d(TAG, "No such document");
-                                        } else Log.d(TAG, "get failed with ", task.getException());
-                                    });
-                                }
-                                else if (invitation.getOrganiserID().equals(userID)){
-                                    DocumentReference docRef = db.collection("users").document(invitation.getInvitedID());
-                                    docRef.get().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
-                                                String name = document.getString("username");
-                                                invitation.setInvitedName(name);
-                                                invitation.setCurrentUserInvitation(true);
-                                            } else Log.d(TAG, "No such document");
-                                        } else Log.d(TAG, "get failed with ", task.getException());
-                                    });
-                                }
-                                invitationList.add(invitation);
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-
+                .addSnapshotListener((value, error) -> {
+                    if(error!=null){
+                        Log.e("Firestore error", error.getMessage());
+                        return;
                     }
+                    for(DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            Invitation invitation = Invitation.toObject(doc.getDocument().getData());
+                            if(invitation.getInvitedID().equals(userID)){
+                                System.out.println("The invited ID" + invitation.getInvitedID());
+                                //get and set organiser name
+                                DocumentReference docRef = db.collection("users").document(invitation.getOrganiserID());
+                                docRef.get().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            String name = document.getString("username");
+                                            invitation.setOrganiserName(name);
+                                            invitation.setCurrentUserInvitation(false);
+                                        } else Log.d(TAG, "No such document");
+                                    } else Log.d(TAG, "get failed with ", task.getException());
+                                });
+                            }
+                            else if (invitation.getOrganiserID().equals(userID)){
+                                System.out.println("The organiser ID" + invitation.getOrganiserID());
+                                DocumentReference docRef = db.collection("users").document(invitation.getInvitedID());
+                                docRef.get().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            String name = document.getString("username");
+                                            invitation.setInvitedName(name);
+                                            invitation.setCurrentUserInvitation(true);
+                                        } else Log.d(TAG, "No such document");
+                                    } else Log.d(TAG, "get failed with ", task.getException());
+                                });
+                            }
+                            invitationList.add(invitation);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
                 });
         progressDialog.dismiss();
     }
