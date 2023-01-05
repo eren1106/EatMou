@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,18 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.R;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<RestaurantItemRecViewAdapter.ViewHolder> {
 
-    private OnItemClickListener listener;
     private final List<Restaurant> restaurants;
     private Context context;
 
@@ -64,7 +70,7 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
             public void onClick(View view) {
                 int position = holder.getBindingAdapterPosition();
                 Restaurant restaurant = restaurants.get(position);
-                Intent intent = new Intent(holder.itemView.getContext(), RestaurantDetails.class);
+                Intent intent = new Intent(context, RestaurantDetails.class);
                 intent.putExtra("id", restaurant.getId());
                 intent.putExtra("name", restaurant.getName());
                 intent.putExtra("rating", restaurant.getRating());
@@ -85,9 +91,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         return restaurants.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.listener = listener;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -105,11 +108,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
 
 
         }
-    }
-
-
-    public interface OnItemClickListener {
-        void onItemClick(Restaurant restaurant, int position);
     }
 
 
