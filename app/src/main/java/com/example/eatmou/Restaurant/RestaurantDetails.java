@@ -34,6 +34,7 @@ public class RestaurantDetails extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant_details);
 
         intent = getIntent();
+        String id = intent.getStringExtra("id").toString();
         String name = intent.getStringExtra("name").toString();
         double rating = intent.getDoubleExtra("rating",0);
         String category = intent.getStringExtra("category").toString();
@@ -42,9 +43,9 @@ public class RestaurantDetails extends AppCompatActivity {
         ArrayList<Integer> closingHours = intent.getIntegerArrayListExtra("closingHours");
         String description = intent.getStringExtra("description").toString();
 
-        Restaurant restaurant = new Restaurant(name, rating, category, location, description, openingHours, closingHours);
+        Restaurant restaurant = new Restaurant(id, name, rating, category, location, description, openingHours, closingHours);
 
-        System.out.println(restaurant.getLocation());
+        System.out.println(restaurant.getId());
 
         restaurantImage = findViewById(R.id.restaurantImage);
         TL_details = findViewById(R.id.TL_details);

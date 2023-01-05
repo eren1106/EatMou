@@ -59,9 +59,9 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
 
         // change restaurant color
         if (holder.restaurantStatus.getText().toString().equals("OPEN")) {
-            holder.restaurantStatus.setTextColor(Color.parseColor("#00D408"));
+            holder.restaurantStatus.setTextColor(Color.parseColor("#00D408"));  //green
         } else {
-            holder.restaurantStatus.setTextColor(Color.parseColor("#D40000"));
+            holder.restaurantStatus.setTextColor(Color.parseColor("#D40000"));  // dark red
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -107,11 +107,14 @@ public class BrowseRestaurant extends AppCompatActivity {
         restaurantItemRecView.setLayoutManager(new GridLayoutManager(this, 2));
 
         restaurantsList = new ArrayList<Restaurant>();
+//        Log.i("Restaurant list: " , String.valueOf(restaurantsList.size()));
         restaurantItemRecViewAdapter = new RestaurantItemRecViewAdapter(BrowseRestaurant.this, restaurantsList);
+//        Log.i("Adapter: " , String.valueOf(restaurantItemRecViewAdapter.getItemCount()));
+//        Log.i("Restaurant list: " , String.valueOf(restaurantsList.size()));
 
         EventChangeListener();
 
-        restaurantItemRecView.setAdapter(restaurantItemRecViewAdapter);
+//        restaurantItemRecView.setAdapter(restaurantItemRecViewAdapter);
 //
 //        restaurantItemRecViewAdapter.setOnItemClickListener(new RestaurantItemRecViewAdapter.OnItemClickListener() {
 //            @Override
