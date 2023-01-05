@@ -18,6 +18,8 @@ import android.widget.TimePicker;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
+import com.example.eatmou.UserModel;
+import com.example.eatmou.ui.homePage.MainActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,7 @@ import java.util.Date;
 
 public class CreateFoodPartyActivity extends AppCompatActivity {
 
+    UserModel currentUser;
     EditText etTitle;
     EditText etLocation;
     EditText etMaxPerson;
@@ -46,6 +49,8 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_food_party);
+
+        currentUser = MainActivity.user;
 
         etTitle = findViewById(R.id.ET_Title);
         etLocation = findViewById(R.id.ET_Location);
@@ -151,7 +156,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //create food party logic
-                    firebaseMethods.addFoodParty(etTitle.getText().toString(), "myid", etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
+                    firebaseMethods.addFoodParty(etTitle.getText().toString(), currentUser.getUserID(), etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
 
                     finish();
                 }

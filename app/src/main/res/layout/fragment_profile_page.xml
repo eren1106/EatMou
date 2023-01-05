@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfilePage.ProfilePage"
-    android:id="@+id/profilePage">
+    tools:context=".ui.ProfilePage.ProfilePage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_title_bar"
@@ -17,6 +17,7 @@
         android:verticalScrollbarPosition="defaultPosition">
 
         <TextView
+            android:id="@+id/profile_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -25,11 +26,8 @@
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -37,8 +35,8 @@
         android:id="@+id/ProfilePageScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/profile_title_bar">
+        android:layout_below="@id/profile_title_bar"
+        android:layout_alignParentBottom="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_1"
@@ -49,21 +47,21 @@
                 android:id="@+id/userBgImg"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-
+                android:layout_marginTop="4dp"
                 android:contentDescription="@string/cover_picture"
                 android:scaleType="centerCrop"
                 android:src="@drawable/mikami_bg"
                 app:layout_constraintBottom_toTopOf="@+id/userProfileImg"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userProfileImg"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="-75dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="-60dp"
                 android:src="@drawable/mikami_profile"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userBgImg" />

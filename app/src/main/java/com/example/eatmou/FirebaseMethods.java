@@ -27,7 +27,7 @@ public class FirebaseMethods {
                              Date startTime, Date endTime, int maxParticipant) {
 
         String id = UUID.randomUUID().toString();
-        FoodPartyModel fpm = new FoodPartyModel(id, title, organiserId, location, date, startTime, endTime, 9, new ArrayList<>(Arrays.asList()));
+        FoodPartyModel fpm = new FoodPartyModel(id, title, organiserId, location, date, startTime, endTime, maxParticipant, new ArrayList<>(Arrays.asList()));
         Map<String, Object> foodParty = fpm.toMap();
 
         firestore.collection("foodParties").document(id).set(foodParty);

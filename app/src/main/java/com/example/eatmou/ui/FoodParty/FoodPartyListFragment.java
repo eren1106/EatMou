@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmou.R;
+import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.Authentication.LoginPage;
+import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -32,7 +35,8 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
     ArrayList<FoodPartyModel> foodPartyModels = new ArrayList<>();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
+    UserModel currentUser = MainActivity.user;
+    TextView tvNoFoodParties;
 
     boolean showMine = false;
     EventListener<QuerySnapshot> eventListener;
@@ -49,21 +53,30 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener());
 
-        ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Fetching Data...");
-        progressDialog.show();
+        tvNoFoodParties = view.findViewById(R.id.TV_NoFoodParties);
+        tvNoFoodParties.setVisibility(View.INVISIBLE);
+
+//        ProgressDialog progressDialog = new ProgressDialog(this.getActivity());
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage("Fetching Data...");
+//        progressDialog.show();
 
         eventListener = new EventListener<QuerySnapshot>() { // addSnapshotListener -> will update the recyclerview whenever there is data change in database
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    if(progressDialog.isShowing())
-                        progressDialog.dismiss();
-                    Log.e("Firestore error", error.getMessage());
+                if (value != null && value.isEmpty()) {
+                    foodPartyModels.clear();
+                    adapter.notifyDataSetChanged();
+                    tvNoFoodParties.setVisibility(View.VISIBLE);
                     return;
                 }
-
+                if (error != null) {
+//                    if(progressDialog.isShowing())
+//                        progressDialog.dismiss();
+                    Log.e("Firestore error", error.getMessage());
+                    Toast.makeText(getActivity(), "error!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 for (DocumentChange dc : value.getDocumentChanges()) {
                     if (dc.getType() == DocumentChange.Type.ADDED) {
                         foodPartyModels.add(FoodPartyModel.toObject(dc.getDocument().getData()));
@@ -90,8 +103,9 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
                     }
 
                     adapter.notifyDataSetChanged();
-                    if(progressDialog.isShowing())
-                        progressDialog.dismiss();
+                    tvNoFoodParties.setVisibility(View.INVISIBLE);
+//                    if(progressDialog.isShowing())
+//                        progressDialog.dismiss();
                 }
             }
         };
@@ -114,7 +128,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
             listenerRegistration.remove();
         }
         if(showMine) {
-            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", "myid").addSnapshotListener(eventListener);
+            listenerRegistration = firestore.collection("foodParties").whereEqualTo("organiserId", currentUser.getUserID()).addSnapshotListener(eventListener);
         }
         else {
             listenerRegistration = firestore.collection("foodParties").addSnapshotListener(eventListener);

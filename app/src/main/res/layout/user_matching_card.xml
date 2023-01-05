@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_item"
-    android:layout_width="180sp"
-    android:layout_height="250sp"
-    android:layout_margin="5sp"
-    android:paddingTop="5sp"
-    android:paddingStart="5sp"
-    android:paddingEnd="5sp">
+    android:layout_width="180dp"
+    android:layout_height="250dp"
+    android:layout_margin="5dp"
+    android:paddingTop="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_image"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        app:cardCornerRadius="30sp"
-        android:padding="10sp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="30dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +31,7 @@
         android:id="@+id/card_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Ernest\nHenningways"
