@@ -1,14 +1,15 @@
 package com.example.eatmou.ui.appLock;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -18,27 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
-import com.example.eatmou.model.AppLock;
-import com.example.eatmou.ui.Authentication.LoginPage;
 import com.example.eatmou.ui.homePage.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppLockStart extends AppCompatActivity {
-    ConstraintLayout appLockLayout, splashScreen;
+    ConstraintLayout appLockLayout;
     RelativeLayout relativeLayout4;
     TextView num1,num2,num3,num4,num5,num6,num7,num8,num9,num0;
     ImageView eraseIcon, tickIcon, lockIcon;
     ImageView appCode1,appCode2,appCode3,appCode4;
     MutableLiveData<String> listen = new MutableLiveData<>();
-    AppLock appLock = new AppLock();
     String appLockPassword = "";
     int lengthOri = 0;
 
@@ -48,10 +40,6 @@ public class AppLockStart extends AppCompatActivity {
         setContentView(R.layout.activity_app_lock_start);
 
         appLockLayout = findViewById(R.id.appLockLayout);
-        splashScreen = findViewById(R.id.splashScreen);
-
-        //Set appLockLayout as invisible
-        appLockLayout.setVisibility(View.INVISIBLE);
 
         //Number pad functionality
         numberPad();
@@ -100,78 +88,46 @@ public class AppLockStart extends AppCompatActivity {
         lockIcon = findViewById(R.id.lockIcon);
         relativeLayout4 = findViewById(R.id.relativeLayout4);
 
-        String currentUserID = FirebaseAuth.getInstance().getUid();
-        if(currentUserID != null) {
-            DocumentReference docRef = FirebaseFirestore.getInstance().collection("AppLock").document(currentUserID);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if(task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if(document.exists()) {
-                            //Set visibility of appLockLayout
-                            appLockLayout.setVisibility(View.VISIBLE);
-                            splashScreen.setVisibility(View.GONE);
 
-                            //Convert the document to AppLock object
-                            appLock = document.toObject(AppLock.class);
-                            boolean check = false;
-                            if(appLock != null) {
-                                check = appLock.isExistPass();
-                                if(check) {
-                                    //Tick function
-                                    tickIcon = findViewById(R.id.tickIcon);
-                                    tickIcon.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(appLockPassword != null) {
-                                                if(appLockPassword.equals(appLock.getPassword())) {
-                                                    //Change the lock to unlock icon
-                                                    lockIcon.setImageResource(R.drawable.unlock_icon);
+        //Get password from share preference from splash screen
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        String pass = sharedPreferences.getString("APP_LOCK","");
+        Log.d("Passcode", "Passcode: " + pass);
 
-                                                    //Add animation of rotation of unlock
-                                                    lockIcon.startAnimation(AnimationUtils.loadAnimation(
-                                                            getApplicationContext(),
-                                                            R.anim.rotate
-                                                    ));
+        //Tick function
+        tickIcon = findViewById(R.id.tickIcon);
+        tickIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(appLockPassword != null && appLockPassword.length() == 4) {
+                    if(appLockPassword.equals(pass)) {
+                        //Change the lock to unlock icon
+                        lockIcon.setImageResource(R.drawable.unlock_icon);
 
-                                                    //Delay action
-                                                    Handler handler = new Handler();
-                                                    handler.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            //Navigate to main activity
-                                                            toMain();
-                                                        }
-                                                    }, 500);
-                                                } else {
-                                                    Toast.makeText(AppLockStart.this, "Password incorrect", Toast.LENGTH_SHORT).show();
-                                                }
-                                            } else {
-                                                Toast.makeText(AppLockStart.this, "Password incomplete", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    toMain();
-                                }
+                        //Add animation of rotation of unlock
+                        lockIcon.startAnimation(AnimationUtils.loadAnimation(
+                                getApplicationContext(),
+                                R.anim.rotate
+                        ));
+
+                        //Delay action
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Navigate to main activity
+                                toMain();
                             }
-
-                            Log.d("AppLock", "Successfully get the app lock details");
-                        } else {
-                            appLockLayout.setVisibility(View.GONE);
-                            toMain();
-                        }
+                        }, 500);
                     } else {
-                        appLockLayout.setVisibility(View.GONE);
-                        toMain();
+                        Toast.makeText(AppLockStart.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(AppLockStart.this, "Password incomplete", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else {
-            startActivity(new Intent(getApplicationContext(), LoginPage.class));
-            finish();
-        }
+            }
+        });
     }
 
     private void toMain() {
