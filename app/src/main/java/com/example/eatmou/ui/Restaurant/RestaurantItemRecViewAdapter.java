@@ -29,8 +29,12 @@ import java.util.List;
 
 public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<RestaurantItemRecViewAdapter.ViewHolder> {
 
-    private final List<Restaurant> restaurants;
+    private List<Restaurant> restaurants;
     private Context context;
+
+    public void setFilteredList(List<Restaurant> filteredList) {
+        this.restaurants = filteredList;
+    }
 
     public RestaurantItemRecViewAdapter(Context context, List<Restaurant> restaurants) {
         this.context = context;
