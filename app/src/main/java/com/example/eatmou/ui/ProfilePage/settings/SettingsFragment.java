@@ -24,6 +24,7 @@ import com.example.eatmou.ui.Authentication.LoginPage;
 import com.example.eatmou.ui.ProfilePage.ProfilePage;
 import com.example.eatmou.ui.appLock.AppLockStart;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -76,10 +77,18 @@ public class SettingsFragment extends Fragment {
                                             startActivity(new Intent(getActivity(), com.example.eatmou.ui.Authentication.appLock.AppLock.class));
                                         }
                                     }
-
                                     Log.d("AppLock", "Successfully get the app lock details");
+                                } else {
+                                    startActivity(new Intent(getActivity(), com.example.eatmou.ui.Authentication.appLock.AppLock.class));
                                 }
+                            } else {
+                                startActivity(new Intent(getActivity(), com.example.eatmou.ui.Authentication.appLock.AppLock.class));
                             }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            startActivity(new Intent(getActivity(), com.example.eatmou.ui.Authentication.appLock.AppLock.class));
                         }
                     });
                 }

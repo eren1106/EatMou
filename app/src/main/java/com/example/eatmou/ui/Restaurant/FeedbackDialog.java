@@ -1,4 +1,4 @@
-package com.example.eatmou.Restaurant;
+package com.example.eatmou.ui.Restaurant;
 
 import android.app.Activity;
 import android.app.AlertDialog;

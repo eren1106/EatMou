@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:nestedScrollingEnabled="true"
-        tools:context=".Restaurant.AboutFragment">
+        tools:context=".ui.Restaurant.AboutFragment">
 
         <TextView
             android:id="@+id/restaurantName"

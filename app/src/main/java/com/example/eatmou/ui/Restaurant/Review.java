@@ -1,19 +1,20 @@
-package com.example.eatmou.Restaurant;
+package com.example.eatmou.ui.Restaurant;
+
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
-public class Comment {
-
+public class Review {
     private String username;
     private double userRating;
-    private Date commentDate;
     private String content;
+    private Date reviewDate;
 
-    public Comment(String username, double userRating, Date commentDate, String content) {
+    public Review(String username, double userRating, String content, Date reviewDate) {
         this.username = username;
         this.userRating = userRating;
-        this.commentDate = commentDate;
         this.content = content;
+        this.reviewDate = reviewDate;
     }
 
     public String getUsername() {
@@ -32,19 +33,20 @@ public class Comment {
         this.userRating = userRating;
     }
 
-    public Date getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @ServerTimestamp
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
+    public void setReviewDate(Date reviewDate) {
+        this.reviewDate = reviewDate;
     }
 }

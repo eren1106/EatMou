@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.eatmou.R;
 import com.example.eatmou.repository.authentication.AuthRepoImp;
 import com.example.eatmou.ui.appLock.AppLockStart;
+import com.example.eatmou.ui.splashScreen.SplashScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -83,7 +84,7 @@ public class AppLock extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()) {
                                                     progressDialog.hide();
-                                                    startActivity(new Intent(getApplicationContext(), AppLockStart.class));
+                                                    startActivity(new Intent(getApplicationContext(), SplashScreen.class));
                                                     finish();
                                                     Log.d("AppLock", "App lock successfully applied");
                                                 } else {
