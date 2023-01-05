@@ -72,4 +72,9 @@
     <string name="category_title">Category:</string>
     <string name="location_title">Location:</string>
     <string name="find_a_restaurant_now">Find a restaurant now</string>
+    <string name="overall_satisfaction">Overall Satisfaction</string>
+    <string name="tell_us_what_can_be_improved">Tell us what can be improved</string>
+    <string name="user_experience">User Experience</string>
+    <string name="personalisation">Personalisation</string>
+    <string name="data_privacy_and_security">Data Privacy and Security</string>
 </resources>

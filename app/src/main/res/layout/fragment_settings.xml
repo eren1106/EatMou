@@ -47,7 +47,7 @@
         android:layout_below="@id/setting_title_bar">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/feedbackBtn"
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/feedback"
