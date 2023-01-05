@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.eatmou.R;
+import com.example.eatmou.Restaurant.RestaurantFragment;
 import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.Inbox.InboxFragment;
 import com.example.eatmou.ui.Inbox.received.ReceivedFragment;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.party:
                     selectedFragment = new FoodPartyListFragment();
+                    break;
+                case R.id.restaurant:
+                    selectedFragment = new RestaurantFragment();
                     break;
                 case R.id.inbox:
                     selectedFragment = new InboxFragment(new ReceivedFragment());
