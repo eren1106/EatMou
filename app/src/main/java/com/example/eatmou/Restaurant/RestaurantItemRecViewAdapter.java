@@ -21,14 +21,93 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//public class RestaurantItemRecViewAdapter extends FirestoreRecyclerAdapter<Restaurant, RestaurantItemRecViewAdapter.RestaurantHolder> {
+//
+//    RecyclerView restaurantItemRecView;
+//
+//    private List<Restaurant> restaurants;
+//    private OnItemClickListener listener;
+//
+//    public RestaurantItemRecViewAdapter(@NonNull FirestoreRecyclerOptions options) {
+//        super(options);
+//    }
+//
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    @Override
+//    protected void onBindViewHolder(@NonNull RestaurantHolder holder, int position, @NonNull Restaurant model) {
+//        holder.restaurantName.setText(model.getName());
+//        holder.restaurantRating.setText(String.valueOf(model.getRating()));
+//        holder.restaurantStatus.setText(model.getStatus());
+//        holder.restaurantCategory.setText(model.getCategory());
+//        holder.restaurantImage.setImageResource(R.drawable.samanja);
+//
+//        // change restaurant color
+//        if (holder.restaurantStatus.getText().toString().equals("OPEN")) {
+//            holder.restaurantStatus.setTextColor(Color.parseColor("#00D408"));  //green
+//        } else {
+//            holder.restaurantStatus.setTextColor(Color.parseColor("#D40000"));  // dark red
+//        }
+//
+//    }
+//
+//
+//    @NonNull
+//    @Override
+//    public RestaurantHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item_card, parent, false);
+//
+//        restaurantItemRecView = (RecyclerView) view.findViewById(R.id.restaurantItemRecView);
+//
+//        return new RestaurantHolder(view);
+//    }
+//
+//    class RestaurantHolder extends RecyclerView.ViewHolder {
+//        TextView restaurantName;
+//        TextView restaurantRating;
+//        TextView restaurantStatus;
+//        TextView restaurantCategory;
+//        ImageView restaurantImage;
+//
+//        public RestaurantHolder(@NonNull View itemView) {
+//            super(itemView);
+//
+//            restaurantName = itemView.findViewById(R.id.restaurantName);
+//            restaurantRating = itemView.findViewById(R.id.restaurantRating);
+//            restaurantStatus = itemView.findViewById(R.id.restaurantStatus);
+//            restaurantCategory = itemView.findViewById(R.id.restaurantCategory);
+//            restaurantImage = itemView.findViewById(R.id.restaurantImage);
+//
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = getBindingAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION && listener != null) {
+//                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+//                    }
+//                }
+//            });
+//        }
+//    }
+//
+//    public interface OnItemClickListener {
+//        void onItemClick (DocumentSnapshot documentSnapshot, int position);
+//    }
+//
+//    public void setOnItemClickListener(OnItemClickListener listener) {
+//        this.listener = listener;
+//    }
+//
+//}
+
 public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<RestaurantItemRecViewAdapter.ViewHolder> {
 
-    private OnItemClickListener listener;
     private final List<Restaurant> restaurants;
     private Context context;
 
@@ -69,8 +148,9 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
             @Override
             public void onClick(View view) {
                 int position = holder.getBindingAdapterPosition();
+                System.out.println(position);
                 Restaurant restaurant = restaurants.get(position);
-                Intent intent = new Intent(holder.itemView.getContext(), RestaurantDetails.class);
+                Intent intent = new Intent(context, RestaurantDetails.class);
                 intent.putExtra("id", restaurant.getId());
                 intent.putExtra("name", restaurant.getName());
                 intent.putExtra("rating", restaurant.getRating());
@@ -91,9 +171,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         return restaurants.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.listener = listener;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -111,11 +188,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
 
 
         }
-    }
-
-
-    public interface OnItemClickListener {
-        void onItemClick(Restaurant restaurant, int position);
     }
 
 
