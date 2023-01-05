@@ -100,6 +100,7 @@ public class AppLockStart extends AppCompatActivity {
         tickIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("passcode", "Db: " + pass + "\nPasscode: " + appLockPassword);
                 if(appLockPassword != null && appLockPassword.length() == 4) {
                     if(appLockPassword.equals(pass)) {
                         //Change the lock to unlock icon
