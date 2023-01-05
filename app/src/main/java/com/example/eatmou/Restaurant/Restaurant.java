@@ -29,9 +29,8 @@ public class Restaurant {
     }
 
     // Constructor
-    public Restaurant(String id, String name, double rating, String category, String location, String description,
+    public Restaurant(String name, double rating, String category, String location, String description,
                       ArrayList<Integer> openingHours, ArrayList<Integer> closingHours) {
-        this.id = id;
         this.name = name;
 //        this.imageURL = imageURL;
         this.rating = rating;

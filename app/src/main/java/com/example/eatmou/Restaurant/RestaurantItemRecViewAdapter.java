@@ -20,6 +20,7 @@ import com.example.eatmou.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

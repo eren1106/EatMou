@@ -43,7 +43,7 @@ public class RestaurantDetails extends AppCompatActivity {
         ArrayList<Integer> closingHours = intent.getIntegerArrayListExtra("closingHours");
         String description = intent.getStringExtra("description").toString();
 
-        Restaurant restaurant = new Restaurant(id, name, rating, category, location, description, openingHours, closingHours);
+        Restaurant restaurant = new Restaurant(name, rating, category, location, description, openingHours, closingHours);
 
         System.out.println(restaurant.getId());
 
