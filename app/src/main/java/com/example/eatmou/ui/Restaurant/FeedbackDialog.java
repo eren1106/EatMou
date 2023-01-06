@@ -122,6 +122,7 @@ public class FeedbackDialog extends AppCompatDialogFragment {
 
         CollectionReference reviewRef = FirebaseFirestore.getInstance().collection("Reviews");
         reviewRef.add(new Review(getRestaurantId(), getUserId(), getUsername(), rating, new Date(), comment));
+
         Toast.makeText(getContext(), "Your feedback has been submitted successfully", Toast.LENGTH_SHORT).show();
         dismiss();
 

@@ -205,6 +205,8 @@ public class BrowseRestaurant extends AppCompatActivity {
 
 
     public void EventChangeListener() {
+
+        restaurantsList.clear();
         Log.i("Method called: ", "Event Change Listener");
 
         query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING);

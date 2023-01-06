@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
@@ -107,6 +109,7 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 openEditReviewDialog();
+                userCommentRecViewAdapter.notifyDataSetChanged();
             }
         });
 
@@ -131,6 +134,7 @@ public class ReviewFragment extends Fragment {
 
     private void loadData() {
         Log.i("Method called: ", "LoadData()");
+        reviews.clear();
 
         Log.i("restaurant Id: " , restaurant.getId());
         query = reviewsRef.whereEqualTo("restaurantId", restaurant.getId());
@@ -194,10 +198,6 @@ public class ReviewFragment extends Fragment {
                 Log.i("For loop ended le", "Thank you dajia");
             }
         });
-    }
-
-    private void editReview() {
-
     }
 
 

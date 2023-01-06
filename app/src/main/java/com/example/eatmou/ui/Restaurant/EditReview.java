@@ -1,8 +1,10 @@
 package com.example.eatmou.ui.Restaurant;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -64,10 +66,17 @@ public class EditReview extends AppCompatActivity {
         saveReviewBtn = findViewById(R.id.saveReviewButton);
         cancelBtn = findViewById(R.id.cancelReviewBtn);
 
+        deleteReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialog();
+            }
+        });
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                ratingTitle.setText("You have rated: " + v + " / 5.0");
+                ratingTitle.setText("You have rated: " + (int) v + " / 5");
             }
         });
 
@@ -99,5 +108,33 @@ public class EditReview extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Delete Review");
+        builder.setMessage("Are you sure you want to delete your review? ");
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                CollectionReference reviewRef = FirebaseFirestore.getInstance().collection("Reviews");
+                reviewRef.document(reviewId).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(EditReview.this, "Your review has been successfully deleted.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
