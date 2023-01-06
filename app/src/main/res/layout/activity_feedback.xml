@@ -133,11 +133,12 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/userExp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -158,11 +159,12 @@
                     android:layout_marginEnd="40dp"
                     android:layout_marginBottom="5dp"
                     android:layout_toEndOf="@+id/userExpBtn"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/customerSupport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -185,11 +187,12 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="40dp"
                     android:layout_marginBottom="5dp"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/design"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -208,11 +211,12 @@
                     android:layout_marginEnd="100dp"
                     android:layout_marginBottom="5dp"
                     android:layout_toEndOf="@+id/DesignBtn"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/personalities"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -235,11 +239,12 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="40dp"
                     android:layout_marginBottom="5dp"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/data_privacy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -259,11 +264,12 @@
                     android:layout_marginEnd="40dp"
                     android:layout_marginBottom="5dp"
                     android:layout_toEndOf="@+id/dataPrivacyBtn"
-                    android:backgroundTint="#FFEECC"
+                    app:cardBackgroundColor="#FFEECC"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
                     <TextView
+                        android:id="@+id/content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -276,6 +282,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/confirmFeedbackBtn"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="40dp"
