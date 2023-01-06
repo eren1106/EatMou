@@ -17,13 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.eatmou.R;
+import com.google.android.material.button.MaterialButton;
 
 public class FeedbackDialog extends AppCompatDialogFragment {
 
     private RatingBar ratingBar;
     private EditText commentET;
     private Button submitFeedbackBtn;
-    private Button cancelFeedbackBtn;
+    private MaterialButton cancelFeedbackBtn;
 
     FeedbackDialogListener feedbackDialogListener;
 

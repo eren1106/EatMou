@@ -3,9 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/categoryBtn"
     style="@style/toggleButton"
+    android:text="@string/restaurant"
+    android:fontFamily="@font/poppins_bold"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    tools:ignore="TextContrastCheck">
+    tools:ignore="TextContrastCheck"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
 </ToggleButton>

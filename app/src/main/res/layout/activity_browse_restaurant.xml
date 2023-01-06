@@ -6,16 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.Restaurant.BrowseRestaurant">
 
-    <!-- Cibai I forgot to do search bar -->
+    <LinearLayout
+        android:id="@+id/searchViewFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gold"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchRestaurantBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:queryHint="Search restaurant here..." />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/selectCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/searchViewFrame"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Select Category:"
+        android:textColor="@color/RED"
         android:textSize="20sp" />
 
 
@@ -28,19 +51,22 @@
         android:layout_marginEnd="8dp"
         android:orientation="horizontal" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userCommentRecView"
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/restaurantItemRecView"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_height="1dp"
+        android:layout_below="@id/categoryFilterRecView"
+        android:background="#EDEDED"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restaurantItemRecView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categoryFilterRecView"
+        android:layout_below="@+id/divider"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp" />

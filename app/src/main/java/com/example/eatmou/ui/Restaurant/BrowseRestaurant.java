@@ -1,7 +1,9 @@
 package com.example.eatmou.ui.Restaurant;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,12 +30,15 @@ public class BrowseRestaurant extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference restaurantRef;
 
+    private SearchView searchRestaurantBar;
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
     private RestaurantItemRecViewAdapter restaurantItemRecViewAdapter;
 
     private List<Restaurant> restaurantsList;
+    ArrayList<String> filteredCategory = new ArrayList<>();
 
+    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,11 @@ public class BrowseRestaurant extends AppCompatActivity {
         setContentView(R.layout.activity_browse_restaurant);
 
         Log.i("Browse Restaurant", "Create");
+
+        firestore = FirebaseFirestore.getInstance();
+        Log.i("firestore instance", String.valueOf(firestore.getFirestoreSettings()));
+        restaurantRef = firestore.collection("Restaurants");
+        Log.i("restaurantRef", restaurantRef.getId());
 
 
         restaurantItemRecView = findViewById(R.id.restaurantItemRecView);
@@ -50,10 +60,6 @@ public class BrowseRestaurant extends AppCompatActivity {
         restaurantsList = new ArrayList<Restaurant>();
         restaurantItemRecViewAdapter = new RestaurantItemRecViewAdapter(BrowseRestaurant.this, restaurantsList);
 
-        firestore = FirebaseFirestore.getInstance();
-        Log.i("firestore instance", String.valueOf(firestore.getFirestoreSettings()));
-        restaurantRef = firestore.collection("Restaurants");
-        Log.i("restaurantRef", restaurantRef.getId());
 
         restaurantItemRecView.setAdapter(restaurantItemRecViewAdapter);
 
@@ -63,16 +69,20 @@ public class BrowseRestaurant extends AppCompatActivity {
         Log.i("Restaurant list: ", String.valueOf(restaurantsList.size()));
 
 
-
-
-        restaurantItemRecViewAdapter.setOnItemClickListener(new RestaurantItemRecViewAdapter.OnItemClickListener() {
+        searchRestaurantBar = findViewById(R.id.searchRestaurantBar);
+        searchRestaurantBar.clearFocus();
+        searchRestaurantBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onItemClick(Restaurant restaurant, int position) {
-                String id = restaurant.getId();
-                Toast.makeText(BrowseRestaurant.this, "ID: " + id, Toast.LENGTH_SHORT).show();
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterData(newText);
+                return false;
             }
         });
-
 
         categoryFilterRecView = findViewById(R.id.categoryFilterRecView);
         categoryFilterRecView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -89,20 +99,64 @@ public class BrowseRestaurant extends AppCompatActivity {
         CategoryFilterRecViewAdapter categoryFilterRecViewAdapter = new CategoryFilterRecViewAdapter(this, categories);
         categoryFilterRecView.setAdapter(categoryFilterRecViewAdapter);
 
-//
-//        restaurants = new ArrayList<>();
-//        restaurants.add(new Restaurant(1, "StarBuck Coffee", 5.0, "Coffee", "KL", "I love bucks", new int[]{16, 0}, new int[]{23, 0}, false));
-//        restaurants.add(new Restaurant(2, "StarBug Coffee", 5.0, "Coffee", "Penang", "I love bugs", new int[]{0, 0}, new int[]{16, 0}, true));
-//        restaurants.add(new Restaurant(3, "StarButt Coffee", 4.0, "Coffee", "KL", "I love butts", new int[]{0, 0}, new int[]{16, 0}, true));
-//        restaurants.add(new Restaurant(4, "StarDebug Coffee", 4.0, "Coffee", "Melaka", "I love debug", new int[]{16, 0}, new int[]{23, 0}, false));
-//        restaurants.add(new Restaurant(5, "StarFixBug Coffee", 5.0, "Beverage", "Sarawak", "I love fix bug", new int[]{0, 0}, new int[]{16, 0}, true));
-//        restaurants.add(new Restaurant(6, "StarNoBug Coffee", 4.0, "Beverage", "Sabah", "
-//        ", new int[]{16, 0}, new int[]{23, 0}, false));
-//
-//        RestaurantItemRecViewAdapter restaurantItemRecViewAdapter = new RestaurantItemRecViewAdapter(this, restaurants);
-//        restaurantItemRecView.setAdapter(restaurantItemRecViewAdapter);
-//        restaurantItemRecView.setLayoutManager(new GridLayoutManager(this, 2));
-////
+        categoryFilterRecViewAdapter.setOnItemClickListener(new CategoryFilterRecViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String filter, boolean isChecked) {
+                if (isChecked)
+                    filteredCategory.add(filter);
+                else
+                    filteredCategory.remove(filter);
+
+                if (!filteredCategory.isEmpty())
+                    filterData();
+                else
+                    restaurantItemRecViewAdapter.setFilteredList(restaurantsList);
+            }
+        });
+
+    }
+
+    private void filterData(String newText) {
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurantsList) {
+            if (restaurant.getName().toLowerCase().contains(newText.toLowerCase())) {
+                filteredList.add(restaurant);
+            }
+        }
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(this, "No restaurant found", Toast.LENGTH_SHORT).show();
+        } else {
+            restaurantItemRecViewAdapter.setFilteredList(filteredList);
+        }
+
+    }
+
+    private void filterData() {
+        List<Restaurant> filteredList = new ArrayList<>();
+
+        for (String filter: filteredCategory) {
+            query = setQuery(filter);
+
+            query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.e("Firestore Error", error.getMessage());
+                        return;
+                    }
+
+                    for (QueryDocumentSnapshot documentSnapshot : value) {
+                        Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+                        restaurant.setId(documentSnapshot.getId());
+                        filteredList.add(restaurant);
+                        restaurantItemRecViewAdapter.setFilteredList(filteredList);
+                        restaurantItemRecViewAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            });
+        }
 
     }
 
@@ -112,7 +166,6 @@ public class BrowseRestaurant extends AppCompatActivity {
         Log.i("Browse Restaurant", "Start");
         Log.i("Adapter is not null", String.valueOf((restaurantItemRecViewAdapter != null)));
 //        restaurantItemRecViewAdapter.startListening();
-
     }
 
     @Override
@@ -123,61 +176,69 @@ public class BrowseRestaurant extends AppCompatActivity {
     }
 
 
-    private void EventChangeListener() {
 
+
+    public void EventChangeListener() {
         Log.i("Method called: ", "Event Change Listener");
 
-        restaurantRef.orderBy("category", Query.Direction.DESCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestore Error", error.getMessage());
-                            return;
-                        }
+        query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING);
 
-                        Log.e("Check error: ", String.valueOf(value.isEmpty()));
-                        Log.e("Query snapshot: ", value.toString());
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e("Firestore Error", error.getMessage());
+                    return;
+                }
 
-                        for (DocumentChange documentChange : value.getDocumentChanges()) {
-                            QueryDocumentSnapshot documentSnapshot = documentChange.getDocument();
-                            Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
-                            restaurant.setId(documentSnapshot.getId());
+                Log.e("Check error: ", String.valueOf(value.isEmpty()));
+                Log.e("Query snapshot: ", value.toString());
 
-                            Log.i("Restaurant ID: ", restaurant.getId());
+                for (DocumentChange documentChange : value.getDocumentChanges()) {
+                    QueryDocumentSnapshot documentSnapshot = documentChange.getDocument();
+                    Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+                    restaurant.setId(documentSnapshot.getId());
+
+                    Log.i("Restaurant ID: ", restaurant.getId());
 
 
-                            switch (documentChange.getType()) {
-                                case ADDED:
-                                    restaurantsList.add(restaurant);
-                                    Log.i("Added: ", restaurant.getId());
-                                    Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                    switch (documentChange.getType()) {
+                        case ADDED:
+                            restaurantsList.add(restaurant);
+                            Log.i("Added: ", restaurant.getId());
+                            Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                            break;
+                        case MODIFIED:
+                            for (int i = 0; i < restaurantsList.size(); i++) {
+                                if (restaurantsList.get(i).getId().equals(restaurant.getId())) {
+                                    restaurantsList.set(i, restaurant);
                                     break;
-                                case MODIFIED:
-                                    for (int i = 0; i < restaurantsList.size(); i++) {
-                                        if (restaurantsList.get(i).getId().equals(restaurant.getId())) {
-                                            restaurantsList.set(i, restaurant);
-                                            break;
-                                        }
-                                    }
-                                    Log.i("Modified: ", restaurant.getId());
-                                    Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
-                                case REMOVED:
-                                    for (int i = 0; i < restaurantsList.size(); i++) {
-                                        if (restaurantsList.get(i).getId().equals(restaurant.getId())) {
-                                            restaurantsList.remove(i);
-                                            break;
-                                        }
-                                    }
-                                    Log.i("Removed: ", restaurant.getId());
-                                    Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                                }
                             }
-                            restaurantItemRecViewAdapter.notifyDataSetChanged();
-                        }
-                        Log.i("For loop ended le", "Thank you dajia");
+                            Log.i("Modified: ", restaurant.getId());
+                            Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                        case REMOVED:
+                            for (int i = 0; i < restaurantsList.size(); i++) {
+                                if (restaurantsList.get(i).getId().equals(restaurant.getId())) {
+                                    restaurantsList.remove(i);
+                                    break;
+                                }
+                            }
+                            Log.i("Removed: ", restaurant.getId());
+                            Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
                     }
-                });
+                    restaurantItemRecViewAdapter.notifyDataSetChanged();
+                }
+                Log.i("For loop ended le", "Thank you dajia");
+            }
+        });
 
+    }
+
+    private Query setQuery(String filter) {
+        Query query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING).whereEqualTo("category", filter);
+        System.out.println(filter);
+        return query;
     }
 
 
