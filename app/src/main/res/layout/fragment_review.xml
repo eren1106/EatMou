@@ -30,13 +30,61 @@
             android:textSize="16sp"
             android:layout_alignParentEnd="true" />
 
+        <LinearLayout
+            android:id="@+id/yourReviewSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/reviewTitle">
+
+            <TextView
+                android:id="@+id/yourReviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Review"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_semibold"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/yourReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editYourReviewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="Edit Your Review"
+                android:textColor="@color/RED"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/allReviewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All Reviews"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_below="@id/yourReviewSection"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userCommentRecView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_below="@id/reviewTitle"
+            android:layout_below="@id/allReviewTitle"
             app:layout_constraintTop_toBottomOf="@id/reviewTitle" />
 
 
