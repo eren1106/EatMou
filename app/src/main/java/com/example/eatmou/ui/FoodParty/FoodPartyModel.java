@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -159,6 +160,16 @@ public class FoodPartyModel implements Serializable{
 
     public void setJoinedPersons(ArrayList<String> joinedPersons) {
         this.joinedPersons = joinedPersons;
+    }
+
+    public Calendar getCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        Calendar startTime = Calendar.getInstance();
+        calendar.setTime(this.date);
+        startTime.setTime(this.startTime);
+        calendar.set(Calendar.HOUR, startTime.get(Calendar.HOUR));
+        calendar.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
+        return calendar;
     }
 }
 

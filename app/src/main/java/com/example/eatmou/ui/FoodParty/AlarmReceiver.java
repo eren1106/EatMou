@@ -16,7 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.calendar_icon)
                 .setContentTitle("Reminder")
                 .setContentText("Don't forget to do something!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, builder.build());
