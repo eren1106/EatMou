@@ -24,6 +24,7 @@
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:background="@drawable/search_restaurant_bar"
             app:queryHint="Search restaurant here..." />
 
     </LinearLayout>

@@ -12,39 +12,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eatmou.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserCommentRecViewAdapter extends RecyclerView.Adapter<UserCommentRecViewAdapter.ViewHolder>{
 
-    private final ArrayList<Comment> comments;
-
+    private List<Review> reviews;
     private Context context;
 
-    public UserCommentRecViewAdapter(Context context, ArrayList<Comment> comments) {
+    public UserCommentRecViewAdapter(Context context, List<Review> reviews) {
         this.context = context;
-        this.comments = comments;
+        this.reviews = reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_comment_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.user_comment_card, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.username.setText(comments.get(position).getUsername());
-        holder.userRating.setText(String.valueOf(comments.get(position).getUserRating()));
-        holder.commentDate.setText("yesterday");
-        holder.commentContent.setText(comments.get(position).getContent());
+        Review review = reviews.get(position);
+
+        holder.username.setText(review.getUsername());
+        holder.userRating.setText(String.valueOf(review.getUserRating()));
+        holder.commentDate.setText(review.displayReviewDate());
+        holder.commentContent.setText(reviews.get(position).getComment());
     }
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        return reviews.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

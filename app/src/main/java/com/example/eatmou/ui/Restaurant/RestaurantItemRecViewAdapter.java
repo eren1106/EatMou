@@ -53,7 +53,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Restaurant restaurant = restaurants.get(position);
 
         holder.restaurantName.setText(restaurant.getName());
@@ -68,25 +67,6 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         } else {
             holder.restaurantStatus.setTextColor(Color.parseColor("#D40000"));  // dark red
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = holder.getBindingAdapterPosition();
-                Restaurant restaurant = restaurants.get(position);
-                Intent intent = new Intent(context, RestaurantDetails.class);
-                intent.putExtra("id", restaurant.getId());
-                intent.putExtra("name", restaurant.getName());
-                intent.putExtra("rating", restaurant.getRating());
-                intent.putExtra("category", restaurant.getCategory());
-                intent.putExtra("location", restaurant.getLocation());
-                intent.putExtra("description", restaurant.getDescription());
-                intent.putIntegerArrayListExtra("openingHours", (ArrayList<Integer>) restaurant.getOpeningHours());
-                intent.putIntegerArrayListExtra("closingHours", (ArrayList<Integer>) restaurant.getClosingHours());
-                holder.itemView.getContext().startActivity(intent);
-                Toast.makeText(holder.itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
@@ -109,6 +89,25 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
             restaurantCategory = itemView.findViewById(R.id.restaurantCategory);
             restaurantImage = itemView.findViewById(R.id.restaurantImage);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getBindingAdapterPosition();
+                    Restaurant restaurant = restaurants.get(position);
+                    Intent intent = new Intent(context, RestaurantDetails.class);
+                    intent.putExtra("id", restaurant.getId());
+                    intent.putExtra("name", restaurant.getName());
+                    intent.putExtra("rating", restaurant.getRating());
+                    intent.putExtra("category", restaurant.getCategory());
+                    intent.putExtra("location", restaurant.getLocation());
+                    intent.putExtra("description", restaurant.getDescription());
+                    intent.putIntegerArrayListExtra("openingHours", (ArrayList<Integer>) restaurant.getOpeningHours());
+                    intent.putIntegerArrayListExtra("closingHours", (ArrayList<Integer>) restaurant.getClosingHours());
+
+                    itemView.getContext().startActivity(intent);
+                    Toast.makeText(itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
         }

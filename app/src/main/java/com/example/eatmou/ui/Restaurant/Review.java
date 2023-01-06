@@ -2,19 +2,48 @@ package com.example.eatmou.ui.Restaurant;
 
 import com.google.firebase.firestore.ServerTimestamp;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Review {
+    private String restaurantId;
+    private String userId;
     private String username;
     private double userRating;
-    private String content;
     private Date reviewDate;
+    private String comment;
 
-    public Review(String username, double userRating, String content, Date reviewDate) {
+    public Review() {
+        // empty no-arg constructor
+    }
+
+    public Review(String restaurantId, String userId, String username, double userRating, Date reviewDate, String comment) {
+        this.restaurantId = restaurantId;
+        this.userId = userId;
         this.username = username;
         this.userRating = userRating;
-        this.content = content;
         this.reviewDate = reviewDate;
+        this.comment = comment;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -33,12 +62,12 @@ public class Review {
         this.userRating = userRating;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @ServerTimestamp
@@ -46,7 +75,10 @@ public class Review {
         return reviewDate;
     }
 
-    public void setReviewDate(Date reviewDate) {
-        this.reviewDate = reviewDate;
+    public String displayReviewDate() {
+        PrettyTime p = new PrettyTime();
+        return p.format(getReviewDate());
     }
+
+
 }
