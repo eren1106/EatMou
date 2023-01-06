@@ -109,8 +109,16 @@ public class BrowseRestaurant extends AppCompatActivity {
 
                 if (!filteredCategory.isEmpty())
                     filterData();
-                else
+                else {
+                    // temp code
+                    int index = 0;
+                    for (Restaurant r : restaurantsList) {
+                        Log.i("Index: ", index + ": " + r.getName());
+                        index++;
+                    }
                     restaurantItemRecViewAdapter.setFilteredList(restaurantsList);
+                    restaurantItemRecViewAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -124,10 +132,18 @@ public class BrowseRestaurant extends AppCompatActivity {
             }
         }
 
+        // temp code
+        int index = 0;
+        for (Restaurant r : filteredList) {
+            Log.i("Index: ", index + ": " + r.getName());
+            index++;
+        }
+
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No restaurant found", Toast.LENGTH_SHORT).show();
         } else {
             restaurantItemRecViewAdapter.setFilteredList(filteredList);
+            restaurantItemRecViewAdapter.notifyDataSetChanged();
         }
 
     }
@@ -150,12 +166,22 @@ public class BrowseRestaurant extends AppCompatActivity {
                         Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                         restaurant.setId(documentSnapshot.getId());
                         filteredList.add(restaurant);
-                        restaurantItemRecViewAdapter.setFilteredList(filteredList);
-                        restaurantItemRecViewAdapter.notifyDataSetChanged();
+
                     }
+
+                    // temp code
+                    int index = 0;
+                    for (Restaurant r : filteredList) {
+                        Log.i("Index: ", index + ": " + r.getName());
+                        index++;
+                    }
+                    restaurantItemRecViewAdapter.setFilteredList(filteredList);
+                    restaurantItemRecViewAdapter.notifyDataSetChanged();
 
                 }
             });
+
+
         }
 
     }
