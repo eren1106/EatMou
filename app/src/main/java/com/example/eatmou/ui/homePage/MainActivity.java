@@ -114,4 +114,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static UserModel getUser() {
+        return user;
+    }
 }
