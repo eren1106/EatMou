@@ -291,8 +291,6 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                         if(currentTime.before(calendar)) {
                             triggerTime = calendar.getTimeInMillis();
                         }
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Toast.makeText(context, formatter.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
                         builder.setWhen(triggerTime);
                         builder.setShowWhen(true);
 

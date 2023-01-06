@@ -47,12 +47,15 @@
                 android:id="@+id/usernameTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="0sp"
+                android:layout_toStartOf="@+id/cardView_arrow"
                 android:layout_toEndOf="@id/pp_cardView"
                 android:padding="16sp"
+                android:scrollHorizontally="false"
                 android:text="@string/username"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_centerVertical="true"
                 tools:ignore="RelativeOverlap" />
 
             <ImageView

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feedback_RL"
+    style="@style/AlertDialogFeedbackBackground">
+
+    <TextView
+        android:id="@+id/feedbackDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/poppins_semibold"
+        android:padding="8dp"
+        android:text="@string/leave_a_review"
+        android:textColor="@color/RED"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/feedbackDialogQues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedbackDialogTitle"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Is it a suitable place for dating?"
+        android:textAlignment="center"
+        android:textColor="@color/RED"
+        android:textSize="14sp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedbackDialogQues"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/leaveCommentTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Leave a comment!"
+        android:textAlignment="center"
+        android:textColor="@color/RED"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/comment_ET"
+        style="@style/AlertDialogFeedbackBox"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/leaveCommentTV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:ems="12"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="start|top"
+        android:hint="Leave your comment here..."
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_ET"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/submitFeedbackBtn"
+            style="@style/primaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/submit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelFeedbackBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/secondaryButton"
+            app:backgroundTint="@color/paleGrey2"
+            android:background="@drawable/secondary_dialog_btn"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
+
+</RelativeLayout>
