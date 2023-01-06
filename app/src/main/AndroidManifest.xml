@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -97,6 +99,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <receiver android:name=".ui.FoodParty.MyNotificationPublisher"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="MY_NOTIFICATION_ACTION" />
+            </intent-filter>
+        </receiver>
         <activity android:name=".ui.Restaurant.BrowseRestaurant"
             android:exported="true">
             <meta-data android:name="android.app.lib_name"

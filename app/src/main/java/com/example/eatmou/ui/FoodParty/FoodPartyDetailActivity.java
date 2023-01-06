@@ -4,9 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -16,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
@@ -29,13 +36,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class FoodPartyDetailActivity extends AppCompatActivity implements Serializable {
 
+    private static final String CHANNEL_ID = "channel_01";
+    private static final int NOTIFICATION_ID = 0;
+
+    Context context;
     UserModel currentUser;
     TextView title, organizer, location, date, time, joinedPersonNumber;
     ImageButton backBtn;
@@ -59,6 +73,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_party_detail);
 
+        context = this;
         currentUser = MainActivity.user;
         foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject"); //get data pass from previous activity/fragment
         joined = checkJoined(currentUser.getUserID());
@@ -93,6 +108,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
             }
         });
 
+        createNotificationChannel();
         setBottomBtn();
         fetchOrganiserName();
         fetchDataToJoinedPersons(this);
@@ -149,6 +165,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onClick(View view) {
+                    setReminder();
                     ArrayList<String> tempList = foodPartyModel.getJoinedPersons();
                     tempList.add(currentUser.getUserID());
                     foodPartyModel.setJoinedPersons(tempList);
@@ -250,5 +267,61 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             }
         });
+    }
+
+    private void setReminder() {
+        FirebaseFirestore.getInstance().collection("foodParties").document(foodPartyModel.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        FoodPartyModel fpm = FoodPartyModel.toObject(document.getData());
+                        Calendar calendar = fpm.getCalendar();
+                        calendar.add(Calendar.HOUR, -1); // show reminder before 1 hour
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.calendar_icon)
+                                .setContentTitle("Food Party Reminder")
+                                .setContentText(fpm.getTitle() + " starting soon at " + fpm.getStartTimeText())
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                        Calendar currentTime = Calendar.getInstance();
+                        long triggerTime = System.currentTimeMillis();
+                        if(currentTime.before(calendar)) {
+                            triggerTime = calendar.getTimeInMillis();
+                        }
+                        builder.setWhen(triggerTime);
+                        builder.setShowWhen(true);
+
+                        Intent notificationIntent = new Intent(context, MyNotificationPublisher.class);
+                        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, NOTIFICATION_ID);
+                        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, builder.build());
+
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) System.currentTimeMillis() % Integer.MAX_VALUE, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                    } else {
+                        Log.d("Reminder", "No such document");
+                    }
+                } else {
+                    Log.d("Reminder", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Reminder";
+            String description = "My Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
