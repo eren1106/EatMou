@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class BrowseRestaurant extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference restaurantRef;
 
+    private ImageButton backBtn;
     private SearchView searchRestaurantBar;
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
@@ -57,6 +59,15 @@ public class BrowseRestaurant extends AppCompatActivity {
         restaurantRef = firestore.collection("Restaurants");
         Log.i("restaurantRef", restaurantRef.getId());
 
+
+        backBtn = findViewById(R.id.back_Btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         noResultFoundText = findViewById(R.id.noResultFoundText);
         restaurantItemRecView = findViewById(R.id.restaurantItemRecView);
@@ -216,6 +227,7 @@ public class BrowseRestaurant extends AppCompatActivity {
     public void EventChangeListener() {
 
         restaurantsList.clear();
+
         Log.i("Method called: ", "Event Change Listener");
 
         query = restaurantRef.orderBy("rating", Query.Direction.DESCENDING);

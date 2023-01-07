@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
+import com.example.eatmou.ui.FoodParty.CreateFoodPartyActivity;
 import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class RestaurantDetails extends AppCompatActivity {
 
+    private ImageButton backBtn;
     private ImageView restaurantImage;
     private MaterialButton holdPartyBtn;
     TabLayout TL_details;
@@ -70,6 +73,14 @@ public class RestaurantDetails extends AppCompatActivity {
         TL_details = findViewById(R.id.TL_details);
         viewPager2 = findViewById(R.id.VP2_details);
         holdPartyBtn = findViewById(R.id.holdPartyBtn);
+        backBtn = findViewById(R.id.back_Btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new RestaurantDetailsVPAdapter(fragmentManager, getLifecycle(), restaurant, currentUser);
@@ -113,7 +124,9 @@ public class RestaurantDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // temporary code
-                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
+                startActivity(intent);
             }
         });
 

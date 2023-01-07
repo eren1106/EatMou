@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.google.type.DateTime;
 
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,6 +94,10 @@ public class Restaurant {
 
     public double getRating() {
         return rating;
+    }
+
+    public String displayRating() {
+        return String.format("%.1f", getRating());
     }
 
     public String getCategory() {

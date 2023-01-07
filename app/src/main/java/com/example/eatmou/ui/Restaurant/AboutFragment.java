@@ -167,7 +167,7 @@ public class AboutFragment extends Fragment {
                         if (totalReviewsCount[0] == 0)
                             overallRating.setText("--");
                         else
-                            overallRating.setText(String.valueOf(restaurant.getRating()));
+                            overallRating.setText(restaurant.displayRating());
 
                         // avoid zero division error
                         if (totalReviewsCount[0] != 0) {

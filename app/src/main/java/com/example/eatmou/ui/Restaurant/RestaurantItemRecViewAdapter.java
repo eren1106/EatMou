@@ -65,7 +65,7 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         if (restaurant.getRating() == 0) {
             holder.restaurantRating.setText("--");
         } else {
-            holder.restaurantRating.setText(String.valueOf(restaurant.getRating()));
+            holder.restaurantRating.setText(restaurant.displayRating());
         }
 
         // change restaurant color
