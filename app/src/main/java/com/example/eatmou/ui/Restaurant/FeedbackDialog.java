@@ -86,6 +86,7 @@ public class FeedbackDialog extends AppCompatDialogFragment {
 
         Review review = new Review();
 
+        ratingBar.setStepSize(1);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -122,6 +123,8 @@ public class FeedbackDialog extends AppCompatDialogFragment {
 
         CollectionReference reviewRef = FirebaseFirestore.getInstance().collection("Reviews");
         reviewRef.add(new Review(getRestaurantId(), getUserId(), getUsername(), rating, new Date(), comment));
+
+        RatingSystem.updateRestaurantRating(getRestaurantId());
         Toast.makeText(getContext(), "Your feedback has been submitted successfully", Toast.LENGTH_SHORT).show();
         dismiss();
 

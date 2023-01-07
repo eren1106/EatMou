@@ -43,7 +43,7 @@ public class UserCommentRecViewAdapter extends RecyclerView.Adapter<UserCommentR
         Review review = reviews.get(position);
 
         holder.username.setText(review.getUsername());
-        holder.userRating.setText(String.valueOf(review.getUserRating()));
+        holder.userRating.setText(String.valueOf((int) review.getUserRating()));
         holder.commentDate.setText(review.displayReviewDate());
         holder.commentContent.setText(reviews.get(position).getComment());
     }
