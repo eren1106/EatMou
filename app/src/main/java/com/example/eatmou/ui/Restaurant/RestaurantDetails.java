@@ -75,14 +75,6 @@ public class RestaurantDetails extends AppCompatActivity {
         holdPartyBtn = findViewById(R.id.holdPartyBtn);
         backBtn = findViewById(R.id.back_Btn);
 
-//        holdPartyBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +124,9 @@ public class RestaurantDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // temporary code
-                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
+                startActivity(intent);
             }
         });
 
