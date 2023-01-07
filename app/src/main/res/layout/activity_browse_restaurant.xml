@@ -22,9 +22,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/search_restaurant_bar"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:background="@drawable/search_restaurant_bar"
             app:queryHint="Search restaurant here..." />
 
     </LinearLayout>
@@ -57,20 +57,35 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/categoryFilterRecView"
-        android:background="#EDEDED"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/restaurantItemRecView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="16dp"
+        android:background="#EDEDED" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/divider">
+
+        <TextView
+            android:id="@+id/noResultFoundText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="No restaurant(s) found."
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_medium"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restaurantItemRecView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
