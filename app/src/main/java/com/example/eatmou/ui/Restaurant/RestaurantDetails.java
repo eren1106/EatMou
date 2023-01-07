@@ -62,6 +62,8 @@ public class RestaurantDetails extends AppCompatActivity {
         restaurant = new Restaurant(name, rating, category, location, description, openingHours, closingHours);
         restaurant.setId(id);
 
+        RatingSystem.updateRestaurantRating(restaurant.getId());
+
         System.out.println(restaurant.getId());
 
         restaurantImage = findViewById(R.id.restaurantImage);

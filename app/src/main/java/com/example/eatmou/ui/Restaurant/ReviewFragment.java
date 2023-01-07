@@ -210,6 +210,7 @@ public class ReviewFragment extends Fragment {
     private void openEditReviewDialog() {
         Intent intent = new Intent(getContext(), EditReview.class);
         intent.putExtra("reviewId", yourReviewId);
+        intent.putExtra("restaurantId", restaurant.getId());
         startActivity(intent);
     }
 }

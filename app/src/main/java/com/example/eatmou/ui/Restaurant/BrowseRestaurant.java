@@ -245,6 +245,7 @@ public class BrowseRestaurant extends AppCompatActivity {
                             }
                             Log.i("Modified: ", restaurant.getId());
                             Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                            break;
                         case REMOVED:
                             for (int i = 0; i < restaurantsList.size(); i++) {
                                 if (restaurantsList.get(i).getId().equals(restaurant.getId())) {
@@ -254,6 +255,7 @@ public class BrowseRestaurant extends AppCompatActivity {
                             }
                             Log.i("Removed: ", restaurant.getId());
                             Log.i("Restaurant list:", String.valueOf(restaurantsList.size()));
+                            break;
                     }
                     restaurantItemRecViewAdapter.notifyDataSetChanged();
                 }

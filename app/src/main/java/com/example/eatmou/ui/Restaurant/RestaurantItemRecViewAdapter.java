@@ -56,10 +56,16 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         Restaurant restaurant = restaurants.get(position);
 
         holder.restaurantName.setText(restaurant.getName());
-        holder.restaurantRating.setText(String.valueOf(restaurant.getRating()));
         holder.restaurantStatus.setText(restaurant.getStatus());
         holder.restaurantCategory.setText(restaurant.getCategory());
         holder.restaurantImage.setImageResource(R.drawable.samanja);
+
+        // set restaurant rating
+        if (restaurant.getRating() == 0) {
+            holder.restaurantRating.setText("--");
+        } else {
+            holder.restaurantRating.setText(String.valueOf(restaurant.getRating()));
+        }
 
         // change restaurant color
         if (holder.restaurantStatus.getText().toString().equals("OPEN")) {

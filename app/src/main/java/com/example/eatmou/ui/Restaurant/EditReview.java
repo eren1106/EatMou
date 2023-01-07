@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -35,6 +35,7 @@ public class EditReview extends AppCompatActivity {
     private MaterialButton cancelBtn;
 
     String reviewId;
+    String restaurantId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class EditReview extends AppCompatActivity {
 
         Intent intent = getIntent();
         reviewId = intent.getStringExtra("reviewId").toString();
+        restaurantId = intent.getStringExtra("restaurantId").toString();
 
         Log.i("review id: " , reviewId);
 
@@ -88,12 +90,14 @@ public class EditReview extends AppCompatActivity {
                 Date reviewDate = new Date();
 
                 CollectionReference reviewRef = FirebaseFirestore.getInstance().collection("Reviews");
+
                 reviewRef.document(reviewId)
                         .update("userRating", rating, "comment", comment, "reviewDate", reviewDate)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(EditReview.this, "Your review has been updated successfully", Toast.LENGTH_SHORT).show();
+                                        RatingSystem.updateRestaurantRating(restaurantId);
                                     }
                                 });
                 finish();
