@@ -47,7 +47,7 @@ public class RestaurantRankingRecViewAdapter extends RecyclerView.Adapter<Restau
         if (restaurant.getRating() == 0) {
             holder.restaurantRating.setText("--");
         } else {
-            holder.restaurantRating.setText(String.valueOf(restaurant.getRating()));
+            holder.restaurantRating.setText(restaurant.displayRating());
         }
     }
 
