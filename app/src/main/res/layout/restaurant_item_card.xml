@@ -16,6 +16,7 @@
             android:id="@+id/restaurantImage"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/samanja" />
 
         <TextView
