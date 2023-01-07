@@ -48,6 +48,8 @@ public class BrowseRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_restaurant);
 
+
+
         Log.i("Browse Restaurant", "Create");
 
         firestore = FirebaseFirestore.getInstance();

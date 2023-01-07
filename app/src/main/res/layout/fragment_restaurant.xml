@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Restaurant.RestaurantFragment">
 
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/restaurant_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/restaurant"
             android:drawablePadding="8dp"
-            android:textSize="30sp"
-            android:textColor="@color/RED"
-            android:textStyle="bold"
             android:padding="20dp"
+            android:text="@string/restaurant"
+            android:textColor="@color/RED"
+            android:textSize="30sp"
+            android:textStyle="bold"
             app:drawableEndCompat="@drawable/restaurantlogo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CLHeaderSection"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="24dp"
-            android:paddingBottom="24dp"
-            android:paddingLeft="48dp"
-            android:paddingRight="48dp"
+            android:layout_height="match_parent"
             android:layout_below="@id/restaurant_title"
-            android:background="@color/gold">
+            android:background="@color/gold"
+            android:paddingLeft="48dp"
+            android:paddingTop="24dp"
+            android:paddingRight="48dp"
+            android:paddingBottom="24dp">
 
             <ImageView
                 android:id="@+id/eatMouLogo"
-                android:layout_width="165dp"
-                android:layout_height="140dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="148dp"
+                android:layout_height="133dp"
+                android:layout_marginTop="24dp"
                 android:src="@drawable/eatmoulogo"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,23 +59,55 @@
                 app:layout_constraintTop_toBottomOf="@+id/eatMouLogo" />
 
 
-            <!--Puki button -->
             <Button
                 android:id="@+id/find_restaurant_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/find_restaurant_button"
                 android:fontFamily="@font/poppins_bold"
-                app:backgroundTint="@color/paleYellow"
+                android:gravity="center"
                 android:text="@string/find_a_restaurant_now"
                 android:textColor="@color/RED"
-                android:gravity="center"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"
+                app:backgroundTint="@color/paleYellow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerMessage"
-                android:background="@drawable/find_restaurant_button" />
+                app:layout_constraintTop_toBottomOf="@id/headerMessage" />
 
+            <TextView
+                android:id="@+id/leaderboardMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="8dp"
+                android:text="View the most popular restaurant recommended by our users in the leaderboard!"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/find_restaurant_btn" />
+
+            <Button
+                android:id="@+id/view_leaderboard_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/find_restaurant_button"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="View Leaderboard"
+                android:textColor="@color/RED"
+                android:textSize="16sp"
+                app:backgroundTint="@color/paleYellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leaderboardMessage" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,5 +115,4 @@
 
     </RelativeLayout>
 
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
