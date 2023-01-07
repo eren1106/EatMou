@@ -23,6 +23,7 @@ import com.example.eatmou.model.AppLock;
 import com.example.eatmou.ui.Authentication.LoginPage;
 import com.example.eatmou.ui.ProfilePage.ProfilePage;
 import com.example.eatmou.ui.appLock.AppLockStart;
+import com.example.eatmou.ui.feedback.FeedbackActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SettingsFragment extends Fragment {
 
     ImageView backBtn;
-    Button appLockBtn;
+    Button appLockBtn, feedbackBtn;
     AppLock appLock = new AppLock();
     Button btnLogOut;
 
@@ -49,6 +50,16 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        //Navigate to feedback apge
+        feedbackBtn = view.findViewById(R.id.feedbackBtn);
+        feedbackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
+            }
+        });
+
         //Navigate to app lock page
         appLockBtn = view.findViewById(R.id.appLockBtn);
         appLockBtn.setOnClickListener(new View.OnClickListener() {

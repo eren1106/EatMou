@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Restaurant.RestaurantDetails">
 
-    <!-- temp code -->
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
@@ -15,6 +14,7 @@
         android:layout_below="@id/TL_details"
         android:textColor="@color/RED"/>
 
+    <!-- To be implemented -->
     <ImageView
         android:id="@+id/restaurantImage"
         android:layout_width="match_parent"

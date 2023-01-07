@@ -58,6 +58,7 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         holder.restaurantName.setText(restaurant.getName());
         holder.restaurantStatus.setText(restaurant.getStatus());
         holder.restaurantCategory.setText(restaurant.getCategory());
+
         holder.restaurantImage.setImageResource(R.drawable.samanja);
 
         // set restaurant rating

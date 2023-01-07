@@ -49,6 +49,10 @@ public class Restaurant {
         this.name = name;
     }
 
+//    public void setImageURL(String imageURL) {
+//        this.imageURL = imageURL;
+//    }
+
     public void setRating(double rating) {
         this.rating = rating;
     }
@@ -82,6 +86,10 @@ public class Restaurant {
     public String getName() {
         return name;
     }
+
+//    public String getImageURL() {
+//        return imageURL;
+//    }
 
     public double getRating() {
         return rating;
