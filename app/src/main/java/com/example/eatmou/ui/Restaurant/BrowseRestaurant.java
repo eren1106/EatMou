@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
@@ -34,6 +36,7 @@ public class BrowseRestaurant extends AppCompatActivity {
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
     private RestaurantItemRecViewAdapter restaurantItemRecViewAdapter;
+    private TextView noResultFoundText;
 
     private List<Restaurant> restaurantsList;
     ArrayList<String> filteredCategory = new ArrayList<>();
@@ -45,6 +48,8 @@ public class BrowseRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_restaurant);
 
+
+
         Log.i("Browse Restaurant", "Create");
 
         firestore = FirebaseFirestore.getInstance();
@@ -53,6 +58,7 @@ public class BrowseRestaurant extends AppCompatActivity {
         Log.i("restaurantRef", restaurantRef.getId());
 
 
+        noResultFoundText = findViewById(R.id.noResultFoundText);
         restaurantItemRecView = findViewById(R.id.restaurantItemRecView);
         restaurantItemRecView.setHasFixedSize(true);
         restaurantItemRecView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -140,11 +146,14 @@ public class BrowseRestaurant extends AppCompatActivity {
         }
 
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No restaurant found", Toast.LENGTH_SHORT).show();
+            restaurantItemRecView.setVisibility(View.GONE);
+            noResultFoundText.setVisibility(View.VISIBLE);
         } else {
             restaurantItemRecViewAdapter.setFilteredList(filteredList);
-            restaurantItemRecViewAdapter.notifyDataSetChanged();
+            restaurantItemRecView.setVisibility(View.VISIBLE);
+            noResultFoundText.setVisibility(View.GONE);
         }
+        restaurantItemRecViewAdapter.notifyDataSetChanged();
 
     }
 
