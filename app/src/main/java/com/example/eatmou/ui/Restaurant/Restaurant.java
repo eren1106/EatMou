@@ -126,7 +126,6 @@ public class Restaurant {
         else return "CLOSED";
     }
 
-    // cannot perform validity check and no action for invalid time (if open >= close --> X )
     public boolean isOpen(LocalTime now) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalTime open = LocalTime.of(openingHours.get(0), openingHours.get(1));

@@ -59,19 +59,6 @@ public class AboutFragment extends Fragment {
         this.restaurantListener = restaurantListener;
     }
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//
-//        Activity activity = (Activity) context;
-//
-//        try {
-//            restaurantListener = (OnRestaurantListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString() + " must be override setRestaurantDetails");
-//        }
-//    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

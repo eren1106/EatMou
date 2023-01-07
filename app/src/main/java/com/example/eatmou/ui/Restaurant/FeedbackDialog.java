@@ -61,15 +61,6 @@ public class FeedbackDialog extends AppCompatDialogFragment {
         public void submitFeedback();
     }
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        try {
-//            feedbackDialogListener = (FeedbackDialogListener) context;
-//        } catch (ClassCastException e){
-//            throw new ClassCastException(context.toString());
-//        }
-//    }
 
     @Override
     @NonNull

@@ -55,9 +55,7 @@ public class BrowseRestaurant extends AppCompatActivity {
         Log.i("Browse Restaurant", "Create");
 
         firestore = FirebaseFirestore.getInstance();
-        Log.i("firestore instance", String.valueOf(firestore.getFirestoreSettings()));
         restaurantRef = firestore.collection("Restaurants");
-        Log.i("restaurantRef", restaurantRef.getId());
 
 
         backBtn = findViewById(R.id.back_Btn);
@@ -81,10 +79,6 @@ public class BrowseRestaurant extends AppCompatActivity {
         restaurantItemRecView.setAdapter(restaurantItemRecViewAdapter);
 
         EventChangeListener();
-
-        Log.i("Adapter: ", String.valueOf(restaurantItemRecViewAdapter.getItemCount()));
-        Log.i("Restaurant list: ", String.valueOf(restaurantsList.size()));
-
 
         searchRestaurantBar = findViewById(R.id.searchRestaurantBar);
         searchRestaurantBar.clearFocus();
@@ -149,12 +143,6 @@ public class BrowseRestaurant extends AppCompatActivity {
             }
         }
 
-        // temp code
-        int index = 0;
-        for (Restaurant r : filteredList) {
-            Log.i("Index: ", index + ": " + r.getName());
-            index++;
-        }
 
         if (filteredList.isEmpty()) {
             restaurantItemRecView.setVisibility(View.GONE);
@@ -189,12 +177,6 @@ public class BrowseRestaurant extends AppCompatActivity {
 
                     }
 
-                    // temp code
-                    int index = 0;
-                    for (Restaurant r : filteredList) {
-                        Log.i("Index: ", index + ": " + r.getName());
-                        index++;
-                    }
                     restaurantItemRecViewAdapter.setFilteredList(filteredList);
                     restaurantItemRecViewAdapter.notifyDataSetChanged();
 
@@ -210,15 +192,13 @@ public class BrowseRestaurant extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.i("Browse Restaurant", "Start");
-        Log.i("Adapter is not null", String.valueOf((restaurantItemRecViewAdapter != null)));
-//        restaurantItemRecViewAdapter.startListening();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.i("Browse Restaurant", "Stop");
-//        restaurantItemRecViewAdapter.stopListening();
     }
 
 
@@ -280,7 +260,6 @@ public class BrowseRestaurant extends AppCompatActivity {
                     }
                     restaurantItemRecViewAdapter.notifyDataSetChanged();
                 }
-                Log.i("For loop ended le", "Thank you dajia");
             }
         });
 

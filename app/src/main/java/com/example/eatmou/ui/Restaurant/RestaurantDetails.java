@@ -123,8 +123,6 @@ public class RestaurantDetails extends AppCompatActivity {
         holdPartyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // temporary code
-//                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
                 startActivity(intent);
             }
