@@ -56,18 +56,22 @@ public class SplashScreen extends AppCompatActivity {
 
                                     //Navigate to app lock page
                                     startActivity(new Intent(getApplicationContext(), AppLockStart.class));
+                                    finish();
                                     Log.d("Check","App lock: " + check);
                                 } else {
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
                                     Log.d("Check","App lock: " + check);
                                 }
                             }
                         } else {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                             Log.d("Check","App lock: No document found");
                         }
                     } else {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                         Log.d("Check","App lock: No task found");
                     }
                 }
@@ -75,10 +79,12 @@ public class SplashScreen extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
                 }
             });
         } else {
             startActivity(new Intent(getApplicationContext(), LoginPage.class));
+            finish();
             Log.d("Check","App lock: First time user");
         }
     }
