@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,11 +30,13 @@ import java.util.Date;
 
 public class CreateFoodPartyActivity extends AppCompatActivity {
 
+    TextView TV_CreatePartyTitle;
+
     UserModel currentUser;
     EditText etTitle;
     EditText etLocation;
     EditText etMaxPerson;
-    ImageButton backBtn;
+    ImageView backBtn;
     Button createBtn;
 
     TextView tvDate;
@@ -53,6 +56,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
 
         currentUser = MainActivity.user;
 
+        TV_CreatePartyTitle = findViewById(R.id.TV_CreatePartyTitle);
         etTitle = findViewById(R.id.ET_Title);
         etLocation = findViewById(R.id.ET_Location);
         etMaxPerson = findViewById(R.id.ET_MaxPerson);
@@ -164,6 +168,16 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //create food party logic
+                    String title = etTitle.getText().toString();
+                    String location = etLocation.getText().toString();
+                    String maxPersonString = etMaxPerson.getText().toString();
+
+                    if(title.equals("") || location.equals("")
+                            || date==null || startTime==null || endTime==null || maxPersonString.equals("")){
+                        Toast.makeText(getApplicationContext(), "Please fill in every field", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     firebaseMethods.addFoodParty(etTitle.getText().toString(), currentUser.getUserID(), etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
                     Toast.makeText(getApplicationContext(), "Food Party Created!", Toast.LENGTH_SHORT).show();
                     finish();
@@ -171,6 +185,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
             });
         }
         else { // UPDATE PARTY
+            TV_CreatePartyTitle.setText("Manage Party");
             createBtn.setText("Update");
 
             etTitle.setText(foodPartyModel.getTitle());
@@ -186,6 +201,17 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
             createBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String title = etTitle.getText().toString();
+                    String location = etLocation.getText().toString();
+                    String maxPersonString = etMaxPerson.getText().toString();
+
+                    if(title.equals("") || location.equals("")
+                            || date==null || startTime==null || endTime==null || maxPersonString.equals("")){
+                        Toast.makeText(getApplicationContext(), "Please fill in every field", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     FoodPartyModel updated = new FoodPartyModel(
                             foodPartyModel.getId(),
                             etTitle.getText().toString(),
@@ -194,7 +220,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                             date,
                             startTime,
                             endTime,
-                            Integer.parseInt(etMaxPerson.getText().toString()),
+                            Integer.parseInt(maxPersonString),
                             foodPartyModel.getJoinedPersons()
                     );
                     firebaseMethods.updateFoodParty(updated);
