@@ -61,7 +61,7 @@
             android:layout_marginTop="16sp"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/privacy_policy_button"
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/privacy_policy"
@@ -74,7 +74,7 @@
             android:layout_marginEnd="20dp"/>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/termsofservice_button"
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/terms_of_service"
@@ -87,7 +87,7 @@
             android:layout_marginEnd="20dp"/>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/community_guideline_button"
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/community_guideline"

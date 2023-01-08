@@ -1,6 +1,5 @@
 package com.example.eatmou.ui.FoodParty;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,10 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatmou.R;
-import com.example.eatmou.UserModel;
-import com.example.eatmou.ui.Authentication.LoginPage;
+import com.example.eatmou.model.UserModel;
 import com.example.eatmou.ui.homePage.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

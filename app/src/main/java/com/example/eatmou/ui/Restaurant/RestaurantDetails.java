@@ -8,22 +8,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
-import com.example.eatmou.UserModel;
+import com.example.eatmou.model.UserModel;
 import com.example.eatmou.ui.FoodParty.CreateFoodPartyActivity;
 import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RestaurantDetails extends AppCompatActivity {
 

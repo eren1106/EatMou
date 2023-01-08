@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eatmou.R;
 import com.example.eatmou.ui.Restaurant.RestaurantFragment;
-import com.example.eatmou.UserModel;
+import com.example.eatmou.model.UserModel;
 import com.example.eatmou.ui.Inbox.InboxFragment;
 import com.example.eatmou.ui.Inbox.received.ReceivedFragment;
 import com.example.eatmou.ui.ProfilePage.ProfilePageFrame;
