@@ -4,20 +4,14 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.type.DateTime;
-
-import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class Restaurant {
 
     private String id;
     private String name;
-//    private String imageURL;
+    private String imageURL;
     private double rating;
     private String category;
     private String location;
@@ -33,7 +27,6 @@ public class Restaurant {
     public Restaurant(String name, double rating, String category, String location, String description,
                       ArrayList<Integer> openingHours, ArrayList<Integer> closingHours) {
         this.name = name;
-//        this.imageURL = imageURL;
         this.rating = rating;
         this.category = category;
         this.location = location;
@@ -50,9 +43,9 @@ public class Restaurant {
         this.name = name;
     }
 
-//    public void setImageURL(String imageURL) {
-//        this.imageURL = imageURL;
-//    }
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
     public void setRating(double rating) {
         this.rating = rating;
@@ -88,9 +81,9 @@ public class Restaurant {
         return name;
     }
 
-//    public String getImageURL() {
-//        return imageURL;
-//    }
+    public String getImageURL() {
+        return imageURL;
+    }
 
     public double getRating() {
         return rating;

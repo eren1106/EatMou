@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 import com.example.eatmou.UserModel;
 import com.example.eatmou.ui.FoodParty.CreateFoodPartyActivity;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class RestaurantDetails extends AppCompatActivity {
 
-    private ImageButton backBtn;
+    private ImageView backBtn;
     private ImageView restaurantImage;
     private MaterialButton holdPartyBtn;
     TabLayout TL_details;
@@ -53,17 +54,19 @@ public class RestaurantDetails extends AppCompatActivity {
 
 
         intent = getIntent();
-        String id = intent.getStringExtra("id").toString();
-        String name = intent.getStringExtra("name").toString();
+        String id = intent.getStringExtra("id");
+        String name = intent.getStringExtra("name");
         double rating = intent.getDoubleExtra("rating",0);
-        String category = intent.getStringExtra("category").toString();
-        String location = intent.getStringExtra("location").toString();
+        String category = intent.getStringExtra("category");
+        String location = intent.getStringExtra("location");
         ArrayList<Integer> openingHours = intent.getIntegerArrayListExtra("openingHours");
         ArrayList<Integer> closingHours = intent.getIntegerArrayListExtra("closingHours");
-        String description = intent.getStringExtra("description").toString();
+        String description = intent.getStringExtra("description");
+        String imageURL = intent.getStringExtra("imageURL");
 
         restaurant = new Restaurant(name, rating, category, location, description, openingHours, closingHours);
         restaurant.setId(id);
+        restaurant.setImageURL(imageURL);
 
         RatingSystem.updateRestaurantRating(restaurant.getId());
 
@@ -74,6 +77,8 @@ public class RestaurantDetails extends AppCompatActivity {
         viewPager2 = findViewById(R.id.VP2_details);
         holdPartyBtn = findViewById(R.id.holdPartyBtn);
         backBtn = findViewById(R.id.back_Btn);
+
+        Glide.with(getApplicationContext()).load(imageURL).into(restaurantImage);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +131,7 @@ public class RestaurantDetails extends AppCompatActivity {
                 // temporary code
 //                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
+                intent.putExtra("restaurant name", restaurant.getName());
                 startActivity(intent);
             }
         });

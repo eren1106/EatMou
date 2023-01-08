@@ -1,19 +1,18 @@
 package com.example.eatmou.ui.Restaurant;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.eatmou.R;
 import com.google.firebase.firestore.CollectionReference;
@@ -33,7 +32,7 @@ public class BrowseRestaurant extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference restaurantRef;
 
-    private ImageButton backBtn;
+    private ImageView backBtn;
     private SearchView searchRestaurantBar;
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
@@ -185,6 +184,7 @@ public class BrowseRestaurant extends AppCompatActivity {
                     for (QueryDocumentSnapshot documentSnapshot : value) {
                         Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                         restaurant.setId(documentSnapshot.getId());
+                        restaurant.setImageURL(documentSnapshot.getString("image"));
                         filteredList.add(restaurant);
 
                     }
@@ -247,7 +247,7 @@ public class BrowseRestaurant extends AppCompatActivity {
                     QueryDocumentSnapshot documentSnapshot = documentChange.getDocument();
                     Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                     restaurant.setId(documentSnapshot.getId());
-
+                    restaurant.setImageURL(documentSnapshot.getString("image"));
                     Log.i("Restaurant ID: ", restaurant.getId());
 
 
