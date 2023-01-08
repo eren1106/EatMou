@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.google.type.DateTime;
 
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +50,10 @@ public class Restaurant {
         this.name = name;
     }
 
+//    public void setImageURL(String imageURL) {
+//        this.imageURL = imageURL;
+//    }
+
     public void setRating(double rating) {
         this.rating = rating;
     }
@@ -83,8 +88,16 @@ public class Restaurant {
         return name;
     }
 
+//    public String getImageURL() {
+//        return imageURL;
+//    }
+
     public double getRating() {
         return rating;
+    }
+
+    public String displayRating() {
+        return String.format("%.1f", getRating());
     }
 
     public String getCategory() {

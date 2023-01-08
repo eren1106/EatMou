@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Restaurant.RestaurantDetails">
 
-    <!-- temp code -->
-    <TextView
-        android:id="@+id/restaurantName"
+    <ImageButton
+        android:id="@+id/back_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_below="@id/TL_details"
-        android:textColor="@color/RED"/>
+        android:background="@color/transparent"
+        android:elevation="4dp"
+        android:padding="16dp"
+        android:src="@drawable/arrow_back"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 
     <ImageView
         android:id="@+id/restaurantImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/samanja" />
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/TL_details"
@@ -32,7 +35,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about"/>
+            android:text="@string/about" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -45,21 +48,21 @@
         android:id="@+id/VP2_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/TL_details"
-        android:layout_above="@id/holdPartyBtn"/>
+        android:layout_above="@id/holdPartyBtn"
+        android:layout_below="@id/TL_details" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/holdPartyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:padding="8dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:padding="8dp"
         android:text="@string/hold_party"
         android:textAlignment="center"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true" />
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

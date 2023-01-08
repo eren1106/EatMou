@@ -17,6 +17,14 @@
         android:theme="@style/Theme.Eatmou"
         tools:targetApi="31">
         <activity
+            android:name=".ui.feedback.FeedbackActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".ui.splashScreen.SplashScreen"
             android:exported="true">
             <meta-data
@@ -99,22 +107,43 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <receiver android:name=".ui.FoodParty.MyNotificationPublisher"
+
+        <receiver
+            android:name=".ui.FoodParty.MyNotificationPublisher"
             android:exported="true">
             <intent-filter>
                 <action android:name="MY_NOTIFICATION_ACTION" />
             </intent-filter>
         </receiver>
-        <activity android:name=".ui.Restaurant.BrowseRestaurant"
-            android:exported="true">
-            <meta-data android:name="android.app.lib_name"
-                android:value=""/>
-        </activity>
 
-        <activity android:name=".ui.Restaurant.RestaurantDetails"
+        <!-- Restaurant -->
+        <activity
+            android:name=".ui.Restaurant.BrowseRestaurant"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.Restaurant.EditReview"
             android:exported="false">
-            <meta-data android:name="android.app.lib_name"
-                android:value=""/>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.Restaurant.RestaurantDetails"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.Restaurant.RestaurantLeaderboard"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
     </application>
 

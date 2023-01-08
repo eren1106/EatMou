@@ -15,6 +15,7 @@ import com.example.eatmou.R;
 public class RestaurantFragment extends Fragment {
 
     private Button findRestaurantBtn;
+    private Button viewLeaderboardBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,6 +23,7 @@ public class RestaurantFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant, container, false);
 
         findRestaurantBtn = view.findViewById(R.id.find_restaurant_btn);
+        viewLeaderboardBtn = view.findViewById(R.id.view_leaderboard_btn);
 
         findRestaurantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +31,16 @@ public class RestaurantFragment extends Fragment {
                 startBrowseRestaurant();
             }
         });
+
+
+        viewLeaderboardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RestaurantLeaderboard.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
