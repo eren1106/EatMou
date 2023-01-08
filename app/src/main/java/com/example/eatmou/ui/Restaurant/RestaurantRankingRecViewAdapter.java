@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
 
 import java.util.ArrayList;
@@ -41,7 +42,8 @@ public class RestaurantRankingRecViewAdapter extends RecyclerView.Adapter<Restau
         holder.rankNum.setText(String.valueOf(position + 1));
         holder.restaurantName.setText(restaurant.getName());
         holder.restaurantCategory.setText(restaurant.getCategory());
-        holder.restaurantImage.setImageResource(R.drawable.samanja);
+//        holder.restaurantImage.setImageResource(R.drawable.samanja);
+        Glide.with(context).load(restaurant.getImageURL()).into(holder.restaurantImage);
 
         // set restaurant rating
         if (restaurant.getRating() == 0) {
@@ -87,6 +89,7 @@ public class RestaurantRankingRecViewAdapter extends RecyclerView.Adapter<Restau
                     intent.putExtra("description", restaurant.getDescription());
                     intent.putIntegerArrayListExtra("openingHours", (ArrayList<Integer>) restaurant.getOpeningHours());
                     intent.putIntegerArrayListExtra("closingHours", (ArrayList<Integer>) restaurant.getClosingHours());
+                    intent.putExtra("imageURL", restaurant.getImageURL());
 
                     itemView.getContext().startActivity(intent);
                     Toast.makeText(itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();

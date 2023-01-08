@@ -4,9 +4,6 @@ import com.google.firebase.firestore.ServerTimestamp;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Review {

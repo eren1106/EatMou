@@ -88,6 +88,7 @@ public class RestaurantLeaderboard extends AppCompatActivity {
                     QueryDocumentSnapshot documentSnapshot = documentChange.getDocument();
                     Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                     restaurant.setId(documentSnapshot.getId());
+                    restaurant.setImageURL(documentSnapshot.getString("image"));
 
                     Log.i("Restaurant ID: ", restaurant.getId());
 

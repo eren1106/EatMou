@@ -10,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatmou.R;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.example.eatmou.model.Users;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +57,7 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
         holder.restaurantName.setText(restaurant.getName());
         holder.restaurantStatus.setText(restaurant.getStatus());
         holder.restaurantCategory.setText(restaurant.getCategory());
-
-        holder.restaurantImage.setImageResource(R.drawable.samanja);
+        Glide.with(context).load(restaurant.getImageURL()).into(holder.restaurantImage);
 
         // set restaurant rating
         if (restaurant.getRating() == 0) {
@@ -110,9 +108,9 @@ public class RestaurantItemRecViewAdapter extends RecyclerView.Adapter<Restauran
                     intent.putExtra("description", restaurant.getDescription());
                     intent.putIntegerArrayListExtra("openingHours", (ArrayList<Integer>) restaurant.getOpeningHours());
                     intent.putIntegerArrayListExtra("closingHours", (ArrayList<Integer>) restaurant.getClosingHours());
+                    intent.putExtra("imageURL", restaurant.getImageURL());
 
                     itemView.getContext().startActivity(intent);
-                    Toast.makeText(itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
                 }
             });
 
