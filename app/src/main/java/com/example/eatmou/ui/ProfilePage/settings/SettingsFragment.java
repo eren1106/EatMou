@@ -18,10 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.eatmou.CommunityGuideline;
 import com.example.eatmou.R;
 import com.example.eatmou.model.AppLock;
 import com.example.eatmou.ui.Authentication.LoginPage;
+import com.example.eatmou.ui.ProfilePage.PrivacyPolicyActivity;
 import com.example.eatmou.ui.ProfilePage.ProfilePage;
+import com.example.eatmou.ui.ProfilePage.TermsOfService;
 import com.example.eatmou.ui.appLock.AppLockStart;
 import com.example.eatmou.ui.feedback.FeedbackActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SettingsFragment extends Fragment {
 
     ImageView backBtn;
-    Button appLockBtn, feedbackBtn;
+    Button appLockBtn, feedbackBtn, privacy_policy_button, termsofservice_button, community_guideline_button;
     AppLock appLock = new AppLock();
     Button btnLogOut;
 
@@ -50,6 +53,30 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        community_guideline_button = view.findViewById(R.id.community_guideline_button);
+        community_guideline_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), CommunityGuideline.class));
+            }
+        });
+
+        privacy_policy_button = view.findViewById(R.id.privacy_policy_button);
+        privacy_policy_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), PrivacyPolicyActivity.class));
+            }
+        });
+
+        termsofservice_button = view.findViewById(R.id.termsofservice_button);
+        termsofservice_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TermsOfService.class));
+            }
+        });
 
         //Navigate to feedback apge
         feedbackBtn = view.findViewById(R.id.feedbackBtn);

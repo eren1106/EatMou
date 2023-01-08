@@ -160,7 +160,7 @@ public class EditProfileFragment extends Fragment {
             //edit Address
             if(!editLocationField.getText().toString().equals(args.getString("Location"))){
                 db.collection("users").document(UserID)
-                        .update("username", editLocationField.getText().toString());
+                        .update("location", editLocationField.getText().toString());
             }
             Toast.makeText(getContext(), "Saved Successfully!", Toast.LENGTH_SHORT).show();
         });

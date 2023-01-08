@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
-import com.example.eatmou.UserModel;
+import com.example.eatmou.model.UserModel;
 import com.example.eatmou.ui.homePage.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

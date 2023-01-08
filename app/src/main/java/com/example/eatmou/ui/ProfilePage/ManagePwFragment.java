@@ -67,6 +67,7 @@ public class ManagePwFragment extends Fragment {
                                     input_old_pw.setText("");
                                     input_new_pw.setText("");
                                     confirm_pw.setText("");
+                                    replaceFragment(new ProfilePage());
                                 }
                                 else {
                                     Log.d(TAG, "Error password not updated");

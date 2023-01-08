@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.eatmou.UserModel;
+import com.example.eatmou.model.UserModel;
 
 public class RestaurantDetailsVPAdapter extends FragmentStateAdapter {
 
