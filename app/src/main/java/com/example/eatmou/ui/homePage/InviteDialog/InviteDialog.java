@@ -128,6 +128,11 @@ public class InviteDialog extends DialogFragment {
                 //Generate random id
                 String id = UUID.randomUUID().toString();
 
+                if(restaurantName.equals("") || date==null || startTime==null || endTime==null){
+                    Toast.makeText(getContext(), "Please fill in every field", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //Create invitation object
                 Invitation invitation = new Invitation(id, userID, tap_Username, restaurantName,date,startTime,endTime,"Pending");
                 Map<String, Object> map = invitation.toMap();

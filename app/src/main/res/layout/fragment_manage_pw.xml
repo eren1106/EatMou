@@ -58,6 +58,7 @@
                 android:text="@string/old_password"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins"
+                android:layout_marginTop="16sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp">
             </TextView>
@@ -85,6 +86,7 @@
                 android:text="@string/new_password"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins"
+                android:layout_marginTop="16sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp">
             </TextView>
@@ -111,6 +113,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/confirm_password"
                 android:textSize="20sp"
+                android:layout_marginTop="16sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"/>
 

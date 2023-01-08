@@ -27,61 +27,84 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="18dp"
-                    android:src="@drawable/loginicon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/eatmou_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="EATMOU"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="200dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="EATMOU"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/imageView"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/imageView"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="WHERE FOOD'S ALIVE"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="8sp"
-                    app:layout_constraintEnd_toEndOf="@+id/textView"
-                    app:layout_constraintStart_toStartOf="@+id/textView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textView2"-->
+<!--                    android:layout_width="200dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="WHERE FOOD'S ALIVE"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="8sp"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/textView"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/textView"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/textView" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/filterBtn"
-                android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/filterbtnbg"
-                android:drawableLeft="@drawable/filter_icon"
-                android:text="Filter"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/title_Layout"
-                app:layout_constraintStart_toStartOf="@+id/title_Layout"
-                app:layout_constraintTop_toBottomOf="@+id/title_Layout" />
+<!--            <Button-->
+<!--                android:id="@+id/filterBtn"-->
+<!--                android:layout_width="130dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@drawable/filterbtnbg"-->
+<!--                android:drawableLeft="@drawable/filter_icon"-->
+<!--                android:text="Filter"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/title_Layout"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/title_Layout"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/title_Layout" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/for_you_icon"
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_below="@id/half_page"
+            android:layout_margin="16sp"
+            android:src="@drawable/bookmark" />
+
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/half_page"
+            android:layout_marginTop="16sp"
+            android:layout_marginBottom="8sp"
+            android:layout_toEndOf="@id/for_you_icon"
+            android:text="@string/for_you"
+            android:textColor="@color/BLACK"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_matching_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/half_page"
+            android:layout_below="@id/text_title"
             android:layout_alignParentBottom="true"
             android:padding="10dp" />
     </RelativeLayout>
