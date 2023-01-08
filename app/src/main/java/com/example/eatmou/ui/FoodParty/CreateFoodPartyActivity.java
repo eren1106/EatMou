@@ -149,7 +149,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
         FirebaseMethods firebaseMethods = new FirebaseMethods();
         FoodPartyModel foodPartyModel = (FoodPartyModel) getIntent().getSerializableExtra("FoodPartyObject");
 
-        if(foodPartyModel == null) {
+        if(foodPartyModel == null) { // CREATE PARTY
             createBtn.setText("Create");
 
             createBtn.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 }
             });
         }
-        else {
+        else { // UPDATE PARTY
             createBtn.setText("Update");
 
             etTitle.setText(foodPartyModel.getTitle());
@@ -171,6 +171,9 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
             tvDate.setText(foodPartyModel.getDateText());
             tvStartTime.setText(foodPartyModel.getStartTimeText());
             tvEndTime.setText(foodPartyModel.getEndTimeText());
+            date = foodPartyModel.getDate();
+            startTime = foodPartyModel.getStartTime();
+            endTime = foodPartyModel.getEndTime();
 
             createBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

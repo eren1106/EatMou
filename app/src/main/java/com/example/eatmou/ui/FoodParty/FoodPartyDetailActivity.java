@@ -165,16 +165,21 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onClick(View view) {
-                    setReminder();
-                    ArrayList<String> tempList = foodPartyModel.getJoinedPersons();
-                    tempList.add(currentUser.getUserID());
-                    foodPartyModel.setJoinedPersons(tempList);
-                    firebaseMethods.updateFoodParty(foodPartyModel);
-                    joinedPersonModels.add(myJoinedPersonModel);
-                    adapter.notifyDataSetChanged();
-                    joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/" + foodPartyModel.getMaxParticipant());
-                    joined = true;
-                    setBottomBtn();
+                    if(foodPartyModel.getJoinedPersons().size() >= foodPartyModel.getMaxParticipant()){
+                        Toast.makeText(context, "This food party is already full!", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        setReminder();
+                        ArrayList<String> tempList = foodPartyModel.getJoinedPersons();
+                        tempList.add(currentUser.getUserID());
+                        foodPartyModel.setJoinedPersons(tempList);
+                        firebaseMethods.updateFoodParty(foodPartyModel);
+                        joinedPersonModels.add(myJoinedPersonModel);
+                        adapter.notifyDataSetChanged();
+                        joinedPersonNumber.setText(foodPartyModel.getJoinedPersons().size() + "/" + foodPartyModel.getMaxParticipant());
+                        joined = true;
+                        setBottomBtn();
+                    }
                 }
             });
         }
@@ -281,7 +286,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
                         calendar.add(Calendar.HOUR, -1); // show reminder before 1 hour
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                                .setSmallIcon(R.drawable.calendar_icon)
+                                .setSmallIcon(R.drawable.party_icon)
                                 .setContentTitle("Food Party Reminder")
                                 .setContentText(fpm.getTitle() + " starting soon at " + fpm.getStartTimeText())
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -321,7 +326,10 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+
+            if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
 }

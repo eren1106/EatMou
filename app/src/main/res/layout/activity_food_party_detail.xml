@@ -66,7 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:text="Eren Yeager"
+                android:text=""
                 android:textColor="@color/BLACK"
                 android:textSize="16sp" />
         </LinearLayout>
