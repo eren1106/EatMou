@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.eatmou.FirebaseMethods;
 import com.example.eatmou.R;
@@ -74,6 +75,13 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
         setupCreateManage();
         setupTimePicker(tvStartTime, "startTime");
         setupTimePicker(tvEndTime, "endTime");
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("restaurant name")) {
+            String name = intent.getStringExtra("restaurant name");
+            etLocation.setText(name);
+        }
     }
 
     private void setupDatePicker(TextView tvDate) {
@@ -157,7 +165,7 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //create food party logic
                     firebaseMethods.addFoodParty(etTitle.getText().toString(), currentUser.getUserID(), etLocation.getText().toString(), date, startTime, endTime, Integer.parseInt(etMaxPerson.getText().toString()));
-
+                    Toast.makeText(getApplicationContext(), "Food Party Created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -190,6 +198,8 @@ public class CreateFoodPartyActivity extends AppCompatActivity {
                             foodPartyModel.getJoinedPersons()
                     );
                     firebaseMethods.updateFoodParty(updated);
+
+                    Toast.makeText(getApplicationContext(), "Food Party Updated!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent();
                     intent.putExtra("UpdatedFoodPartyObject", updated);

@@ -92,7 +92,7 @@ public class RestaurantRankingRecViewAdapter extends RecyclerView.Adapter<Restau
                     intent.putExtra("imageURL", restaurant.getImageURL());
 
                     itemView.getContext().startActivity(intent);
-                    Toast.makeText(itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(itemView.getContext(), "Item clicked: " + restaurant.getId(), Toast.LENGTH_SHORT).show();
                 }
             });
 

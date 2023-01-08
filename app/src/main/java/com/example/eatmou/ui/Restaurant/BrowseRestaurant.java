@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ public class BrowseRestaurant extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private CollectionReference restaurantRef;
 
-    private ImageButton backBtn;
+    private ImageView backBtn;
     private SearchView searchRestaurantBar;
     private RecyclerView categoryFilterRecView;
     private RecyclerView restaurantItemRecView;
@@ -183,6 +184,7 @@ public class BrowseRestaurant extends AppCompatActivity {
                     for (QueryDocumentSnapshot documentSnapshot : value) {
                         Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                         restaurant.setId(documentSnapshot.getId());
+                        restaurant.setImageURL(documentSnapshot.getString("image"));
                         filteredList.add(restaurant);
 
                     }

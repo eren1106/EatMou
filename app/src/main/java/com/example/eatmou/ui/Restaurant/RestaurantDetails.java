@@ -27,7 +27,7 @@ import java.util.List;
 
 public class RestaurantDetails extends AppCompatActivity {
 
-    private ImageButton backBtn;
+    private ImageView backBtn;
     private ImageView restaurantImage;
     private MaterialButton holdPartyBtn;
     TabLayout TL_details;
@@ -131,6 +131,7 @@ public class RestaurantDetails extends AppCompatActivity {
                 // temporary code
 //                Toast.makeText(getApplicationContext(), "Hold Party clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RestaurantDetails.this, CreateFoodPartyActivity.class);
+                intent.putExtra("restaurant name", restaurant.getName());
                 startActivity(intent);
             }
         });
