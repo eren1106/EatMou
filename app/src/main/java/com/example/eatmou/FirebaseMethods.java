@@ -47,25 +47,6 @@ public class FirebaseMethods {
         });
     }
 
-//    public void retrieveInvitations(ArrayList<Invitation> list, ReceivedAdapter adapter){
-//        firestore.collection("Invitations").addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                if (error != null){
-//                    Log.e("Firestore error", error.getMessage());
-//                    return;
-//                }
-//                for(DocumentChange doc : value.getDocumentChanges()){
-//                    if(doc.getType()==DocumentChange.Type.ADDED){
-//                        String OrganiserID =
-//
-//                        list.add(doc.getDocument().toObject(Invitation.class));
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//        });
-//    }
     public void updateFoodParty(FoodPartyModel foodPartyModel) {
         String id = foodPartyModel.getId();
         Map<String, Object> foodParty = foodPartyModel.toMap();

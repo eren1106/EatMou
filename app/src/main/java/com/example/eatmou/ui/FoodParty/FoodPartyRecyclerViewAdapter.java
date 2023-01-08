@@ -1,15 +1,23 @@
 package com.example.eatmou.ui.FoodParty;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatmou.FirebaseMethods;
@@ -22,15 +30,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodPartyRecyclerViewAdapter.MyViewHolder> {
+
+    private final String CHANNEL_ID = "channel_01";
+    private final int NOTIFICATION_ID = 0;
 
     Context context;
     ArrayList<FoodPartyModel> foodPartyModels;
     UserModel currentUser = MainActivity.user;
     FirebaseMethods firebaseMethods;
     int currentPosition;
-    String organiserName;
 
     private OnCardListener onCardListener;
 
@@ -52,7 +63,8 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
     @Override
     public void onBindViewHolder(@NonNull FoodPartyRecyclerViewAdapter.MyViewHolder holder, int position) {
         firebaseMethods = new FirebaseMethods();
-        currentPosition = holder.getAdapterPosition();
+        currentPosition = holder.getBindingAdapterPosition();
+        createNotificationChannel();
         fetchOrganiserName(holder);
         holder.title.setText(foodPartyModels.get(currentPosition).getTitle());
         holder.location.setText(foodPartyModels.get(currentPosition).getLocation());
@@ -146,11 +158,17 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
             holder.cardBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArrayList<String> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
-                    tempList.add(currentUser.getUserID());
-                    foodPartyModels.get(currentPosition).setJoinedPersons(tempList);
-                    firebaseMethods.updateFoodParty(foodPartyModels.get(currentPosition));
-                    setCardButton(holder, currentPosition);
+                    if(foodPartyModels.get(currentPosition).getJoinedPersons().size() >= foodPartyModels.get(currentPosition).getMaxParticipant()){
+                        Toast.makeText(context, "This food party is already full!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        setReminder(foodPartyModels.get(currentPosition));
+                        ArrayList<String> tempList = foodPartyModels.get(currentPosition).getJoinedPersons();
+                        tempList.add(currentUser.getUserID());
+                        foodPartyModels.get(currentPosition).setJoinedPersons(tempList);
+                        firebaseMethods.updateFoodParty(foodPartyModels.get(currentPosition));
+                        setCardButton(holder, currentPosition);
+                    }
                 }
             });
         }
@@ -175,6 +193,65 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
                 }
             }
         });
+    }
+
+    private void setReminder(FoodPartyModel foodPartyModel) {
+        FirebaseFirestore.getInstance().collection("foodParties").document(foodPartyModel.getId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        FoodPartyModel fpm = FoodPartyModel.toObject(document.getData());
+                        Calendar calendar = fpm.getCalendar();
+                        calendar.add(Calendar.HOUR, -1); // show reminder before 1 hour
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.party_icon)
+                                .setContentTitle("Food Party Reminder")
+                                .setContentText(fpm.getTitle() + " starting soon at " + fpm.getStartTimeText())
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                        Calendar currentTime = Calendar.getInstance();
+                        long triggerTime = System.currentTimeMillis();
+                        if(currentTime.before(calendar)) {
+                            triggerTime = calendar.getTimeInMillis();
+                        }
+                        builder.setWhen(triggerTime);
+                        builder.setShowWhen(true);
+
+                        Intent notificationIntent = new Intent(context, MyNotificationPublisher.class);
+                        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID, NOTIFICATION_ID);
+                        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION, builder.build());
+
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) System.currentTimeMillis() % Integer.MAX_VALUE, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+
+                        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                    } else {
+                        Log.d("Reminder", "No such document");
+                    }
+                } else {
+                    Log.d("Reminder", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Reminder";
+            String description = "My Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+
+            if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 }
 
