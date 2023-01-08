@@ -116,7 +116,7 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
 
         setupToggleButton(view);
 
-        setupLogout(view);
+//        setupLogout(view);
 
         // Inflate the layout for this fragment
         return view;
@@ -170,16 +170,16 @@ public class FoodPartyListFragment extends Fragment implements FoodPartyRecycler
         startActivity(intent);
     }
 
-    private void setupLogout(View view) {
-        TextView tvTitle = view.findViewById(R.id.PageTitle);
-        tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), LoginPage.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-    }
+//    private void setupLogout(View view) {
+//        TextView tvTitle = view.findViewById(R.id.PageTitle);
+//        tvTitle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent intent = new Intent(getActivity(), LoginPage.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
+//    }
 }
