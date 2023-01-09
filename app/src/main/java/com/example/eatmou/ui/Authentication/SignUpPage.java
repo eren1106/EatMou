@@ -20,9 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpPage extends AppCompatActivity {
     Button signUpBtn;
@@ -99,9 +103,20 @@ public class SignUpPage extends AppCompatActivity {
                             String tempAddress = "I'm at where I am";
                             String tempProfilePicUrl = "https://firebasestorage.googleapis.com/v0/b/eatlan-4403e.appspot.com/o/TempProfilePic.png?alt=media&token=b0e7c932-3936-4ba6-bb74-4c8909c5c1fd";
                             String tempProfileBgPicUrl = "https://firebasestorage.googleapis.com/v0/b/eatlan-4403e.appspot.com/o/TempCoverPic.png?alt=media&token=d66811ae-272a-406a-a5f6-e22ed408a1d8";
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("0","Friendly");
+                            map.put("1","Nice");
+                            map.put("2","Positive");
 
                             UserModel userModel = new UserModel(user.getUid(), usernameTemp, emailTemp, tempDate, tempBio, tempAddress, tempProfilePicUrl, tempProfileBgPicUrl);
                             firestore.collection("users").document(user.getUid()).set(userModel.toMap());
+
+                            DocumentReference keywordRef = firestore.collection("users").document(user.getUid());
+                            keywordRef.update("Keywords.0", "Happy");
+                            keywordRef.update("Keywords.1", "Nice");
+                            keywordRef.update("Keywords.2", "Positive");
+
+                            userModel.setKeywords(map);
                             //Hide the progress dialog
                             progressDialog.hide();
 

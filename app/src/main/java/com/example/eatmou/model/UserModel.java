@@ -1,6 +1,8 @@
 package com.example.eatmou.model;
 
 import com.google.firebase.Timestamp;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,7 @@ public class UserModel {
     private String location;
     private String profilePicUrl;
     private String profileBgPicUrl;
+    private HashMap<String, String> keywords;
 
     public UserModel(String userID, String username, String email, Date dob, String bio, String location, String profilePicUrl, String profileBgPicUrl) {
         this.userID = userID;
@@ -53,6 +56,14 @@ public class UserModel {
         );
 
         return user;
+    }
+
+    public HashMap<String, String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(HashMap<String, String> keywords) {
+        this.keywords = keywords;
     }
 
     public String getUserID() {

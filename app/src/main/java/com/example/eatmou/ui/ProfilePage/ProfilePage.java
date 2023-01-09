@@ -2,6 +2,8 @@ package com.example.eatmou.ui.ProfilePage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfilePage extends Fragment {
 
@@ -72,6 +79,11 @@ public class ProfilePage extends Fragment {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     currentUser = Users.toObject(document.getData());
+                    HashMap<String, String> list = (HashMap<String, String>) document.get("Keywords");
+//                    ArrayList<String> list = new ArrayList<String>(map.values());
+                    currentUser.setKeywords(list);
+//                    System.out.println(list);
+
                     Log.d("User document", "DocumentSnapshot data: " + document.getData());
 
                     Glide.with(view).load(currentUser.getProfilePicUrl()).into(userProfileImg);
@@ -97,6 +109,10 @@ public class ProfilePage extends Fragment {
             args.putString("ProfileBgPicUrl", currentUser.getProfileBgPicUrl());
             args.putString("Bio", currentUser.getBio());
             args.putString("Location", currentUser.getLocation());
+            HashMap<String, String> map = currentUser.getKeywords();
+            String[] arr = new String[3];
+            for(int i = 0; i < 3; i++) arr[i] = map.get(""+i);
+            args.putStringArray("Keywords", arr);
 
             EditProfileFragment editProfileFragment = new EditProfileFragment();
             editProfileFragment.setArguments(args);

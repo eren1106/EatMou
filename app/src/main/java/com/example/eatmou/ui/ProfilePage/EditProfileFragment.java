@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -45,6 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileFragment extends Fragment {
 
     private EditText date, editNameField, editBioField, editLocationField;
+    private EditText k1, k2, k3;
     private CircleImageView editProfileImg;
     private ImageView editBgImg;
     private ImageView backBtn;
@@ -56,6 +61,7 @@ public class EditProfileFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     String imageURL;
+    String[] arr;
 
     //global test
     String indication;
@@ -80,6 +86,9 @@ public class EditProfileFragment extends Fragment {
         editBgImg = view.findViewById(R.id.editBgImg);
         editBioField = view.findViewById(R.id.editBioField);
         editLocationField = view.findViewById(R.id.editLocationField);
+        k1 = view.findViewById(R.id.keyword1);
+        k2 = view.findViewById(R.id.keyword2);
+        k3 = view.findViewById(R.id.keyword3);
 
         backBtn = view.findViewById(R.id.back_BtnEditProfile);
         saveButton = view.findViewById(R.id.saveButton);
@@ -93,6 +102,11 @@ public class EditProfileFragment extends Fragment {
             Glide.with(view).load(args.getString("ProfileBgPicUrl")).into(editBgImg);
             editBioField.setText(args.getString("Bio"));
             editLocationField.setText(args.getString("Location"));
+            arr = args.getStringArray("Keywords");
+            System.out.println(Arrays.toString(arr));
+            k1.setText(arr[0]);
+            k2.setText(arr[1]);
+            k3.setText(arr[2]);
         }
 
         backBtn.setOnClickListener(v -> replaceFragment(new ProfilePage()));
@@ -163,6 +177,27 @@ public class EditProfileFragment extends Fragment {
                         .update("location", editLocationField.getText().toString());
             }
             Toast.makeText(getContext(), "Saved Successfully!", Toast.LENGTH_SHORT).show();
+
+
+            DocumentReference keywordRef = db.collection("users").document(UserID);
+            //k1
+            String text1 = arr[0];
+            String text2 = arr[1];
+            String text3 = arr[2];
+            if(!k1.getText().toString().equals(text1)
+                    || !k2.getText().toString().equals(text2)
+                    || !k3.getText().toString().equals(text3)){
+                if(k1.getText().toString().equals("")
+                        || k2.getText().toString().equals("")
+                        || k3.getText().toString().equals("")){
+                    Toast.makeText(getContext(),"Please fill in every field", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    keywordRef.update("Keywords.0", k1.getText().toString());
+                    keywordRef.update("Keywords.1", k2.getText().toString());
+                    keywordRef.update("Keywords.2", k3.getText().toString());
+                }
+            }
         });
     }
 
