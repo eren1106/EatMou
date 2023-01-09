@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "827209213875",
+    "project_id": "eatlan-4403e",
+    "storage_bucket": "eatlan-4403e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827209213875:android:35102994ca0a6d2f6b8dc6",
+        "android_client_info": {
+          "package_name": "com.example.eatmou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827209213875-dj61qc7cs957nnjeo1f1dcvevlt6ovgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd7Q9VU1UyNzvELD_vqn_Tv1xiSwJX1iU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827209213875-dj61qc7cs957nnjeo1f1dcvevlt6ovgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
