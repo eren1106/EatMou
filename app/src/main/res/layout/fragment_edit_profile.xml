@@ -120,7 +120,8 @@
                 android:paddingEnd="20sp"
                 android:layout_marginBottom="10sp"
                 android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp">
+                android:layout_marginEnd="20sp"
+                android:hint="@string/name">
             </EditText>
 
             <TextView
@@ -153,7 +154,8 @@
                     android:background="@drawable/inputbg"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:paddingStart="20sp" />
+                    android:paddingStart="20sp"
+                    android:hint="@string/date_of_birth"/>
 
                 <ImageView
                     android:id="@+id/calendar_icon"
@@ -194,7 +196,8 @@
                 android:gravity="top"
                 android:layout_marginBottom="10sp"
                 android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp">
+                android:layout_marginRight="20sp"
+                android:hint="@string/write_about_yourself">
             </EditText>
 
             <TextView
@@ -222,13 +225,14 @@
                 android:gravity="top"
                 android:layout_marginBottom="10sp"
                 android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp">
+                android:layout_marginRight="20sp"
+                android:hint="@string/where_are_you_from">
             </EditText>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keywords"
+                android:text="@string/keywords"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins"
                 android:layout_marginStart="20sp"
@@ -248,7 +252,8 @@
                 android:paddingEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp">
+                android:layout_marginEnd="20sp"
+                android:hint="@string/your_traits">
             </EditText>
 
             <EditText
@@ -264,7 +269,8 @@
                 android:paddingEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp">
+                android:layout_marginEnd="20sp"
+                android:hint="@string/your_traits">
             </EditText>
 
             <EditText
@@ -280,7 +286,8 @@
                 android:paddingEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp">
+                android:layout_marginEnd="20sp"
+                android:hint="@string/your_traits">
             </EditText>
 
             <Button
