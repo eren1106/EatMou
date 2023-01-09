@@ -24,12 +24,14 @@ import com.example.eatmou.ui.homePage.userMatching.UserMatchingProfileFragment;
 import com.example.eatmou.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class HomeFragment extends Fragment {
     RecyclerView user_matching_list;
     FirestoreRecyclerAdapter<Users, UserViewHolder> adapter;
+    String currentUserID = FirebaseAuth.getInstance().getUid();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,9 +63,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Users model) {
-                holder.name.setText(model.getUsername());
-                Glide.with(container).load(model.getProfilePicUrl()).into(holder.image);
-                holder.userIDTitle.setText(model.getUserID());
+                if(!model.getUserID().equals(currentUserID)) {
+                    holder.name.setText(model.getUsername());
+                    Glide.with(container).load(model.getProfilePicUrl()).into(holder.image);
+                    holder.userIDTitle.setText(model.getUserID());
+                }
             }
         };
 
