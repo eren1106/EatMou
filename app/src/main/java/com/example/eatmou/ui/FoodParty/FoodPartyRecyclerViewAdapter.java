@@ -7,8 +7,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +95,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
         // kinda like in onCreate method
 
         TextView title, organizer, location, date, time, personNumber;
+        TextView organiserLabel, locationLabel, dateLabel, timeLabel;
         Button cardBtn;
         OnCardListener onCardListener;
 
@@ -106,14 +110,37 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
             personNumber = itemView.findViewById(R.id.TV_JoinedPersonNumber);
             cardBtn = itemView.findViewById(R.id.B_CardBtn);
 
+            organiserLabel = itemView.findViewById(R.id.TV_OrganizerLabel);
+            locationLabel = itemView.findViewById(R.id.TV_LocationLabel);
+            dateLabel = itemView.findViewById(R.id.TV_DateLabel);
+            timeLabel = itemView.findViewById(R.id.TV_TimeLabel);
+
             this.onCardListener = onCardListener;
 
             itemView.setOnClickListener(this);
+            changeFontSize();
         }
 
         @Override
         public void onClick(View view) {
             onCardListener.onCardClick(getAdapterPosition());
+        }
+
+        private void changeFontSize(){
+            SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
+            int size = fontPreference.getInt("FONT_SP",0)-1;
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size+6);
+            organizer.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            time.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            personNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            cardBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            organiserLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            locationLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            dateLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            timeLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+
         }
     }
 

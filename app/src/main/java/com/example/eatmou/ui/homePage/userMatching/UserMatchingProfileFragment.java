@@ -1,27 +1,25 @@
 package com.example.eatmou.ui.homePage.userMatching;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
+import com.example.eatmou.R;
 import com.example.eatmou.model.Users;
-import com.example.eatmou.repository.home.HomeUserRepoImp;
 import com.example.eatmou.ui.homePage.InviteDialog.InviteDialog;
 import com.example.eatmou.ui.homePage.MainActivity;
-import com.example.eatmou.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,15 +30,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserMatchingProfileFragment extends Fragment {
     ImageView backBtn, user_image;
-    Context context = getContext();
     FloatingActionButton inviteBtn;
     TextView user_title, user_bio, user_location, info1, info2, info3;
+    TextView about_me, location, basicinfo;
     Users user = new Users();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_matching_profile, container, false);
+
+        about_me = view.findViewById(R.id.about_me);
+        location = view.findViewById(R.id.user_location_title);
+        basicinfo = view.findViewById(R.id.user_info_title);
 
         // Inflate the layout for this fragment
         backBtn = view.findViewById(R.id.back_Btn);
@@ -93,6 +95,8 @@ public class UserMatchingProfileFragment extends Fragment {
                         info1.setText(document.getString("Keywords.0"));
                         info2.setText(document.getString("Keywords.1"));
                         info3.setText(document.getString("Keywords.2"));
+
+                        changeFontSize();
                     } else {
                         Log.d("User document", "No such document");
                     }
@@ -112,11 +116,28 @@ public class UserMatchingProfileFragment extends Fragment {
             }
         });
 
+//        changeFontSize();
+
         return view;
     }
 
     public void openDialog() {
         InviteDialog inviteDialog = new InviteDialog();
         inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
+    }
+
+    private void changeFontSize(){
+
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int size = fontPreference.getInt("FONT_SP",0)+4;
+        user_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        user_bio.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        user_location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        info1.setTextSize(TypedValue.COMPLEX_UNIT_SP, size-4);
+        info2.setTextSize(TypedValue.COMPLEX_UNIT_SP, size-4);
+        info3.setTextSize(TypedValue.COMPLEX_UNIT_SP, size-4);
+        about_me.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        basicinfo.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }

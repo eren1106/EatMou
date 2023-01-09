@@ -4,8 +4,11 @@ import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +61,7 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
         private Button declineBtn;
         private String InboxUserID;
 
+        private TextView location, date, startTime, endTime;
 
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
@@ -72,6 +76,11 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
             dateTxt = view.findViewById(R.id.dateTxt);
             startTimeTxt = view.findViewById(R.id.startTimeTxt);
             endTimeTxt = view.findViewById(R.id.endTimeTxt);
+
+            location = view.findViewById(R.id.location);
+            date = view.findViewById(R.id.date);
+            startTime = view.findViewById(R.id.startTime);
+            endTime = view.findViewById(R.id.endTime);
 
             acceptBtn = view.findViewById(R.id.acceptBtn);
             declineBtn = view.findViewById(R.id.declineBtn);
@@ -148,19 +157,23 @@ public class ReceivedAdapter extends RecyclerView.Adapter<ReceivedAdapter.MyView
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayout, fragment);
                 fragmentTransaction.commit();
-//                    //Share Preferences
-//                    SharedPreferences sharedPreferences = PreferenceManager
-//                            .getDefaultSharedPreferences(context);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    //Set username clicked into the share preference
-//                    editor.putString("USERNAME_SHARED_PREF", invitation.getInvitedID());
-//                    editor.apply();
-//                    Log.d("userID", invitation.getInvitedID());
-//                    //Switch to next fragment
-//                    Fragment fragment = new UserMatchingProfileFragment();
-//                    ((FragmentActivity)context).getSupportFragmentManager()
-//                            .beginTransaction().replace(R.id.frameLayout, fragment).commit();
             });
+
+            changeFontSize();
+        }
+
+        private void changeFontSize(){
+            SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            int size = fontPreference.getInt("FONT_SP",0);
+            usernameTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            locationTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            dateTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         }
     }
 

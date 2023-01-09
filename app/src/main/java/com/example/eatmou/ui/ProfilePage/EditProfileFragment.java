@@ -5,9 +5,12 @@ import static android.app.Activity.RESULT_OK;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,6 +202,8 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
+
+        changeFontSize();
     }
 
 
@@ -275,5 +280,17 @@ public class EditProfileFragment extends Fragment {
 
     private void updateImage(String imageField, String imageURL){
         db.collection("users").document(UserID).update(imageField, imageURL);
+    }
+
+    private void changeFontSize(){
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int size = fontPreference.getInt("FONT_SP",0);
+        editNameField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        editBioField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        editLocationField.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        k1.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        k2.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        k3.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }
