@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
     Context context;
     UserModel currentUser;
     TextView title, organizer, location, date, time, joinedPersonNumber;
-    ImageButton backBtn;
+    ImageView backBtn;
     Button deleteBtn, bottomBtn;
 
     FoodPartyModel foodPartyModel;
