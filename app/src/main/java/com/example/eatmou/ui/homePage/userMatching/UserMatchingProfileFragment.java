@@ -90,13 +90,9 @@ public class UserMatchingProfileFragment extends Fragment {
                         info1 = view.findViewById(R.id.info1);
                         info2 = view.findViewById(R.id.info2);
                         info3 = view.findViewById(R.id.info3);
-                        String bio = user.getBio();
-                        if(bio != null) {
-                            String[] basic_info = bio.split(" ");
-                            info1.setText(basic_info[0]);
-                            info2.setText(basic_info[1]);
-                            info3.setText(basic_info[2]);
-                        }
+                        info1.setText(document.getString("Keywords.0"));
+                        info2.setText(document.getString("Keywords.1"));
+                        info3.setText(document.getString("Keywords.2"));
                     } else {
                         Log.d("User document", "No such document");
                     }

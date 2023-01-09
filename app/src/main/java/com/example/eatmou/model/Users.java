@@ -1,11 +1,16 @@
 package com.example.eatmou.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.Timestamp;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
-public class Users {
+public class Users{
     private String bio;
     private Timestamp dob;
     private String email;
@@ -14,6 +19,7 @@ public class Users {
     private String profilePicUrl;
     private String userID;
     private String username;
+    private HashMap<String, String> keywords;
 
     public Users(){}
 
@@ -45,6 +51,13 @@ public class Users {
         return formatter.format(this.dob.toDate());
     }
 
+    public HashMap<String, String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(HashMap<String, String> keywords) {
+        this.keywords = keywords;
+    }
 
     public String getBio() {
         return bio;
@@ -77,4 +90,5 @@ public class Users {
     public String getUserID() {
         return userID;
     }
+
 }
