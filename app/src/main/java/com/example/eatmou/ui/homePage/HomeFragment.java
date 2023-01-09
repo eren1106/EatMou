@@ -1,9 +1,11 @@
 package com.example.eatmou.ui.homePage;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,21 +19,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.eatmou.model.Users;
+import com.example.eatmou.ui.FoodParty.FoodPartyModel;
+import com.example.eatmou.ui.homePage.userMatching.Adapter;
 import com.example.eatmou.ui.homePage.userMatching.UserMatchingProfileFragment;
 import com.example.eatmou.R;
+import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     RecyclerView user_matching_list;
-    FirestoreRecyclerAdapter<Users, UserViewHolder> adapter;
+    List<Users> usersList = new ArrayList<>();
+
+    //Current userID
     String currentUserID = FirebaseAuth.getInstance().getUid();
+
+    //Firebase instance
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    EventListener<QuerySnapshot> eventListener;
+    ListenerRegistration listenerRegistration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,40 +64,38 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         user_matching_list = view.findViewById(R.id.user_matching_list);
 
-        //Get data from fireStore
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        //Query
-        Query query = db.collection("users");
-
-        //RecyclerOption
-        FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
-                .setQuery(query, Users.class)
-                        .build();
-
-        adapter = new FirestoreRecyclerAdapter<Users, UserViewHolder>(options) {
-            @NonNull
-            @Override
-            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-                View view = layoutInflater.inflate(R.layout.user_matching_card, parent, false);
-                return new UserViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Users model) {
-                if(!model.getUserID().equals(currentUserID)) {
-                    holder.name.setText(model.getUsername());
-                    Glide.with(container).load(model.getProfilePicUrl()).into(holder.image);
-                    holder.userIDTitle.setText(model.getUserID());
-                }
-            }
-        };
-
+        //Set up the recycler view using adapter
+        Adapter adapter = new Adapter(getContext(), usersList);
         user_matching_list.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         user_matching_list.setLayoutManager(gridLayoutManager);
         user_matching_list.setAdapter(adapter);
+
+       eventListener = new EventListener<QuerySnapshot>() {
+           @SuppressLint("NotifyDataSetChanged")
+           @Override
+           public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+               if (value != null && !value.isEmpty()) {
+                   for (DocumentChange dc : value.getDocumentChanges()) {
+                       if (dc.getType() == DocumentChange.Type.ADDED) {
+                           Users users = Users.toObject(dc.getDocument().getData());
+                           if(!users.getUserID().equals(currentUserID)) {
+                               usersList.add(users);
+                           }
+                       }
+                   }
+               }
+               if (error != null) {
+//                    if(progressDialog.isShowing())
+//                        progressDialog.dismiss();
+                   Log.e("FireStore error", error.getMessage());
+                   return;
+               }
+               adapter.notifyDataSetChanged();
+           }
+       };
+
+        listenerRegistration = db.collection("users").addSnapshotListener(eventListener);
         return view;
     }
 
@@ -107,17 +128,5 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
     }
 }
