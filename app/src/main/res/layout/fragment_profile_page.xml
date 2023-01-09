@@ -32,7 +32,7 @@
             <ImageView
                 android:id="@+id/userBgImg"
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
+                android:layout_height="250sp"
                 android:layout_marginTop="4dp"
                 android:contentDescription="@string/cover_picture"
                 android:scaleType="centerCrop"
