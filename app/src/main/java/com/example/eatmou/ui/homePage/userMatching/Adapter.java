@@ -94,7 +94,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private void changeFontSize(){
             SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(context);
             int size = fontPreference.getInt("FONT_SP",0);
-            name.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            name.setTextSize(TypedValue.COMPLEX_UNIT_SP, size+2);
         }
     }
 }

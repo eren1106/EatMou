@@ -147,7 +147,7 @@ public class ProfilePage extends Fragment {
     private void changeFontSize(){
         SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
         int size = fontPreference.getInt("FONT_SP",0);
-        userName.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        userName.setTextSize(TypedValue.COMPLEX_UNIT_SP, size+4);
         userBio.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         btnEditProfileFragment.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         btnManagePwFragment.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
