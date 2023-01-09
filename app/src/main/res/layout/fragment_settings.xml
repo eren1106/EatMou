@@ -58,7 +58,8 @@
             app:cornerRadius="10sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="16sp"/>
+            android:layout_marginTop="16sp"
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/privacy_policy_button"
@@ -104,6 +105,19 @@
             android:layout_width="match_parent"
             android:layout_height="56sp"
             android:text="@string/applock"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/RICE"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <Button
+            android:id="@+id/fontSizeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:text="Font Size"
             android:textColor="@color/black"
             android:backgroundTint="@color/RICE"
             android:layout_gravity="center"

@@ -1,8 +1,11 @@
 package com.example.eatmou.ui.Inbox;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ public class InboxUserProfileFragment extends Fragment {
     ImageView backBtn, user_image;
     FloatingActionButton inviteBtn;
     TextView user_title, user_bio, user_location, info1, info2, info3;
+    TextView about_me, location, basicinfo;
     Users user = new Users();
     String InboxUserID;
     Bundle args;
@@ -39,6 +43,11 @@ public class InboxUserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_matching_profile, container, false);
         // Inflate the layout for this fragment
+
+        about_me = view.findViewById(R.id.about_me);
+        location = view.findViewById(R.id.user_location_title);
+        basicinfo = view.findViewById(R.id.user_info_title);
+
         args = this.getArguments();
         backBtn = view.findViewById(R.id.back_Btn);
         backBtn.setOnClickListener(view12 -> {
@@ -103,6 +112,8 @@ public class InboxUserProfileFragment extends Fragment {
                     info1.setText(document.getString("Keywords.0"));
                     info2.setText(document.getString("Keywords.1"));
                     info3.setText(document.getString("Keywords.2"));
+
+                    changeFontSize();
                 } else {
                     Log.d("User document", "No such document");
                 }
@@ -122,5 +133,20 @@ public class InboxUserProfileFragment extends Fragment {
     public void openDialog() {
         InviteDialog inviteDialog = new InviteDialog();
         inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
+    }
+
+    private void changeFontSize(){
+
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int size = fontPreference.getInt("FONT_SP",0)+4;
+        user_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        user_bio.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        user_location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        info1.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        info2.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        info3.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        about_me.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        basicinfo.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }

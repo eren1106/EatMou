@@ -1,10 +1,13 @@
 package com.example.eatmou.ui.ProfilePage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +126,8 @@ public class ProfilePage extends Fragment {
             replaceFragment(managePwFragment);
         });
         btnSettingsFragment.setOnClickListener(v -> replaceFragment(new SettingsFragment()));
+
+        changeFontSize();
     }
 
     private void replaceFragment(Fragment fragment){
@@ -137,6 +142,16 @@ public class ProfilePage extends Fragment {
         for (Fragment fragment : getChildFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void changeFontSize(){
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int size = fontPreference.getInt("FONT_SP",0);
+        userName.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        userBio.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        btnEditProfileFragment.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        btnManagePwFragment.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        btnSettingsFragment.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }
 

@@ -14,9 +14,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -48,6 +51,7 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
     Context context;
     UserModel currentUser;
     TextView title, organizer, location, date, time, joinedPersonNumber;
+    TextView organiserLabel, locationLabel, dateLabel, timeLabel;
     ImageView backBtn;
     Button deleteBtn, bottomBtn;
 
@@ -85,6 +89,11 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         deleteBtn = findViewById(R.id.B_Delete);
         bottomBtn = findViewById(R.id.B_BottomBtn);
 
+        organiserLabel = findViewById(R.id.TV_OrganizerLabel);
+        locationLabel = findViewById(R.id.TV_LocationLabel);
+        dateLabel = findViewById(R.id.TV_DateLabel);
+        timeLabel = findViewById(R.id.TV_TimeLabel);
+
         setData();
 
         setDeleteBtnVisibility();
@@ -108,6 +117,22 @@ public class FoodPartyDetailActivity extends AppCompatActivity implements Serial
         setBottomBtn();
         fetchOrganiserName();
         fetchDataToJoinedPersons(this);
+        changeFontSize();
+    }
+
+    private void changeFontSize(){
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int size = fontPreference.getInt("FONT_SP",0)-1;
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size+8);
+        organizer.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        time.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        organiserLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        locationLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        dateLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        timeLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+
     }
 
     private void setDeleteBtnVisibility() {

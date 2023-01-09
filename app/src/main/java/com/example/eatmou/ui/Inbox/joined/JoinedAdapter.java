@@ -3,8 +3,11 @@ package com.example.eatmou.ui.Inbox.joined;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,8 @@ import com.example.eatmou.ui.Inbox.InboxUserProfileFragment;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -53,6 +58,8 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
         private TextView endTimeTxt;
         private String InboxUserID;
 
+        private TextView location, date, startTime, endTime;
+
         LinearLayout cardView_linearLayout;
         RelativeLayout cardView_expandable;
         RelativeLayout cardView_mainBar;
@@ -65,6 +72,11 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
             dateTxt = view.findViewById(R.id.dateTxt);
             startTimeTxt = view.findViewById(R.id.startTimeTxt);
             endTimeTxt = view.findViewById(R.id.endTimeTxt);
+
+            location = view.findViewById(R.id.location);
+            date = view.findViewById(R.id.date);
+            startTime = view.findViewById(R.id.startTime);
+            endTime = view.findViewById(R.id.endTime);
 
             cardView_mainBar = view.findViewById(R.id.cardView_mainBar);
             cardView_linearLayout = view.findViewById(R.id.cardView_linearLayout);
@@ -89,7 +101,24 @@ public class JoinedAdapter extends RecyclerView.Adapter<JoinedAdapter.MyViewHold
                 fragmentTransaction.replace(R.id.frameLayout,fragment);
                 fragmentTransaction.commit();
             });
+
+            changeFontSize();
         }
+
+        private void changeFontSize(){
+            SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            int size = fontPreference.getInt("FONT_SP",0);
+            usernameTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            locationTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            dateTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        }
+
     }
 
     @NonNull

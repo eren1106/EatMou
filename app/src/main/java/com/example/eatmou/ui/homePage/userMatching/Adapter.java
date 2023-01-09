@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                             .beginTransaction().replace(R.id.frameLayout, fragment).commit();
                 }
             });
+
+            changeFontSize();
+        }
+
+        private void changeFontSize(){
+            SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            int size = fontPreference.getInt("FONT_SP",0);
+            name.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         }
     }
 }

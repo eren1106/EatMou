@@ -1,16 +1,16 @@
 package com.example.eatmou.ui.ProfilePage.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +19,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eatmou.CommunityGuideline;
+import com.example.eatmou.FontSettingActivity;
 import com.example.eatmou.R;
 import com.example.eatmou.model.AppLock;
 import com.example.eatmou.ui.Authentication.LoginPage;
 import com.example.eatmou.ui.ProfilePage.PrivacyPolicyActivity;
 import com.example.eatmou.ui.ProfilePage.ProfilePage;
 import com.example.eatmou.ui.ProfilePage.TermsOfService;
-import com.example.eatmou.ui.appLock.AppLockStart;
 import com.example.eatmou.ui.feedback.FeedbackActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SettingsFragment extends Fragment {
 
     ImageView backBtn;
-    Button appLockBtn, feedbackBtn, privacy_policy_button, termsofservice_button, community_guideline_button;
+    Button appLockBtn, feedbackBtn, privacy_policy_button, termsofservice_button, community_guideline_button, fontSizeBtn;
     AppLock appLock = new AppLock();
     Button btnLogOut;
 
@@ -132,6 +132,14 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
+        fontSizeBtn = view.findViewById(R.id.fontSizeBtn);
+        fontSizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), FontSettingActivity.class));
+            }
+        });
         return view;
     }
 
@@ -149,6 +157,8 @@ public class SettingsFragment extends Fragment {
             startActivity(intent);
             getActivity().finish();
         });
+
+        changeFontSize();
     }
 
     private void replaceFragment(Fragment fragment){
@@ -156,5 +166,17 @@ public class SettingsFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.profilePageFrame, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void changeFontSize(){
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int size = fontPreference.getInt("FONT_SP",0);
+        feedbackBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        privacy_policy_button.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        termsofservice_button.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        community_guideline_button.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        appLockBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        fontSizeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        btnLogOut.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }

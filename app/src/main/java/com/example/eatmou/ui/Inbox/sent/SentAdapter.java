@@ -4,9 +4,12 @@ import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +60,8 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
         private TextView endTimeTxt;
         private Button cancelBtn;
 
+        private TextView location, date, startTime, endTime;
+
         private TextView statusTxt;
         private String InboxUserID;
 
@@ -73,6 +78,11 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
             startTimeTxt = view.findViewById(R.id.startTimeTxt);
             endTimeTxt = view.findViewById(R.id.endTimeTxt);
             cancelBtn = view.findViewById(R.id.cancelBtn);
+
+            location = view.findViewById(R.id.location);
+            date = view.findViewById(R.id.date);
+            startTime = view.findViewById(R.id.startTime);
+            endTime = view.findViewById(R.id.endTime);
 
             statusTxt = view.findViewById(R.id.statusTxt);
 
@@ -126,6 +136,21 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.MyViewHolder> 
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show());
+            changeFontSize();
+        }
+
+        private void changeFontSize(){
+            SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            int size = fontPreference.getInt("FONT_SP",0);
+            usernameTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            locationTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            dateTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTimeTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            startTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            endTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         }
     }
 
