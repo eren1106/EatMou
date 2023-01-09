@@ -134,7 +134,7 @@ public class FoodPartyRecyclerViewAdapter extends RecyclerView.Adapter<FoodParty
             location.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
             date.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
             time.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
-            personNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            personNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, size+4);
             cardBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
             organiserLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
             locationLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
