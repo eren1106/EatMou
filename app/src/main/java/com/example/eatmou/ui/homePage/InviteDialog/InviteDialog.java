@@ -47,6 +47,7 @@ public class InviteDialog extends DialogFragment {
     private TimePickerDialog _timePickerDialog;
     private TextView displayTimeStart;
     private TextView displayTimeEnd;
+    private TextView inviteTitle;
     private Button inviteBtn;
     Date date = new Date();
     Date startTime = new Date();
@@ -63,6 +64,12 @@ public class InviteDialog extends DialogFragment {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
+
+        //Title
+        inviteTitle = view.findViewById(R.id.invite_title);
+        SharedPreferences namePref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String title_str = "Invite " + namePref.getString("INV_NAME","");
+        inviteTitle.setText(title_str);
 
         //Input restaurant
         EditText input_restaurant = view.findViewById(R.id.input_restaurant);

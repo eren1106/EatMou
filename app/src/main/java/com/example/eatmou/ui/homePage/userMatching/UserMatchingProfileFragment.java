@@ -116,18 +116,20 @@ public class UserMatchingProfileFragment extends Fragment {
             }
         });
 
-//        changeFontSize();
-
         return view;
     }
 
     public void openDialog() {
+        SharedPreferences namePref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = namePref.edit();
+        editor.putString("INV_NAME", user.getUsername());
+        editor.apply();
+
         InviteDialog inviteDialog = new InviteDialog();
         inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
     }
 
     private void changeFontSize(){
-
         SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getContext());
         int size = fontPreference.getInt("FONT_SP",0)+4;
         user_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);

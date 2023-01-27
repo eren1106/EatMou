@@ -131,6 +131,11 @@ public class InboxUserProfileFragment extends Fragment {
     }
 
     public void openDialog() {
+        SharedPreferences namePref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = namePref.edit();
+        editor.putString("INV_NAME", user.getUsername());
+        editor.apply();
+
         InviteDialog inviteDialog = new InviteDialog();
         inviteDialog.show(getActivity().getSupportFragmentManager(), "Invite Dialog");
     }
