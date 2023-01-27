@@ -1,4 +1,4 @@
-package com.example.eatmou;
+package com.example.eatmou.ui.ProfilePage.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eatmou.R;
+
 public class FontSettingActivity extends AppCompatActivity {
 
-    private Button small, mid, big;
+    private Button mid, big;
     ImageView font_size_back_Btn;
 
     @Override
@@ -23,7 +25,6 @@ public class FontSettingActivity extends AppCompatActivity {
 
         font_size_back_Btn = findViewById(R.id.font_size_back_Btn);
 
-//        small = findViewById(R.id.smallBtn);
         mid = findViewById(R.id.midBtn);
         big = findViewById(R.id.bigBtn);
 
@@ -57,7 +58,6 @@ public class FontSettingActivity extends AppCompatActivity {
     private void changeFontSize(){
         SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int size = fontPreference.getInt("FONT_SP",0);
-//        small.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         mid.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         big.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }

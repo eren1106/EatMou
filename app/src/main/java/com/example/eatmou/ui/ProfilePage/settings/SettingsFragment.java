@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.eatmou.CommunityGuideline;
-import com.example.eatmou.FontSettingActivity;
 import com.example.eatmou.R;
 import com.example.eatmou.model.AppLock;
 import com.example.eatmou.ui.Authentication.LoginPage;

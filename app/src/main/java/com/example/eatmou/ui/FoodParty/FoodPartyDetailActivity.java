@@ -22,12 +22,11 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eatmou.FirebaseMethods;
+import com.example.eatmou.ui.ProfilePage.settings.FirebaseMethods;
 import com.example.eatmou.R;
 import com.example.eatmou.model.UserModel;
 import com.example.eatmou.ui.homePage.MainActivity;

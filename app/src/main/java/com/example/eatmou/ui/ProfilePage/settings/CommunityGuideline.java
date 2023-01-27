@@ -1,10 +1,12 @@
-package com.example.eatmou;
+package com.example.eatmou.ui.ProfilePage.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.eatmou.R;
 
 public class CommunityGuideline extends AppCompatActivity {
 
