@@ -1,7 +1,10 @@
 package com.example.eatmou.ui.homePage;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.eatmou.ui.FoodParty.FoodPartyListFragment;
@@ -62,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, selectedFragment).commit();
             }
         });
+
+
+        SharedPreferences fontPreference = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = fontPreference.edit();
+        int size = fontPreference.getInt("FONT_SP",0);
+        if(size!=16 && size !=22){
+            editor.putInt("FONT_SP", 16);
+            editor.apply();
+        }
 
     }
 
